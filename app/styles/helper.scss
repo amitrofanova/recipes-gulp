@@ -1,0 +1,25 @@
+@at-root {
+  @-ms-viewport { width: device-width; }
+}
+
+html {
+  box-sizing: border-box;
+  -ms-overflow-style: scrollbar;
+
+	// font-size: 1vw;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
