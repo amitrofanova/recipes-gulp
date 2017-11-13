@@ -1,0 +1,28 @@
+.nav__collapse
+	+clearfix()
+	@media (max-width: 991px)
+		display: none
+	list-style: none
+	
+.nav__button
+	float: right
+	display: block
+	@media (min-width: 992px)
+		display: none
+	margin: auto 2rem
+	width: 30px
+	height: 30px
+	border: 3px solid #49130c
+	border-radius: 3px
+	cursor: pointer
+
+.nav__item
+	display: inline-block
+	float: left
+	&:last-child
+		float: right
+
+.nav__link
+	display: block
+	padding: 1rem 2rem
+	font-size: calc(8px + .7rem)

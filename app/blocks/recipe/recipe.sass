@@ -1,0 +1,47 @@
+.recipe
+	display: flex
+	flex-wrap: wrap
+	background-color: #fbdcad
+
+.recipe__image
+	flex-basis: 50%
+	background: url('../images/soups.jpg') no-repeat 0 0
+	background-size: cover
+
+.recipe__content
+	flex-basis: 50%
+	padding: 2rem
+
+.recipe__title
+	text-align: center
+	font-size: calc(10px + 2rem)
+	font-weight: 700
+
+.recipe__components
+	padding: 2rem 4rem 1rem
+
+.recipe__item
+	display: block
+	position: relative
+	padding: 5px 30px
+	font-size: calc(8px + .7rem)
+	&::before
+		content: '\002714'
+		padding-right: 10px
+		// display: block
+		// position: absolute
+		// top: 50%
+		// left: 0
+		// width: 8px
+		// height: 16px
+		// border: solid #49130c
+		// border-width: 0 2px 2px 0
+		// transform: rotate(30deg) translate(0, -50%)
+
+.recipe__details
+	flex-basis: 100%
+	padding: 4rem 3rem
+	background-color: #fbdcad
+
+.recipe__step
+	padding-bottom: 1rem
