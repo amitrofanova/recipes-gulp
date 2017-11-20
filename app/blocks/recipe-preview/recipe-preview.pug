@@ -1,5 +1,12 @@
-.recipe-preview
-	.recipe-preview__image
-	.recipe-preview__content
-		.recipe-preview__title Title
-		.recipe-preview__description Description
+//- .recipe-preview
+//- 	.recipe-preview__image
+//- 	.recipe-preview__content
+//- 		.recipe-preview__title
+//- 		.recipe-preview__description Description
+
+mixin recipe-preview(title, description)
+	.recipe-preview&attributes(attributes)
+		.recipe-preview__image
+		.recipe-preview__content
+			.recipe-preview__title #{title}
+			.recipe-preview__description #{description}
