@@ -6,7 +6,11 @@ html {
   box-sizing: border-box;
   -ms-overflow-style: scrollbar;
 
-	// font-size: 1vw;
+	font-size: 1vw;
+}
+
+body {
+	font-family: 'Montserrat', sans-serif
 }
 
 *,
@@ -15,11 +19,11 @@ html {
   box-sizing: inherit;
 }
 
-ol, ul {
-	list-style: none;
-}
-
 * {
 	margin: 0;
 	padding: 0;
+}
+
+a {
+	text-decoration: none;
 }
