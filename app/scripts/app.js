@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-$('.recipe').on('click', getRecipe);
+$('.recipe-preview').on('click', showRecipe);
 $('.dish-group').on('click', openDishGroup);
 $('.all-dish-groups').on('click', backToAllGroups);
 
@@ -33,6 +33,17 @@ function getRecipesPreviewData() {
 	};
 	xmlhttp.open("GET", "assets/data/recipes.json");
 	xmlhttp.send();
+}
+
+function showRecipe() {
+	$('.recipe-preview').hide();
+	$('<div class="recipe"></div>').insertAfter($('.recipe-preview')[0]);
+	$('.recipe').append('<div class="recipe__image"></div>');
+	$('.recipe').append('<div class="recipe__content"></div>');
+	$('.recipe__content').append('<div class="recipe__title"></div>');
+	$('.recipe__content').append('<ul class="recipe__components"></ul>');
+	$('.recipe').append('<div class="recipe__details"></div>');
+	getRecipe();
 }
 
 function getRecipe() {
