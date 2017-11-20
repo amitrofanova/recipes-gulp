@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
-$('.recipe-preview').on('click', openRecipe);
 $('.dish-group').on('click', openDishGroup);
+$(document).on('click', '.recipe-preview', openRecipe);
 $('.all-dish-groups').on('click', backToAllGroups);
 
 function backToAllGroups() {
@@ -23,8 +23,9 @@ function openDishGroup() {
 			var recipes = JSON.parse(this.responseText);
 
 			for (var i = 0; i < recipes.length; i++) {
-				$('.dish-group_opened').append('<div class="recipe-preview"><div class="recipe-preview__image"></div><div class="recipe-preview__content"><div class="recipe-preview__title">'
-				 + recipes[i].title + '</div><div class="recipe-preview__description">' + recipes[i].description + '</div></div></div>');
+				$('.dish-group_opened').append(
+					'<div class="recipe-preview"><div class="recipe-preview__image"></div><div class="recipe-preview__content"><div class="recipe-preview__title">'
+					+ recipes[i].title + '</div><div class="recipe-preview__description">' + recipes[i].description + '</div></div></div>');
 			}
 		}
 	};
@@ -33,37 +34,33 @@ function openDishGroup() {
 }
 
 function openRecipe() {
-	$('.recipe-preview').hide();
-	$('<div class="recipe"></div>').insertAfter($('.recipe-preview')[0]);
-	$('.recipe').append('<div class="recipe__image"></div>');
-	$('.recipe').append('<div class="recipe__content"></div>');
-	$('.recipe__content').append('<div class="recipe__title"></div>');
-	$('.recipe__content').append('<ul class="recipe__components"></ul>');
-	$('.recipe').append('<div class="recipe__details"></div>');
-	getRecipeData();
-}
-
-function getRecipeData() {
 	var xmlhttp = new XMLHttpRequest();
+
+	var recipeTitle = $(this).find('.recipe-preview__title').text();
+
 	xmlhttp.onreadystatechange = function() {
 	  if (this.readyState == 4 && this.status == 200) {
 
 			var recipes = JSON.parse(this.responseText);
+			for (var j = 0; j < recipes.length; j++) {
+				if (recipes[j].title === recipeTitle) {
+					$('.recipe-preview').hide();
+					$('<div class="recipe"></div>').insertAfter($('.recipe-preview')[0]).append('<div class="recipe__image"></div><div class="recipe__content"><div class="recipe__title">'
+					+ recipes[j].title + '</div><ul class="recipe__components"></ul></div><div class="recipe__details"></div>');
 
-			$('.recipe__title').html(recipes[0].title);
+					var components = [];
+					for (var i = 0; i < recipes[j].components.length; i++) {
+						components.push('<li class="recipe__item">' + recipes[j].components[i] + '</li>');
+					}
+					$('.recipe__components').append(components);
 
-			var components = [];
-			for (var i = 0; i < recipes[0].components.length; i++) {
-				components.push('<li class="recipe__item">' + recipes[0].components[i] + '</li>');
+					var steps = [];
+					for (var i = 0; i < recipes[j].steps.length; i++) {
+						steps.push('<p class="recipe__step">' + recipes[j].steps[i] + '</p');
+					}
+					$('.recipe__details').append(steps);
+				}
 			}
-			$('.recipe__components').append(components);
-
-			var steps = [];
-			for (var i = 0; i < recipes[0].steps.length; i++) {
-				steps.push('<p class="recipe__step">' + recipes[0].steps[i] + '</p');
-			}
-			$('.recipe__details').append(steps);
-
 		}
 	};
 	xmlhttp.open("GET", "assets/data/recipes.json");
