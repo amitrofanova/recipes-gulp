@@ -1,26 +1,63 @@
 import $ from 'jquery';
 
-var xmlhttp = new XMLHttpRequest();
-xmlhttp.onreadystatechange = function() {
-  if (this.readyState == 4 && this.status == 200) {
+$('.recipe').on('click', getRecipe);
+$('.dish-group').on('click', openDishGroup);
+$('.all-dish-groups').on('click', backToAllGroups);
 
-		var recipe = JSON.parse(this.responseText);
+function backToAllGroups() {
+	$('.dish-group_opened').hide();
+	$('.dish-group').show();
+}
 
-		$('.recipe__title').html(recipe.title);
+function openDishGroup() {
+	$('.dish-group').hide();
+	$('.dish-group_opened').css('padding-top', '80px');
+	$('.all-dish-groups').show().css('display', 'inline-block');
+	$('.current-dish-groups').show().css('display', 'inline-block');
+	$('.dish-group_opened').show().css('display', 'flex');
+}
 
-		var components = [];
-		for (var i = 0; i < recipe.components.length; i++) {
-			components.push('<li class="recipe__item">' + recipe.components[i] + '</li>');
+function getRecipesPreviewData() {
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+	  if (this.readyState == 4 && this.status == 200) {
+
+			var recipes = JSON.parse(this.responseText);
+
+			for (var i = 0; i < recipes.length; i++) {
+				console.log($('.recipe-preview__title'));
+				$('.recipe-preview__title').html(recipes[0].title);
+			}
+
 		}
-		$('.recipe__components').append(components);
+	};
+	xmlhttp.open("GET", "assets/data/recipes.json");
+	xmlhttp.send();
+}
 
-		var steps = [];
-		for (var i = 0; i < recipe.steps.length; i++) {
-			steps.push('<p class="recipe__step">' + recipe.steps[i] + '</p');
+function getRecipe() {
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+	  if (this.readyState == 4 && this.status == 200) {
+
+			var recipes = JSON.parse(this.responseText);
+
+			$('.recipe__title').html(recipes[0].title);
+
+			var components = [];
+			for (var i = 0; i < recipes[0].components.length; i++) {
+				components.push('<li class="recipe__item">' + recipes[0].components[i] + '</li>');
+			}
+			$('.recipe__components').append(components);
+
+			var steps = [];
+			for (var i = 0; i < recipes[0].steps.length; i++) {
+				steps.push('<p class="recipe__step">' + recipes[0].steps[i] + '</p');
+			}
+			$('.recipe__details').append(steps);
+
 		}
-		$('.recipe__details').append(steps);
-
-	}
-};
-xmlhttp.open("GET", "assets/data/recipe.json");
-xmlhttp.send();
+	};
+	xmlhttp.open("GET", "assets/data/recipes.json");
+	xmlhttp.send();
+}
