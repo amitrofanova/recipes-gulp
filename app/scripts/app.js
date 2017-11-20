@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-$('.recipe-preview').on('click', showRecipe);
+$('.recipe-preview').on('click', openRecipe);
 $('.dish-group').on('click', openDishGroup);
 $('.all-dish-groups').on('click', backToAllGroups);
 
@@ -11,13 +11,11 @@ function backToAllGroups() {
 
 function openDishGroup() {
 	$('.dish-group').hide();
-	$('.dish-group_opened').css('padding-top', '80px');
 	$('.all-dish-groups').show().css('display', 'inline-block');
 	$('.current-dish-groups').show().css('display', 'inline-block');
 	$('.dish-group_opened').show().css('display', 'flex');
-}
+	$('.dish-group_opened').css('padding-top', '80px');
 
-function getRecipesPreviewData() {
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 	  if (this.readyState == 4 && this.status == 200) {
@@ -25,17 +23,16 @@ function getRecipesPreviewData() {
 			var recipes = JSON.parse(this.responseText);
 
 			for (var i = 0; i < recipes.length; i++) {
-				console.log($('.recipe-preview__title'));
-				$('.recipe-preview__title').html(recipes[0].title);
+				$('.dish-group_opened').append('<div class="recipe-preview"><div class="recipe-preview__image"></div><div class="recipe-preview__content"><div class="recipe-preview__title">'
+				 + recipes[i].title + '</div><div class="recipe-preview__description">' + recipes[i].description + '</div></div></div>');
 			}
-
 		}
 	};
 	xmlhttp.open("GET", "assets/data/recipes.json");
 	xmlhttp.send();
 }
 
-function showRecipe() {
+function openRecipe() {
 	$('.recipe-preview').hide();
 	$('<div class="recipe"></div>').insertAfter($('.recipe-preview')[0]);
 	$('.recipe').append('<div class="recipe__image"></div>');
@@ -43,10 +40,10 @@ function showRecipe() {
 	$('.recipe__content').append('<div class="recipe__title"></div>');
 	$('.recipe__content').append('<ul class="recipe__components"></ul>');
 	$('.recipe').append('<div class="recipe__details"></div>');
-	getRecipe();
+	getRecipeData();
 }
 
-function getRecipe() {
+function getRecipeData() {
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 	  if (this.readyState == 4 && this.status == 200) {
