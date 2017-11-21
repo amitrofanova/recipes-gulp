@@ -1,0 +1,23 @@
+[
+	{
+		"title": "Title 1",
+		"group": "Group 1",
+		"description": "Description 1",
+		"components": [ "comp1for1", "comp2for1", "comp3for1"],
+		"steps": ["step1for1", "step2for1"]
+	},
+	{
+		"title": "Title 2",
+		"group": "Group 1",
+		"description": "Description 2",
+		"components": [ "comp1for2", "comp2", "comp3"],
+		"steps": ["step1", "step2"]
+	},
+	{
+		"title": "Title 3",
+		"group": "Group 1",
+		"description": "Description 3",
+		"components": [ "comp1for3", "comp2", "comp3"],
+		"steps": ["step1", "step2"]
+	}
+]
