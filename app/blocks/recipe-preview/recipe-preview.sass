@@ -3,23 +3,24 @@
 	margin-bottom: 1rem
 	width: 48%
 	height: 200px
+	overflow: hidden
 	box-shadow: 1px 1px 2px #ccc
 	cursor: pointer
 
 .recipe-preview__image
 	width: 40%
-	padding-top: 200px
-	background: #ccc url('../images/soups.jpg') no-repeat 0 0
-	background-size: cover
+	overflow: hidden
+	img
+		max-width: 100%
 
 .recipe-preview__content
 	width: 60%
-	padding: 30px
+	padding: 2rem
 
 .recipe-preview__title
 	font-size: calc(8px + 1rem)
 	font-weight: 700
 
 .recipe-preview__description
-	padding-top: 10px
+	padding-top: .8rem
 	font-size: calc(8px + .5rem)

@@ -31,14 +31,16 @@ function backToAllGroups() {
 
 function backToCurrentGroup() {
 	$('.recipe').remove();
+	$('.current-recipe').remove();
 	$('.recipe-preview').show();
 }
 
 function openDishGroup() {
-	$('.dish-group').hide();
-	$('.main').append('<section class="dish-group_opened"><div class="dish-group__nav"><div class="all-dish-groups">Все рецепты</div>&rarr; <div class="current-dish-group">current group</div></div></section>')
-
 	var currentDishGroup = $(this).find('.dish-group__title').text();
+
+	$('.dish-group').hide();
+	$('.main').append('<section class="dish-group_opened"><div class="dish-group__nav"><div class="all-dish-groups">Все рецепты</div>&rarr; <div class="current-dish-group">'
+	+ currentDishGroup + '</div></div></section>')
 
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
@@ -52,7 +54,8 @@ function openDishGroup() {
 
 					for (var i = 0; i < dishGroups[j].recipes.length; i++) {
 						$('.dish-group_opened').append(
-							'<div class="recipe-preview"><div class="recipe-preview__image"></div><div class="recipe-preview__content"><div class="recipe-preview__title">'
+							'<div class="recipe-preview"><div class="recipe-preview__image"><img src="'
+							+ dishGroups[j].recipes[i].image + '"></div><div class="recipe-preview__content"><div class="recipe-preview__title">'
 							+ dishGroups[j].recipes[i].title + '</div><div class="recipe-preview__description">' + dishGroups[j].recipes[i].description + '</div></div></div>');
 					}
 				}
@@ -68,7 +71,7 @@ function openRecipe() {
 	var xmlhttp = new XMLHttpRequest();
 
 	var recipeTitle = $(this).find('.recipe-preview__title').text();
-	console.log(recipeTitle);
+	$('.dish-group__nav').append('<div class="current-recipe">&rarr;' + recipeTitle + '</div>');
 
 	xmlhttp.onreadystatechange = function() {
 	  if (this.readyState == 4 && this.status == 200) {
@@ -79,7 +82,7 @@ function openRecipe() {
 				for (var j = 0; j < allRrecipes[k].recipes.length; j++) {
 					if (allRrecipes[k].recipes[j].title === recipeTitle) {
 						$('.recipe-preview').hide();
-						$('<div class="recipe"></div>').insertAfter($('.recipe-preview')[0]).append('<div class="recipe__image"></div><div class="recipe__content"><div class="recipe__title">'
+						$('<div class="recipe"></div>').insertAfter($('.recipe-preview')[0]).append('<div class="recipe__image" style="background: url(' + allRrecipes[k].recipes[j].image + ') no-repeat 0 0; background-size: cover"></div><div class="recipe__content"><div class="recipe__title">'
 						+ allRrecipes[k].recipes[j].title + '</div><ul class="recipe__components"></ul></div><div class="recipe__details"></div>');
 
 						var components = [];
@@ -102,68 +105,3 @@ function openRecipe() {
 	xmlhttp.open("GET", "assets/data/recipes2.json");
 	xmlhttp.send();
 }
-
-
-
-
-
-//
-//
-//
-// function openDishGroup() {
-// 	$('.dish-group').hide();
-// 	$('.all-dish-groups').show().css('display', 'inline-block');
-// 	$('.current-dish-groups').show().css('display', 'inline-block');
-// 	$('.dish-group_opened').show().css('display', 'flex');
-// 	$('.dish-group_opened').css('padding-top', '80px');
-//
-// 	var xmlhttp = new XMLHttpRequest();
-// 	xmlhttp.onreadystatechange = function() {
-// 	  if (this.readyState == 4 && this.status == 200) {
-//
-// 			var recipes = JSON.parse(this.responseText);
-//
-// 			for (var i = 0; i < recipes.length; i++) {
-// 				$('.dish-group_opened').append(
-// 					'<div class="recipe-preview"><div class="recipe-preview__image"></div><div class="recipe-preview__content"><div class="recipe-preview__title">'
-// 					+ recipes[i].title + '</div><div class="recipe-preview__description">' + recipes[i].description + '</div></div></div>');
-// 			}
-// 		}
-// 	};
-// 	xmlhttp.open("GET", "assets/data/recipes.json");
-// 	xmlhttp.send();
-// }
-//
-// function openRecipe() {
-// 	var xmlhttp = new XMLHttpRequest();
-//
-// 	var recipeTitle = $(this).find('.recipe-preview__title').text();
-//
-// 	xmlhttp.onreadystatechange = function() {
-// 	  if (this.readyState == 4 && this.status == 200) {
-//
-// 			var recipes = JSON.parse(this.responseText);
-// 			for (var j = 0; j < recipes.length; j++) {
-// 				if (recipes[j].title === recipeTitle) {
-// 					$('.recipe-preview').hide();
-// 					$('<div class="recipe"></div>').insertAfter($('.recipe-preview')[0]).append('<div class="recipe__image"></div><div class="recipe__content"><div class="recipe__title">'
-// 					+ recipes[j].title + '</div><ul class="recipe__components"></ul></div><div class="recipe__details"></div>');
-//
-// 					var components = [];
-// 					for (var i = 0; i < recipes[j].components.length; i++) {
-// 						components.push('<li class="recipe__item">' + recipes[j].components[i] + '</li>');
-// 					}
-// 					$('.recipe__components').append(components);
-//
-// 					var steps = [];
-// 					for (var i = 0; i < recipes[j].steps.length; i++) {
-// 						steps.push('<p class="recipe__step">' + recipes[j].steps[i] + '</p');
-// 					}
-// 					$('.recipe__details').append(steps);
-// 				}
-// 			}
-// 		}
-// 	};
-// 	xmlhttp.open("GET", "assets/data/recipes.json");
-// 	xmlhttp.send();
-// }
