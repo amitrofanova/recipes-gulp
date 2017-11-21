@@ -52,6 +52,12 @@ gulp.task('images', function() {
 		.pipe(browserSync.reload({stream: true}))
 });
 
+gulp.task('copy', function() {
+	return gulp.src('app/resources/data/*')
+		.pipe(gulp.dest('dist/assets/data'))
+		.pipe(browserSync.reload({stream: true}))
+});
+
 gulp.task('browser-sync', function() {
 	browserSync({
 		server: {
@@ -61,9 +67,10 @@ gulp.task('browser-sync', function() {
 	});
 });
 
-gulp.task('default', ['browser-sync', 'styles', 'templates', 'scripts', 'images', 'fonts'], function() {
+gulp.task('default', ['browser-sync', 'styles', 'templates', 'scripts', 'fonts', 'copy', 'images'], function() {
 	gulp.watch(['app/blocks/**/*', 'app/styles/*'], ['styles']);
 	gulp.watch(['app/blocks/**/*', 'app/pages/index.pug'], ['templates']);
 	gulp.watch(['app/blocks/**/*', 'app/scripts/app.js'], ['scripts']);
+	gulp.watch(['app/resources/data/*'], ['copy']);
 	gulp.watch(['app/resources/images/*'], ['images']);
 });
