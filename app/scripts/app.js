@@ -4,6 +4,7 @@ $(window).on('load', showDishGroups);
 $(document).on('click', '.dish-group', openDishGroup);
 $(document).on('click', '.recipe-preview', openRecipe);
 $(document).on('click', '.all-dish-groups', backToAllGroups);
+$(document).on('click', '.current-dish-group', backToCurrentGroup);
 
 function showDishGroups() {
 	var xmlhttp = new XMLHttpRequest();
@@ -26,6 +27,11 @@ function showDishGroups() {
 function backToAllGroups() {
 	$('.dish-group_opened').remove();
 	$('.dish-group').show();
+}
+
+function backToCurrentGroup() {
+	$('.recipe').remove();
+	$('.recipe-preview').show();
 }
 
 function openDishGroup() {
