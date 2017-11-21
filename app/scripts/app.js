@@ -3,7 +3,7 @@ import $ from 'jquery';
 $(window).on('load', showDishGroups);
 $(document).on('click', '.dish-group', openDishGroup);
 $(document).on('click', '.recipe-preview', openRecipe);
-$('.all-dish-groups').on('click', backToAllGroups);
+$(document).on('click', '.all-dish-groups', backToAllGroups);
 
 function showDishGroups() {
 	var xmlhttp = new XMLHttpRequest();
@@ -24,16 +24,13 @@ function showDishGroups() {
 }
 
 function backToAllGroups() {
-	$('.dish-group_opened').hide();
+	$('.dish-group_opened').remove();
 	$('.dish-group').show();
 }
 
 function openDishGroup() {
 	$('.dish-group').hide();
-	$('.all-dish-groups').show().css('display', 'inline-block');
-	$('.current-dish-groups').show().css('display', 'inline-block');
-	$('.dish-group_opened').show().css('display', 'flex');
-	$('.dish-group_opened').css('padding-top', '80px');
+	$('.main').append('<section class="dish-group_opened"><div class="dish-group__nav"><div class="all-dish-groups">Все рецепты</div>&rarr; <div class="current-dish-group">current group</div></div></section>')
 
 	var currentDishGroup = $(this).find('.dish-group__title').text();
 
@@ -99,13 +96,6 @@ function openRecipe() {
 	xmlhttp.open("GET", "assets/data/recipes2.json");
 	xmlhttp.send();
 }
-
-
-
-
-
-
-
 
 
 
