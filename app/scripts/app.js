@@ -3,8 +3,8 @@ import $ from 'jquery';
 $(window).on('load', showDishGroups);
 $(document).on('click', '.dish-group', openDishGroup);
 $(document).on('click', '.recipe-preview', openRecipe);
-$(document).on('click', '.all-dish-groups', backToAllGroups);
-$(document).on('click', '.current-dish-group', backToCurrentGroup);
+$(document).on('click', '.breadcrumb__all-dish-groups', backToAllGroups);
+$(document).on('click', '.breadcrumb__current-dish-group', backToCurrentGroup);
 
 function showDishGroups() {
 	var xmlhttp = new XMLHttpRequest();
@@ -15,7 +15,7 @@ function showDishGroups() {
 
 			for (var i = 0; i < dishGroups.length; i++) {
 				$('.main').append(
-					'<div class="main__dish-group dish-group"><img class="dish-group__img" src=' + dishGroups[i].recipes[0].image
+					'<div class="main__dish-group dish-group"><img class="dish-group__img" src=' + dishGroups[i].image
 					+ '><div class="dish-group__title">' + dishGroups[i].group + '</div></div>');
 			}
 		}
@@ -26,12 +26,14 @@ function showDishGroups() {
 
 function backToAllGroups() {
 	$('.dish-group_opened').remove();
+	$('.main__breadcrumb').remove();
 	$('.dish-group').show();
 }
 
 function backToCurrentGroup() {
 	$('.recipe').remove();
-	$('.current-recipe').remove();
+	$('.breadcrumb__current-recipe').prev().remove();
+	$('.breadcrumb__current-recipe').remove();
 	$('.recipe-preview').show();
 }
 
@@ -39,8 +41,8 @@ function openDishGroup() {
 	var currentDishGroup = $(this).find('.dish-group__title').text();
 
 	$('.dish-group').hide();
-	$('.main').append('<section class="dish-group_opened"><div class="dish-group__nav"><div class="all-dish-groups">Все рецепты</div>&rarr; <div class="current-dish-group">'
-	+ currentDishGroup + '</div></div></section>')
+	$('.main').append('<div class="main__breadcrumb"><div class="breadcrumb__all-dish-groups">Все рецепты</div><div class="breadcrumb__arrow"/><div class="breadcrumb__current-dish-group">'
+	+ currentDishGroup + '</div></div><section class="dish-group_opened"></section>')
 
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
@@ -71,7 +73,8 @@ function openRecipe() {
 	var xmlhttp = new XMLHttpRequest();
 
 	var recipeTitle = $(this).find('.recipe-preview__title').text();
-	$('.dish-group__nav').append('<div class="current-recipe">&rarr;' + recipeTitle + '</div>');
+	console.log(recipeTitle);
+	$('.main__breadcrumb').append('<div class="breadcrumb__arrow"/><div class="breadcrumb__current-recipe">' + recipeTitle + '</div>');
 
 	xmlhttp.onreadystatechange = function() {
 	  if (this.readyState == 4 && this.status == 200) {
@@ -82,7 +85,8 @@ function openRecipe() {
 				for (var j = 0; j < allRrecipes[k].recipes.length; j++) {
 					if (allRrecipes[k].recipes[j].title === recipeTitle) {
 						$('.recipe-preview').hide();
-						$('<div class="recipe"></div>').insertAfter($('.recipe-preview')[0]).append('<div class="recipe__image" style="background: url(' + allRrecipes[k].recipes[j].image + ') no-repeat 0 0; background-size: cover"></div><div class="recipe__content"><div class="recipe__title">'
+						$('<div class="recipe"></div>').insertAfter($('.recipe-preview')[0]).append('<div class="recipe__image" style="background: url('
+						+ allRrecipes[k].recipes[j].image + ') no-repeat 0 0; background-size: cover"></div><div class="recipe__content"><div class="recipe__title">'
 						+ allRrecipes[k].recipes[j].title + '</div><ul class="recipe__components"></ul></div><div class="recipe__details"></div>');
 
 						var components = [];
