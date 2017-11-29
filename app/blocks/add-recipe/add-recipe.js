@@ -8,18 +8,32 @@ $(document).ready(function(){
 
 	$(document).on('click', '.nav__add-recipe', showAddRecipeForm);
 
+	// Reset input before typing
+	$(document).on('focus', '.add-recipe__ingredient-input', function() {
+		$('.add-recipe__ingredient-input').val('');
+		$('.add-recipe__ingredient-input').css('color', '#000');
+	})
+
 	$(document).on('click', '.add-recipe__new-ingredient-btn', function() {
-		ingredients.push($('.add-recipe__ingredient').val());
-		$('.add-recipe__ingredients').append('<div class="add-recipe__new-item">' + $('.add-recipe__ingredient').val() + '<div class="add-recipe__delete-item">x</div></div>');
-		$('.add-recipe__ingredient').val('');
+		var ingredient = $('.add-recipe__ingredient-input').val();
+		if (ingredient !== "") {
+			ingredients.push(ingredient);
+			$('.add-recipe__ingredients').append('<div class="add-recipe__new-item">' + ingredient + '<div class="add-recipe__delete-item">x</div></div>');
+			$('.add-recipe__ingredient-input').val('');
+		}
+		else {
+			$('.add-recipe__ingredient-input').val('Укажите ингредиент');
+			$('.add-recipe__ingredient-input').css('color', '#fff');
+		}
 	});
 
 	$(document).on('click', '.add-recipe__new-step-btn', function() {
-		var step = $('.add-recipe__step').val();
+		var step = $('.add-recipe__step-input').val();
+    // Check if text input is not empty
 		if (step !== "") {
 			steps.push(step);
 			$('.add-recipe__steps').append('<div class="add-recipe__new-item">' + step + '<div class="add-recipe__delete-item">x</div></div>');
-			$('.add-recipe__step').val('');
+			$('.add-recipe__step-input').val('');
 		}
 	});
 
