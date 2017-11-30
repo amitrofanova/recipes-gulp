@@ -20,6 +20,7 @@ form.add-recipe(action="#")
 		.add-recipe__image Изображение
 			input(type="file" name="image" class="add-recipe__image-input")
 		label(for='add-recipe__image-input' class='add-recipe__image-label')
+		img(class='add-recipe__image-preview' src='#')
   
 	section.add-recipe__section.add-recipe__ingredients
 		.add-recipe__section-title Ингредиенты
@@ -35,6 +36,6 @@ form.add-recipe(action="#")
 
 	section
 		.add-recipe__section-title Result JSON:
-		.add-recipe__result-json
+		pre.add-recipe__result-json
 
 		//- form.add-recipe(action="upload.php" method="post")
