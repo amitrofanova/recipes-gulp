@@ -13,10 +13,11 @@
 	margin-right: 2rem
 	display: inline-block
 
-.add-recipe__image
+.add-recipe__image-button
 	display: inline-block
 	width: max-content
 	position: relative
+	vertical-align: top
 	overflow: hidden
 	padding: .5rem 1rem
 	background-color: green
@@ -37,6 +38,8 @@
 	padding: .5rem 1rem
 	font-size: calc(8px + .5rem)
 
+.add-recipe__image-preview
+	max-height: 10rem
 .add-recipe__new-item
 	display: inline-block
 	margin: 0 .5rem
@@ -79,8 +82,8 @@
 	color: #fff
 	cursor: pointer
 
-.add-recipe__save-btn
-	margin: 2rem 0 4rem
+.add-recipe__save-btn, .add-recipe__reset-btn
+	margin: 2rem 2rem 4rem 0
 	width: max-content
 	border: none
 	padding: 1rem

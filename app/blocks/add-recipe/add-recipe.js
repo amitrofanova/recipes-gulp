@@ -55,6 +55,13 @@ $(document).ready(function(){
 
 	$(document).on('submit', '.add-recipe', addRecipe);
 
+	$(document).on('click', '.add-recipe__reset-btn', function() {
+		$('.add-recipe__new-item').remove();
+		$('.add-recipe__delete-item').remove();
+		$('.add-recipe__image-preview').attr('src', '');
+		$('.add-recipe__image-label').text('');
+	})
+
 });
 
 function addRecipe() {

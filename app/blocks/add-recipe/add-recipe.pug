@@ -17,7 +17,7 @@ form.add-recipe(action="#")
 		input(type="text" name="description" size="60" class="add-recipe__description")
   
 	section.add-recipe__section
-		.add-recipe__image Изображение
+		.add-recipe__image-button Изображение
 			input(type="file" name="image" class="add-recipe__image-input")
 		label(for='add-recipe__image-input' class='add-recipe__image-label')
 		img(class='add-recipe__image-preview' src='#')
@@ -32,7 +32,8 @@ form.add-recipe(action="#")
 		input(type="text" name="step" size="60" class='add-recipe__step-input')
 		.add-recipe__new-step-btn +
 		
-	input(type="submit" value="Save recipe" class="add-recipe__save-btn")
+	input(type="submit" value="Сохранить" class="add-recipe__save-btn")
+	input(type='reset' value='Очистить форму' class="add-recipe__reset-btn")
 
 	section
 		.add-recipe__section-title Result JSON:
