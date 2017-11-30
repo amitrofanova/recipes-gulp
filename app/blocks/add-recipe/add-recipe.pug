@@ -1,4 +1,4 @@
-form.add-recipe(action="#")
+form.add-recipe(action="#" method="post")
 
 	section.add-recipe__section
 		.add-recipe__section-title Группа
@@ -10,11 +10,11 @@ form.add-recipe(action="#")
 		
 	section.add-recipe__section
 		.add-recipe__section-title Название блюда 
-		input(type="text" name="title" size="40" class="add-recipe__title")
+		input(type="text" name="title" size="40" class="add-recipe__title-input")
 		
 	section.add-recipe__section
 		.add-recipe__section-title Описание 
-		input(type="text" name="description" size="60" class="add-recipe__description")
+		input(type="text" name="description" size="60" class="add-recipe__description-input")
   
 	section.add-recipe__section
 		.add-recipe__image-button Изображение
@@ -40,5 +40,3 @@ form.add-recipe(action="#")
 	section
 		.add-recipe__section-title Result JSON:
 		pre.add-recipe__result-json
-
-		//- form.add-recipe(action="upload.php" method="post")

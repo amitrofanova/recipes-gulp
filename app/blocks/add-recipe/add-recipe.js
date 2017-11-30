@@ -66,9 +66,9 @@ $(document).ready(function(){
 
 function addRecipe() {
 	var group = $('.add-recipe__dish-group').val();
-	var title = $('.add-recipe__title').val();
-	var description = $('.add-recipe__description').val();
-	var image = $('.image-data').text();
+	var title = $('.add-recipe__title-input').val();
+	var description = $('.add-recipe__description-input').val();
+	var image = $('.add-recipe__image-preview').attr('src');
 	var newRecipe = {"title": title, "description": description, "image": image, "components": ingredients, "steps": steps};
 	var newRecipeToJSON = JSON.stringify(newRecipe, null, '\t');
 	console.log(newRecipeToJSON);
@@ -93,7 +93,6 @@ function GetImageData(evt) {
     var fr = new FileReader();
 		fr.onload = function (evt) {
 			$('.add-recipe__image-preview').attr('src', fr.result);
-			$('.image-data').html(fr.result);
 			return fr.result;
 		};
     fr.readAsDataURL(f);
