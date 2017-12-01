@@ -1,3 +1,7 @@
+input
+	border: none
+	color: $color_blacksmoke
+
 .add-recipe
 	display: none
 	margin-top: 3rem
@@ -6,32 +10,75 @@
 	margin: 1rem 0
 	border-radius: 4px
 	position: relative
+	display: flex
+	flex-wrap: wrap
+	align-items: center
 	padding: 2rem 1rem
-	background-color: #eee
+	background-color: $color_leaf
 
 .add-recipe__section-title
 	margin-right: 2rem
 	display: inline-block
+	font-size: calc(8px + .7rem)
+	color: #fff
 
 .add-recipe__dish-group
-	height: 2rem
+	height: calc(16px + 1rem)
 	padding: 0 1rem
-	font-size: 1rem
+	font-size: calc(8px + .5rem)
 
 .add-recipe__title-input, .add-recipe__description-input
-	height: 2rem
+	height: calc(16px + 1rem)
+	flex: 2
 	padding-left: 1rem
-	font-size: 1rem
+	font-size: calc(8px + .5rem)
+
+.add-recipe__ingredient-input, .add-recipe__step-input
+	height: calc(16px + 1rem)
+	padding-left: 1rem
+	font-size: calc(8px + .5rem)
+	transition: color 3s
+
+.add-recipe__ingredient-input
+	flex-basis: 40%
+
+.add-recipe__step-input
+	flex-basis: 80%
+
+.add-recipe__ingredients, .add-recipe__steps
+	flex-basis: 100%
+
+.add-recipe__wrapper
+	flex: 2
+	display: flex
+	flex-wrap: nowrap
+
+.add-recipe__new-ingredient-btn, .add-recipe__new-step-btn
+	display: inline-block
+	margin-right: 2rem
+	height: calc(16px + 1rem)
+	vertical-align: bottom
+	line-height: 100%
+	font-size: calc(16px + 1rem)
+	padding: 0 7px
+	background-color: $color_gray
+	color: $color_leaf
+	cursor: pointer
 
 .add-recipe__image-button
 	display: inline-block
 	width: max-content
 	position: relative
-	vertical-align: top
-	overflow: hidden
+	// overflow: hidden
+	border-radius: 3px
 	padding: .5rem 1rem
-	background-color: green
-	color: #fff
+	background-color: $color_gray
+	font-size: calc(8px + .7rem)
+	color: $color_leaf
+	transition-duration: 0.4s
+	&:hover
+		background-color: #fff
+		color: $color_blacksmoke
 
 .add-recipe__image-input
 	position: absolute
@@ -58,8 +105,8 @@
 	padding-right: 1.5rem
 	padding-left: .5rem
 	line-height: 2rem
-	background-color: blue
-	color: #fff
+	background-color: $color_buttermilk
+	color: $color_leaf
 
 .add-recipe__delete-item
 	position: absolute
@@ -67,46 +114,35 @@
 	right: 0
 	padding-left: .3rem
 	line-height: 2rem
-	background-color: #eee
-	color: #000
+	background-color: #fff
+	color: $color_leaf
 	font-weight: 700
 	width: 1rem
 	height: 100%
 	content: 'x'
 	cursor: pointer
 
-.add-recipe__ingredient-input, .add-recipe__step-input
-	height: 2rem
-	padding-left: 1rem
-	font-size: 1rem
-	transition: color 3s
-
-.add-recipe__new-ingredient-btn, .add-recipe__new-step-btn
-	display: inline-block
-	margin-right: 2rem
-	height: 2rem
-	vertical-align: bottom
-	line-height: 100%
-	font-size: calc(8px + 1.5rem)
-	padding: 0 7px
-	background-color: green
-	color: #fff
-	cursor: pointer
-
 .add-recipe__save-btn, .add-recipe__reset-btn
 	margin: 2rem 2rem 4rem 0
 	width: max-content
-	border: none
-	padding: 1rem
-	background-color: green
+	border: 3px solid $color_gray
+	border-radius: 3px
+	padding: .7rem 1rem
+	background-color: $color_gray
 	font-size: calc(8px + .5rem)
-	color: #fff
+	font-weight: 700
+	color: $color_leaf
+	transition-duration: 0.4s
 	cursor: pointer
-
+	&:hover
+		background-color: #fff
+		border: 3px solid $color_leaf
+		color: $color_leaf
+		
 .add-recipe__result-json
 	margin: 1rem 0 3rem
 	width: 100%
 	overflow-x: scroll
 	padding: 2rem
-	background-color: #eee
-	color: #000
+	background-color: $color_gray
+	color: $color_blacksmoke
