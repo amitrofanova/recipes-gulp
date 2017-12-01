@@ -4,15 +4,24 @@
 	flex-wrap: nowrap
 	align-items: center
 	width: 100%
+	min-width: 300px
 	max-height: 70px
+	@media (max-width: 450px)
+		max-height: 50px
 	position: relative
-	background-color: #fbdcad
-	color: #fff
+	background-color: $color_buttermilk
 
 .header__logo
-	padding-right: 4rem
 	padding-left: 2rem
 	max-height: 70px
+	@media (max-width: 450px)
+		max-height: 50px
+
+.header__brand
+	padding-right: 4rem
+	font-family: 'Midnight Bangkok'
+	font-size: calc(16px + 3rem)
+	color: $color_brown
 
 .header__nav
 	flex-grow: 2
