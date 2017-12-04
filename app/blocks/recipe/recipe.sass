@@ -10,20 +10,22 @@
 
 .recipe__content
 	flex-basis: 60%
+	@media (max-width: 575px)
+		flex-basis: 100%
 	padding: 2rem
 
 .recipe__title
 	text-align: center
-	font-size: calc(10px + 2rem)
+	font-size: calc(10px + 1.5rem)
 	font-weight: 700
 
-.recipe__components
+.recipe__ingredients
 	padding: 2rem 3rem 1rem
 
-.recipe__item
+.recipe__ingredient
 	display: block
 	position: relative
-	padding: 5px 30px
+	padding: .4rem 2rem
 	font-size: calc(8px + .6rem)
 	&::before
 		content: '\002714'
@@ -38,10 +40,11 @@
 		// border-width: 0 2px 2px 0
 		// transform: rotate(30deg) translate(0, -50%)
 
-.recipe__details
+.recipe__steps
 	flex-basis: 100%
 	padding: 4rem 3rem
 	background-color: #fbdcad
 
 .recipe__step
 	padding-bottom: 1rem
+	font-size: calc(8px + .6rem)
