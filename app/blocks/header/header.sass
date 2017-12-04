@@ -8,20 +8,27 @@
 	max-height: 70px
 	@media (max-width: 450px)
 		max-height: 50px
+		padding-right: 2rem
+		padding-left: 2rem
 	position: relative
 	background-color: $color_buttermilk
 
 .header__logo
 	padding-left: 2rem
-	max-height: 70px
+	padding-right: 1rem
+	height: 70px
 	@media (max-width: 450px)
-		max-height: 50px
+		height: 50px
 
 .header__brand
 	padding-right: 4rem
 	font-family: 'Midnight Bangkok'
-	font-size: calc(16px + 3rem)
+	font-size: calc(20px + 2rem)
 	color: $color_brown
+
+
 
 .header__nav
 	flex-grow: 2
+	@media (max-width: 767px)
+		flex-grow: 0
