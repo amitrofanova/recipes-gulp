@@ -1,12 +1,10 @@
 import $ from 'jquery';
 
-var ingredients = [];
-var steps = [];
-
 $(document).ready(function(){
 
-
 	$(document).on('click', '.nav__add-recipe', showAddRecipeForm);
+
+	$(document).on('change', '.add-recipe__image-input', GetImageData);
 
 	// Reset input before typing
 	$(document).on('focus', '.add-recipe__ingredient-input', function() {
@@ -17,7 +15,6 @@ $(document).ready(function(){
 	$(document).on('click', '.add-recipe__new-ingredient-btn', function() {
 		var ingredient = $('.add-recipe__ingredient-input').val();
 		if ((ingredient !== '') && (ingredient !== 'Укажите ингредиент')) {
-			ingredients.push(ingredient);
 			$('.add-recipe__ingredients').append('<div class="add-recipe__new-item">' + ingredient + '<div class="add-recipe__delete-item">x</div></div>');
 			$('.add-recipe__ingredient-input').val('');
 		}
@@ -31,7 +28,6 @@ $(document).ready(function(){
 		var step = $('.add-recipe__step-input').val();
     // Check if text input is not empty
 		if (step !== "") {
-			steps.push(step);
 			$('.add-recipe__steps').append('<div class="add-recipe__new-item">' + step + '<div class="add-recipe__delete-item">x</div></div>');
 			$('.add-recipe__step-input').val('');
 		}
@@ -64,12 +60,37 @@ $(document).ready(function(){
 
 });
 
+function getIngredients() {
+	var ingredients = [];
+	var newIngredient;
+	$('.add-recipe__new-item').each(function(i) {
+		if ($(this).parents('.add-recipe__ingredients').length) {
+			newIngredient = $(this).contents().filter(function() {return this.nodeType === 3;}).text();
+			ingredients.push(newIngredient);
+		}
+	});
+	return ingredients;
+}
+
+function getSteps() {
+	var steps = [];
+	var newStep;
+	$('.add-recipe__new-item').each(function(i) {
+		if ($(this).parents('.add-recipe__steps').length) {
+			newStep = $(this).contents().filter(function() {return this.nodeType === 3;}).text();
+			steps.push(newStep);
+		}
+	});
+	return steps;
+}
+
 function addRecipe() {
+	getIngredients();
 	var group = $('.add-recipe__dish-group').val();
 	var title = $('.add-recipe__title-input').val();
 	var description = $('.add-recipe__description-input').val();
 	var image = $('.add-recipe__image-preview').attr('src');
-	var newRecipe = {"title": title, "description": description, "image": image, "components": ingredients, "steps": steps};
+	var newRecipe = {"title": title, "description": description, "image": image, "components": getIngredients(), "steps": getSteps()};
 	var newRecipeToJSON = JSON.stringify(newRecipe, null, '\t');
 	console.log(newRecipeToJSON);
 	$('.add-recipe__result-json').html(newRecipeToJSON);
@@ -80,8 +101,6 @@ function showAddRecipeForm() {
 	$('.main').hide();
 	$('.add-recipe').show();
 }
-
-$(document).on('change', '.add-recipe__image-input', GetImageData);
 
 function GetImageData(evt) {
   var tgt = evt.target || window.event.srcElement;
