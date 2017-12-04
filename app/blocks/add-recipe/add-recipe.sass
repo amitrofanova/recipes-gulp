@@ -7,13 +7,13 @@ input
 	margin-top: 3rem
 
 .add-recipe__section
-	margin: 1rem 0
+	margin: calc(16px + 1rem) 0
 	border-radius: 4px
 	position: relative
 	display: flex
 	flex-wrap: wrap
 	align-items: center
-	padding: 2rem 1rem
+	padding: 2rem calc(8px + .5rem)
 	background-color: $color_leaf
 
 .add-recipe__section-title
@@ -21,6 +21,9 @@ input
 	display: inline-block
 	font-size: calc(8px + .7rem)
 	color: #fff
+
+.add-recipe__result-title
+	color: #000
 
 .add-recipe__dish-group
 	height: calc(16px + 1rem)
@@ -69,13 +72,12 @@ input
 	display: inline-block
 	width: max-content
 	position: relative
-	// overflow: hidden
 	border-radius: 3px
 	padding: .5rem 1rem
 	background-color: $color_gray
 	font-size: calc(8px + .7rem)
 	color: $color_leaf
-	transition-duration: 0.4s
+	transition-duration: .6s
 	&:hover
 		background-color: #fff
 		color: $color_blacksmoke
@@ -102,9 +104,12 @@ input
 	display: inline-block
 	margin: 1.5rem .5rem 0 .5rem
 	position: relative
-	padding-right: 1.5rem
+	padding-right: calc(8px + 1rem)
 	padding-left: .5rem
 	line-height: 2rem
+	@media (max-width: 767px)
+		line-height: 4rem
+		font-size: calc(8px + .5rem)
 	background-color: $color_buttermilk
 	color: $color_leaf
 
@@ -114,10 +119,13 @@ input
 	right: 0
 	padding-left: .3rem
 	line-height: 2rem
+	@media (max-width: 767px)
+		line-height: 4rem
+		font-size: calc(10px + .5rem)
 	background-color: #fff
 	color: $color_leaf
 	font-weight: 700
-	width: 1rem
+	width: calc(8px + .5rem)
 	height: 100%
 	content: 'x'
 	cursor: pointer
@@ -138,11 +146,12 @@ input
 		background-color: #fff
 		border: 3px solid $color_leaf
 		color: $color_leaf
-		
+
 .add-recipe__result-json
 	margin: 1rem 0 3rem
 	width: 100%
 	overflow-x: scroll
 	padding: 2rem
 	background-color: $color_gray
+	font-size: calc(6px + .5rem)
 	color: $color_blacksmoke
