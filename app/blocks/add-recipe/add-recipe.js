@@ -16,7 +16,7 @@ $(document).ready(function(){
 
 	$(document).on('click', '.add-recipe__new-ingredient-btn', function() {
 		var ingredient = $('.add-recipe__ingredient-input').val();
-		if (ingredient !== "") {
+		if ((ingredient !== '') && (ingredient !== 'Укажите ингредиент')) {
 			ingredients.push(ingredient);
 			$('.add-recipe__ingredients').append('<div class="add-recipe__new-item">' + ingredient + '<div class="add-recipe__delete-item">x</div></div>');
 			$('.add-recipe__ingredient-input').val('');
@@ -92,6 +92,7 @@ function GetImageData(evt) {
   if (FileReader && files && files.length) {
     var fr = new FileReader();
 		fr.onload = function (evt) {
+			$('.add-recipe__image-preview').show();
 			$('.add-recipe__image-preview').attr('src', fr.result);
 			return fr.result;
 		};
