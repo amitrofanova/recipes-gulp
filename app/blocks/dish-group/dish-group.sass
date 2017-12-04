@@ -1,7 +1,7 @@
 .dish-group
 	position: relative
 	overflow: hidden
-	padding: 15px
+	padding: calc(6px + 1rem)
 	cursor: pointer
 	background-color: #fff
 
@@ -12,6 +12,12 @@
 	width: 100%
 	position: relative
 	padding-top: 2.2rem
+	@media (max-width: 575px)
+		padding-top: 6rem
+	@media (min-width: 576px) and (max-width: 767px)
+		padding-top: 5rem
+	@media (min-width: 768px) and (max-width: 991px)
+		padding-top: 4rem
 
 .dish-group__img
 	width: 100%
@@ -20,11 +26,13 @@
 
 .dish-group__title
 	position: absolute
-	bottom: 3rem
+	bottom: 0
 	left: 0
 	width: 100%
-	padding: 1rem 2rem
+	padding: 1rem calc(16px + 1rem) calc(16px + 2rem)
 	background-color: #fff
 	opacity: .5
 	font-family: 'Segoe UI', sans-serif
-	font-size: 2rem
+	font-size: calc(16px + 1rem)
+	@media (max-width: 575px)
+		text-align: center
