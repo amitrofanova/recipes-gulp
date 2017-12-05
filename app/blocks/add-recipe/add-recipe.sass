@@ -36,6 +36,12 @@ input
 	padding-left: 1rem
 	font-size: calc(8px + .5rem)
 
+.add-recipe__wrapper
+	flex: 2
+	display: flex
+	flex-wrap: nowrap
+	align-items: stretch
+
 .add-recipe__ingredient-input, .add-recipe__step-input
 	height: calc(16px + 1rem)
 	padding-left: 1rem
@@ -51,22 +57,18 @@ input
 .add-recipe__ingredients, .add-recipe__steps
 	flex-basis: 100%
 
-.add-recipe__wrapper
-	flex: 2
-	display: flex
-	flex-wrap: nowrap
-
 .add-recipe__new-ingredient-btn, .add-recipe__new-step-btn
-	display: inline-block
-	margin-right: 2rem
+	width: calc(16px + 1rem)
 	height: calc(16px + 1rem)
-	vertical-align: bottom
-	line-height: 100%
-	font-size: calc(16px + 1rem)
-	padding: 0 7px
 	background-color: $color_gray
-	color: $color_leaf
 	cursor: pointer
+	&::after
+		display: block
+		text-align: center
+		line-height: 90%
+		content: '\002B'
+		color: $color_leaf
+		font-size: calc(16px + 1rem)
 
 .add-recipe__image-button
 	display: inline-block

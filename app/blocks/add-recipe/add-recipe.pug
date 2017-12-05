@@ -20,20 +20,21 @@ form.add-recipe(action="#" method="post")
 		.add-recipe__image-button Изображение
 			input(type="file" name="image" class="add-recipe__image-input")
 		label(for='add-recipe__image-input' class='add-recipe__image-label')
-		img(class='add-recipe__image-preview' src='#')
+		obj(type="image/png")
+			img(class='add-recipe__image-preview' src='')
   
 	section.add-recipe__section
 		.add-recipe__section-title Ингредиенты
 		.add-recipe__wrapper
 			input(type="text" name="ingredient" class="add-recipe__ingredient-input")
-			.add-recipe__new-ingredient-btn +
+			.add-recipe__new-ingredient-btn
 		.add-recipe__ingredients
   
 	section.add-recipe__section
 		.add-recipe__section-title Этапы приготовления 
 		.add-recipe__wrapper
 			input(type="text" name="step" class='add-recipe__step-input')
-			.add-recipe__new-step-btn +
+			.add-recipe__new-step-btn
 		.add-recipe__steps
 		
 	input(type="submit" value="Сохранить" class="add-recipe__save-btn")
