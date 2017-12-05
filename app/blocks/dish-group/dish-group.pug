@@ -1,4 +1,4 @@
-.dish-group
-	img(class='dish-group__img', src='../images/soups.jpg', alt='Soups')
-	
-	 
+mixin dish-group(title, path)
+	.dish-group&attributes(attributes)
+		img(class='dish-group__img', src=path, alt=title)
+		.dish-group__title #{title}

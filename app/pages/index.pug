@@ -1,44 +1,33 @@
 doctype	html
 html(lang='ru')
 	include ../blocks/head/head
+	include ../blocks/dish-group/dish-group
 	include ../blocks/recipe-preview/recipe-preview
 	body
 
 		header.header
-				img(class='header__logo', src='assets/images/logo.png', alt='Recipe Book')
-				.nav.header__nav
-					ul.nav__collapse
-						li.nav__item
-							a(href='#', class='nav__link') Рецепты
-						li.nav__item
-							a(href='#', class='nav__link') События		
-						li.nav__item
-							a(href='#', class='nav__link') Попробовать
-						li.nav__item
-							a(href='#', class='nav__link') Добавить рецепт
-					.nav__button
-						
+			img(class='header__logo', src='assets/images/logo.png', alt='Recipe Book')
+			.header__brand Recipe book
+			.nav.header__nav
+				ul.nav__collapse
+					li.nav__item.nav__recipes
+						a(href='#', class='nav__link nav__all-recipes') Рецепты
+					li.nav__item.nav__events
+						a(href='#', class='nav__link') События		
+					li.nav__item
+						a(href='#', class='nav__link') Попробовать
+					li.nav__item
+						a(href='#', class='nav__link nav__add-recipe') Добавить рецепт
+				.nav__button
+					hr
+					hr
+					hr
 		.container
-			main.main
-				//- .main__dish-group.dish-group
-				//- 	img(class='dish-group__img', src='assets/images/soups.jpg', alt='Soups')
-				//- 	.dish-group__title Супы
-				//- .main__dish-group.dish-group
-				//- 	img(class='dish-group__img', src='assets/images/soups.jpg', alt='Soups')
-				//- 	.dish-group__title Салаты
-				//- .main__dish-group.dish-group
-				//- 	img(class='dish-group__img', src='assets/images/soups.jpg', alt='Soups')
-				//- 	.dish-group__title Десерты
-				//- .main__dish-group.dish-group
-				//- 	img(class='dish-group__img', src='assets/images/soups.jpg', alt='Soups')
-				//- 	.dish-group__title Блюда из мяса
-					
-				//- section.dish-group_opened
-				//- 	.all-dish-groups Все рецепты
-					//- .current-dish-group
-					//- +recipe-preview('Тыквенные маффины', 'Маффины с тыквенным пюре')
-					//- +recipe-preview('Тыквенные маффины', 'Маффины с тыквенным пюре')
-					//- +recipe-preview('Тыквенные маффины', 'Маффины с тыквенным пюре')
-					//- +recipe-preview('Тыквенные маффины', 'Маффины с тыквенным пюре')
+			.main
+				+dish-group('Десерты', 'assets/images/baking.png')(class='main__dish-group')
+				+dish-group('Хлеб', 'assets/images/bread.png')(class='main__dish-group')
+				+dish-group('Супы', 'assets/images/soups.png')(class='main__dish-group')
+				+dish-group('Салаты', 'assets/images/salads.png')(class='main__dish-group')
 				
+			include ../blocks/add-recipe/add-recipe
 		script(src='assets/scripts/scripts.js')
