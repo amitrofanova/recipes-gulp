@@ -1,11 +1,15 @@
-.nav.header__nav
-	ul.nav__collapse
-		li.nav__item
-			a(href='#', class='nav__link nav__all-recipes') Рецепты
-		li.nav__item
-			a(href='#', class='nav__link') События		
-		li.nav__item
-			a(href='#', class='nav__link') Попробовать
-		li.nav__item
-			a(href='#', class='nav__link nav__add-recipe') Добавить рецепт
-	.nav__button
+mixin nav()
+	nav.nav&attributes(attributes)
+		ul.nav__collapse
+			li.nav__item.nav__recipes
+				a(href='#', class='nav__link nav__all-recipes') Рецепты
+			li.nav__item.nav__events
+				a(href='#', class='nav__link nav__events') События		
+			li.nav__item
+				a(href='#', class='nav__link nav__try-new') Попробовать
+			li.nav__item
+				a(href='#', class='nav__link nav__add-recipe') Добавить рецепт
+		.nav__button
+			hr
+			hr
+			hr
