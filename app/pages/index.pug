@@ -1,33 +1,12 @@
 doctype	html
 html(lang='ru')
 	include ../blocks/head/head
-	include ../blocks/dish-group/dish-group
-	include ../blocks/recipe-preview/recipe-preview
 	body
-
-		header.header
-			img(class='header__logo', src='assets/images/logo.png', alt='Recipe Book')
-			.header__brand Recipe book
-			.nav.header__nav
-				ul.nav__collapse
-					li.nav__item.nav__recipes
-						a(href='#', class='nav__link nav__all-recipes') Рецепты
-					li.nav__item.nav__events
-						a(href='#', class='nav__link') События		
-					li.nav__item
-						a(href='#', class='nav__link') Попробовать
-					li.nav__item
-						a(href='#', class='nav__link nav__add-recipe') Добавить рецепт
-				.nav__button
-					hr
-					hr
-					hr
-		.container
-			.main
-				+dish-group('Десерты', 'assets/images/baking.png')(class='main__dish-group')
-				+dish-group('Хлеб', 'assets/images/bread.png')(class='main__dish-group')
-				+dish-group('Супы', 'assets/images/soups.png')(class='main__dish-group')
-				+dish-group('Салаты', 'assets/images/salads.png')(class='main__dish-group')
-				
+		include ../blocks/header/header
+		main.container
+			include ../blocks/all-recipes/all-recipes
+			include ../blocks/events/events
+			include ../blocks/try-new/try-new
 			include ../blocks/add-recipe/add-recipe
+			
 		script(src='assets/scripts/scripts.js')
