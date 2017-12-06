@@ -1,0 +1,21 @@
+.all-recipes
+	display: flex
+	justify-content: space-around
+	align-items: stretch
+	flex-flow: row wrap
+	align-content: space-around
+	position: relative
+	padding: 3rem 0
+
+.all-recipes__breadcrumb
+	margin: 2rem 0
+	position: absolute
+	top: 0
+	left: 0
+	width: 100%
+
+.all-recipes__dish-group
+	flex: 0 1 auto
+	width: 50%
+	@media (min-width: 768px)
+		width: 25%
