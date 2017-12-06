@@ -1,6 +1,6 @@
 input
 	border: none
-	color: $color_blacksmoke
+	color: $primary-text-color
 
 .add-recipe
 	display: none
@@ -14,7 +14,7 @@ input
 	flex-wrap: wrap
 	align-items: center
 	padding: 2rem calc(8px + .5rem)
-	background-color: $color_leaf
+	background-color: $tertiary-bg-color
 
 .add-recipe__section-title
 	margin-right: 2rem
@@ -60,14 +60,14 @@ input
 .add-recipe__new-ingredient-btn, .add-recipe__new-step-btn
 	width: calc(16px + 1rem)
 	height: calc(16px + 1rem)
-	background-color: $color_gray
+	background-color: $secondary-bg-color
 	cursor: pointer
 	&::after
 		display: block
 		text-align: center
 		line-height: 90%
 		content: '\002B'
-		color: $color_leaf
+		color: $secondary-text-color
 		font-size: calc(16px + 1rem)
 
 .add-recipe__image-button
@@ -76,13 +76,13 @@ input
 	position: relative
 	border-radius: 3px
 	padding: .5rem 1rem
-	background-color: $color_gray
+	background-color: $secondary-bg-color
 	font-size: calc(8px + .7rem)
-	color: $color_leaf
+	color: $secondary-text-color
 	transition-duration: .6s
 	&:hover
 		background-color: #fff
-		color: $color_blacksmoke
+		color: $primary-text-color
 
 .add-recipe__image-input
 	position: absolute
@@ -112,8 +112,8 @@ input
 	@media (max-width: 767px)
 		line-height: 4rem
 		font-size: calc(8px + .5rem)
-	background-color: $color_buttermilk
-	color: $color_leaf
+	background-color: $primary-bg-color
+	color: $primary-text-color
 
 .add-recipe__delete-item
 	position: absolute
@@ -125,7 +125,7 @@ input
 		line-height: 4rem
 		font-size: calc(10px + .5rem)
 	background-color: #fff
-	color: $color_leaf
+	color: $secondary-text-color
 	font-weight: 700
 	width: calc(8px + .5rem)
 	height: 100%
@@ -135,25 +135,25 @@ input
 .add-recipe__save-btn, .add-recipe__reset-btn
 	margin: 2rem 2rem 4rem 0
 	width: max-content
-	border: 3px solid $color_gray
+	border: 3px solid $secondary-bg-color
 	border-radius: 3px
 	padding: .7rem 1rem
-	background-color: $color_gray
+	background-color: $secondary-bg-color
 	font-size: calc(8px + .5rem)
 	font-weight: 700
-	color: $color_leaf
+	color: $secondary-text-color
 	transition-duration: 0.4s
 	cursor: pointer
 	&:hover
 		background-color: #fff
-		border: 3px solid $color_leaf
-		color: $color_leaf
+		border: 3px solid $secondary-text-color
+		color: $secondary-text-color
 
 .add-recipe__result-json
 	margin: 1rem 0 3rem
 	width: 100%
 	overflow-x: scroll
 	padding: 2rem
-	background-color: $color_gray
+	background-color: $secondary-bg-color
 	font-size: calc(6px + .5rem)
-	color: $color_blacksmoke
+	color: $primary-text-color
