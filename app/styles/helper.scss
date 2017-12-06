@@ -13,7 +13,8 @@ html {
 body {
 	height: 100%;
 	position: relative;
-	font-family: 'Montserrat', sans-serif
+	font-family: $primary-font;
+	color: $primary-text-color;
 }
 
 *,
