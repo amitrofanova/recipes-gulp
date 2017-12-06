@@ -1,31 +1,47 @@
 .recipe
+	margin-top: 2rem
 	display: flex
 	flex-wrap: wrap
 	width: 100%
-	background-color: #fbdcad
+	// border: 3px solid $secondary-text-color
+	// background-color: $primary-bg-color
 
 .recipe__image
-	flex-basis: 40%
-	overflow: hidden
+	flex-basis: 30%
+	@media (max-width: 575px)
+		display: none
+	// overflow: hidden
+	img
+		width: 100%
 
 .recipe__content
-	flex-basis: 60%
+	flex-basis: 70%
 	@media (max-width: 575px)
 		flex-basis: 100%
-	padding: 2rem
+	padding: 0 2rem
 
 .recipe__title
 	text-align: center
 	font-size: calc(10px + 1.5rem)
 	font-weight: 700
 
+.recipe__ingredients-title
+	padding-top: 2rem
+	padding-left: 5rem
+	@media (max-width: 575px)
+		padding-left: 0
+	font-size: calc(10px + .8rem)
+
 .recipe__ingredients
-	padding: 2rem 3rem 1rem
+	padding: 1rem 2rem 0 5rem
+	@media (max-width: 575px)
+		padding-left: 0
 
 .recipe__ingredient
 	display: block
 	position: relative
-	padding: .4rem 2rem
+	padding: .4rem 0
+	font-family: $secondary-font
 	font-size: calc(8px + .6rem)
 	&::before
 		content: '\002714'
@@ -40,10 +56,14 @@
 		// border-width: 0 2px 2px 0
 		// transform: rotate(30deg) translate(0, -50%)
 
+.recipe__steps-title
+	padding-bottom: 2rem
+	font-size: calc(10px + .8rem)
+
 .recipe__steps
 	flex-basis: 100%
-	padding: 4rem 3rem
-	background-color: #fbdcad
+	margin: 2rem 0
+	padding: 2rem 3rem
 
 .recipe__step
 	padding-bottom: 1rem
