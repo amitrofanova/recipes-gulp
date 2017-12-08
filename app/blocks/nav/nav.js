@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
 $(document).ready(function(){
-
+	toggleNavButton();
 	$('.nav__all-recipes').on('click', showAllRecipes);
 	$('.nav__events').on('click', showEvents);
 	$('.nav__try-new').on('click', showTryNew);
@@ -40,11 +40,23 @@ $(document).ready(function(){
 		$('.add-recipe').show();
 	}
 
+	function toggleNavButton() {
+		if ($('.nav__collapse').css('display') === 'none') {
+			$('.nav__button').addClass("nav__button_open");
+			$('.nav__button').removeClass("nav__button_close");
+		}
+		if ($('.nav__collapse').css('display') === 'block') {
+			$('.nav__button').addClass("nav__button_close");
+			$('.nav__button').removeClass("nav__button_open");
+		}
+	}
+
 	function toggleMobileNav() {
 		// if (window.matchMedia('(max-width: 767px)').matches) {
 		if (window.innerWidth <= 767) {
 			$('.nav__collapse').toggle();
 		}
+		toggleNavButton();
 	}
 
 	// Make nav to be visible after resizing to large screen
