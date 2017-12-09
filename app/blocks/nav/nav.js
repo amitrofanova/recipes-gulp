@@ -9,6 +9,7 @@ $(document).ready(function(){
 	$('.nav__button').on('click', toggleMobileNav);
 	$('.nav__item').on('click', toggleMobileNav);
 	$(window).on('resize', showLargeNav);
+	$(window).on('resize', toggleNavButton);
 
 	function showAllRecipes() {
 		$('.events').hide();
@@ -45,14 +46,13 @@ $(document).ready(function(){
 			$('.nav__button').addClass("nav__button_open");
 			$('.nav__button').removeClass("nav__button_close");
 		}
-		if ($('.nav__collapse').css('display') === 'block') {
+		else if ($('.nav__collapse').css('display') === 'block') {
 			$('.nav__button').addClass("nav__button_close");
 			$('.nav__button').removeClass("nav__button_open");
 		}
 	}
 
 	function toggleMobileNav() {
-		// if (window.matchMedia('(max-width: 767px)').matches) {
 		if (window.innerWidth <= 767) {
 			$('.nav__collapse').toggle();
 		}
@@ -61,7 +61,6 @@ $(document).ready(function(){
 
 	// Make nav to be visible after resizing to large screen
 	function showLargeNav() {
-		// if (window.matchMedia('(min-width: 768px)').matches) {
 		if (window.innerWidth >= 768) {
 			$('.nav__collapse').show();
 		}
