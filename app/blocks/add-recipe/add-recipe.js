@@ -67,6 +67,7 @@ function clearInput() {
 
 function deleteItem() {
 	var ingredients = getIngredients();
+	var steps = getSteps();
 	// Define if current section related to ingredients or steps
 	if ($(this).parents('.add-recipe__ingredients').length) {
 		// Find content of the element that have to be deleted
@@ -75,6 +76,7 @@ function deleteItem() {
 		ingredients.splice(elemToDeleteFromIngredients, 1);
 	}
 	else if ($(this).parents('.add-recipe__steps').length) {
+		console.log("t");
 		var elemToDeleteFromSteps = steps.indexOf($(this).parent().contents().not($('.add-recipe__new-item').children()).text());
 		steps.splice(elemToDeleteFromSteps, 1);
 	}
