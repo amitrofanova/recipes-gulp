@@ -4,9 +4,13 @@ form.add-recipe(action="#" method="post")
 		.add-recipe__section-title Группа
 		select(name='select' class='add-recipe__dish-group')
 			option(value="deserts") Десерты
-			option(value="soups") Супы
 			option(value="bread") Хлеб
+			option(value="meat") Блюда из мяса
+			option(value="soups") Супы
 			option(value="salads") Салаты
+			option(value="fish") Блюда из рыбы
+			option(value="canape") Фуршетный стол
+			option(value="drinks") Напитки
 		
 	section.add-recipe__section
 		.add-recipe__section-title Название блюда 
@@ -42,4 +46,4 @@ form.add-recipe(action="#" method="post")
 
 	section
 		.add-recipe__section-title.add-recipe__result-title Result JSON:
-		pre.add-recipe__result-json
+		pre(contenteditable='true').add-recipe__result-json
