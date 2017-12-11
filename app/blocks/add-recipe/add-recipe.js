@@ -115,6 +115,7 @@ function addRecipe(evt) {
 	var image = $('.add-recipe__image-preview').attr('src');
 	var newRecipe = {"title": title, "description": description, "image": image, "components": getIngredients(), "steps": getSteps()};
 	var newRecipeToJSON = JSON.stringify(newRecipe, null, '\t');
+	$('.add-recipe__result-title').text('Скопируйте результат в группу "' + group + '"');
 	$('.add-recipe__result-json').html(newRecipeToJSON);
   evt.preventDefault();
 }
