@@ -2,7 +2,6 @@
 	position: relative
 	overflow: hidden
 	padding: calc(6px + 1rem)
-	cursor: pointer
 	background-color: #fff
 
 .dish-group_opened
@@ -11,18 +10,26 @@
 	flex-wrap: wrap
 	width: 100%
 	position: relative
-	padding-top: 2.2rem
+	// padding-top: 2.2rem
+	// @media (max-width: 575px)
+	// 	padding-top: 6rem
+	// @media (min-width: 576px) and (max-width: 767px)
+	// 	padding-top: 5rem
+	// @media (min-width: 768px) and (max-width: 991px)
+	// 	padding-top: calc(16px + 3rem)
+	margin-top: 2.2rem
 	@media (max-width: 575px)
-		padding-top: 6rem
+		margin-top: 6rem
 	@media (min-width: 576px) and (max-width: 767px)
-		padding-top: 5rem
+		margin-top: 5rem
 	@media (min-width: 768px) and (max-width: 991px)
-		padding-top: 4rem
+		margin-top: calc(16px + 3rem)
 
 .dish-group__img
 	width: 100%
 	height: auto
 	border-radius: 3px
+	cursor: pointer
 
 .dish-group__title
 	position: absolute
@@ -36,3 +43,4 @@
 	font-size: calc(16px + 1rem)
 	@media (max-width: 575px)
 		text-align: center
+	cursor: pointer
