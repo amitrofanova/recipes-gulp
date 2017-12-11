@@ -109,7 +109,7 @@ function getSteps() {
 }
 
 function addRecipe(evt) {
-	var group = $('.add-recipe__dish-group').val();
+	var group = $('.add-recipe__dish-group option:selected').text();
 	var title = $('.add-recipe__title-input').val();
 	var description = $('.add-recipe__description-input').val();
 	var image = $('.add-recipe__image-preview').attr('src');
