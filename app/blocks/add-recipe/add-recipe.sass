@@ -27,7 +27,7 @@ input
 
 .add-recipe__dish-group
 	height: calc(16px + 1rem)
-	padding: 0 1rem
+	padding: 0 .5rem
 	font-size: calc(8px + .5rem)
 
 .add-recipe__title-input, .add-recipe__description-input
@@ -60,15 +60,17 @@ input
 .add-recipe__new-ingredient-btn, .add-recipe__new-step-btn
 	width: calc(16px + 1rem)
 	height: calc(16px + 1rem)
+	position: relative
 	background-color: $secondary-bg-color
 	cursor: pointer
-	&::after
-		display: block
-		text-align: center
-		line-height: 90%
-		content: '\002B'
-		color: $secondary-text-color
-		font-size: calc(16px + 1rem)
+	&::before
+		width: calc(10px + .5rem)
+		height: calc(10px + .5rem)
+		position: absolute
+		top: 50%
+		left: 50%
+		transform: translate(-50%, -50%)
+		content: url('../images/add-recipe__new-item-btn.svg')
 
 .add-recipe__image-button
 	display: inline-block
