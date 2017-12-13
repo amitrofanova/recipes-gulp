@@ -44,12 +44,12 @@ $(document).ready(function(){
 
 	function toggleNavButton() {
 		if ($('.nav__collapse').css('display') === 'none') {
-			$('.nav__button').addClass("nav__button_open");
-			$('.nav__button').removeClass("nav__button_close");
+			$('.nav__button').addClass('nav__button_open');
+			$('.nav__button').removeClass('nav__button_close');
 		}
 		else if ($('.nav__collapse').css('display') === 'block') {
-			$('.nav__button').addClass("nav__button_close");
-			$('.nav__button').removeClass("nav__button_open");
+			$('.nav__button').addClass('nav__button_close');
+			$('.nav__button').removeClass('nav__button_open');
 		}
 	}
 

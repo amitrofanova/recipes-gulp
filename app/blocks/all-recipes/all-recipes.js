@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-const jsonPath = "assets/data/recipes.json";
+const jsonPath = 'assets/data/recipes.json';
 
 $(document).ready(function(){
 
@@ -14,7 +14,7 @@ $(document).ready(function(){
 		$('.dish-group').hide();
 
 		$('.all-recipes').append('<div class="all-recipes__breadcrumb breadcrumb"><div class="breadcrumb__all-dish-groups">Все рецепты</div><div class="breadcrumb__arrow"/><div class="breadcrumb__current-dish-group">'
-		+ currentDishGroup + '</div></div><section class="dish-group_opened"></section>')
+		+ currentDishGroup + '</div></div><section class="dish-group_opened"></section>');
 
 		$.getJSON(jsonPath, function(dishGroups) {
 

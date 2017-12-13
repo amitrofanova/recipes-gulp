@@ -1,5 +1,3 @@
-import $ from 'jquery';
-
 import '../blocks/nav/nav.js';
 import '../blocks/all-recipes/all-recipes.js';
 import '../blocks/breadcrumb/breadcrumb.js';
