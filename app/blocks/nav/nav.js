@@ -17,6 +17,7 @@ $(document).ready(function(){
 		$('.add-recipe').hide();
 		$('.all-recipes__breadcrumb').remove();
 		$('.dish-group_opened').remove();
+		$('.all-recipes').show();
 		$('.all-recipes__dish-group').show();
 	}
 
