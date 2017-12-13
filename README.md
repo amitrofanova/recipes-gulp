@@ -8,7 +8,7 @@ Website is intended for storing cook recipes.
 #### Clone repository and go to the project folder
 
 ```
-git clone git@github.com:amitrofanova/BeaversBrothers-task.git && cd BeaversBrothers-task
+git clone git@gitlab.com:funnymitrofunny/recipe-book.git && cd recipe-book
 ```
 
 #### Install modules
@@ -17,7 +17,7 @@ git clone git@github.com:amitrofanova/BeaversBrothers-task.git && cd BeaversBrot
 npm i
 ```
 
-#### Build to dist
+#### Build to dist/ folder
 
 ```
 gulp default
@@ -25,9 +25,7 @@ gulp default
 
 #### Access in browser
 
-```
 http://localhost:3000
-```
 
 
 ## Development
