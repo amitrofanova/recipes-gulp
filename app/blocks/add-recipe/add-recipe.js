@@ -4,6 +4,10 @@ import $ from 'jquery';
 $(document).ready(function(){
 
 	$(document).on('change', '.add-recipe__image-input', GetImageData);
+	// $('.add-recipe__image-preview').on('click', function() {
+	// 	resizeImage(100,100);
+	// });
+	// $(document).on('change', '.add-recipe__image-input', addImage);
 	$(document).on('click', '.add-recipe__new-ingredient-btn', addIngredient);
 	$(document).on('click', '.add-recipe__new-step-btn', addStep);
 	$(document).on('focus', '.add-recipe__ingredient-input', clearInput);
@@ -11,8 +15,8 @@ $(document).ready(function(){
 	$(document).on('submit', '.add-recipe', addRecipe);
 	$(document).on('click', '.add-recipe__reset-btn', resetForm);
 
+	// $(".add-recipe__image-input").change(resizeImage);
 });
-
 
 function GetImageData(evt) {
 	var tgt = evt.target || window.event.srcElement;
@@ -25,14 +29,100 @@ function GetImageData(evt) {
 		fr.onload = function () {
 			$('.add-recipe__image-preview').show();
 			$('.add-recipe__image-preview').attr('src', fr.result);
+			console.log('source: ' + fr.result.length);
 			return fr.result;
 		};
 		fr.readAsDataURL(f);
+		resizeImage(100,100);
 	}
 	else {
 		alert('Unable to load file');
 	}
 }
+
+function resizeImage(width, height) {
+	var canvas = document.createElement('canvas');
+	canvas.width = width;
+	canvas.height = height;
+	var context = canvas.getContext('2d');
+	var imageToResize = document.getElementsByClassName('add-recipe__image-preview')[0];
+
+	$('.add-recipe__image-preview').on('load', function() {
+		context.scale(width / imageToResize.width, height / imageToResize.height);
+		context.drawImage(imageToResize, 0, 0);
+		$('.add-recipe__image-resized').attr('src', canvas.toDataURL());
+		console.log('result: ' + canvas.toDataURL().length);
+	});
+}
+
+// function addImage(evt) {
+// 	var tgt = evt.target || window.event.srcElement;
+// 	var files = tgt.files;
+// 	var f = files[0];
+// 	$('.add-recipe__image-label').html(f.name);
+//
+// 	if (FileReader && files && files.length) {
+//
+// 		var fileReader = new FileReader();
+// 		fileReader.onload = function (evt) {
+// 			var img = new Image();
+// 			img.onload = function () {
+// 				const MAX_WIDTH = 150;
+// 				const MAX_HEIGHT = 150;
+// 				var width = img.width;
+// 				var height = img.height;
+//
+// 				if (width > height) {
+// 					if (width > MAX_WIDTH) {
+// 						height *= MAX_WIDTH / width;
+// 						width = MAX_WIDTH;
+// 					}
+// 				} else {
+// 					if (height > MAX_HEIGHT) {
+// 						width *= MAX_HEIGHT / height;
+// 						height = MAX_HEIGHT;
+// 					}
+// 				}
+//
+// 				var canvas = document.createElement('canvas');
+// 				canvas.width = width;
+// 				canvas.height = height;
+// 				canvas.getContext('2d').drawImage(this, 0, 0, width, height);
+// 				this.src = canvas.toDataURL();
+// 				$('.add-recipe__image-preview').show();
+// 				$('.add-recipe__image-preview-wrapper').append(this);
+// 				$(this).addClass('.add-recipe__image-preview');
+// 			};
+// 			img.src = evt.target.result;
+// 		}
+// 		fileReader.readAsDataURL(f);
+// 	}
+// 	else {
+// 		alert('Unable to load file');
+// 	}
+// }
+
+
+// function GetImageData(evt) {
+// 	var tgt = evt.target || window.event.srcElement;
+// 	var files = tgt.files;
+// 	var f = files[0];
+// 	$('.add-recipe__image-label').html(f.name);
+//
+// 	if (FileReader && files && files.length) {
+// 		var fr = new FileReader();
+// 		fr.onload = function () {
+// 			$('.add-recipe__image-preview').show();
+// 			$('.add-recipe__image-preview').attr('src', fr.result);
+// 			return fr.result;
+// 		};
+// 		fr.readAsDataURL(f);
+// 	}
+// 	else {
+// 		alert('Unable to load file');
+// 	}
+// }
+
 
 function addIngredient() {
 	var ingredient = $('.add-recipe__ingredient-input').val();
@@ -46,6 +136,7 @@ function addIngredient() {
 	}
 }
 
+
 function addStep() {
 	var step = $('.add-recipe__step-input').val();
 	// Check if text input is not empty
@@ -55,11 +146,13 @@ function addStep() {
 	}
 }
 
+
 // Reset input before typing
 function clearInput() {
 	$('.add-recipe__ingredient-input').val('');
 	$('.add-recipe__ingredient-input').css('color', '#000');
 }
+
 
 function deleteItem() {
 	var ingredients = getIngredients();
@@ -79,6 +172,7 @@ function deleteItem() {
 	$(this).parent().remove();
 }
 
+
 function getIngredients() {
 	var ingredients = [];
 	var newIngredient;
@@ -90,6 +184,7 @@ function getIngredients() {
 	});
 	return ingredients;
 }
+
 
 function getSteps() {
 	var steps = [];
@@ -103,6 +198,7 @@ function getSteps() {
 	return steps;
 }
 
+
 function addRecipe(evt) {
 	var group = $('.add-recipe__dish-group option:selected').text();
 	var title = $('.add-recipe__title-input').val();
@@ -114,6 +210,7 @@ function addRecipe(evt) {
 	$('.add-recipe__result-json').html(newRecipeToJSON);
 	evt.preventDefault();
 }
+
 
 function resetForm() {
 	$('.add-recipe__new-item').remove();
