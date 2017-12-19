@@ -97,10 +97,13 @@ function resizeImage() {
 
 function addIngredient() {
 	var ingredient = $(ingredientInputCls).val();
+	var newElCls = newItemCls.substr(1);
+	var deleteElCls = deleteItemCls.substr(1);
 
 	if ((ingredient !== '') && (ingredient !== EMPTY_INGREDIENT_ALERT)) {
-		$(ingredientsCls).append('<div class=' + newItemCls + '>' + ingredient +
-			'<div class=' + deleteItemCls + '>x</div></div>');
+		var newEl = '<div class="' + newElCls + '">' + ingredient + '<div class="' + deleteElCls + '">x</div></div>';
+
+		$(ingredientsCls).append(newEl);
 		$(ingredientInputCls).val('');
 	}
 
@@ -113,10 +116,12 @@ function addIngredient() {
 
 function addStep() {
 	var step = $(stepInputCls).val();
+	var newElCls = newItemCls.substr(1);
+	var deleteElCls = deleteItemCls.substr(1);
 
 	if (step !== '') {
-		$(stepsCls).append('<div class=' + newItemCls + '>' + step +
-			'<div class=' + deleteItemCls + '>x</div></div>');
+		var newEl = '<div class=' + newElCls + '>' + step +	'<div class="' + deleteElCls + '">x</div></div>';
+		$(stepsCls).append(newEl);
 		$(stepInputCls).val('');
 	}
 }
@@ -202,7 +207,8 @@ function getSteps() {
 
 
 function addRecipe(evt) {
-	var group = $(dishGroupInputCls + 'option:selected').text();
+	var selectedGroup = dishGroupInputCls + ' option:selected';
+	var group = $(selectedGroup).text();
 	var title = $(titleInputCls).val();
 	var description = $(descriptionInputCls).val();
 	var image = $(imageResizedCls).attr('src');
