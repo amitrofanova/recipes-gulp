@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { UNABLE_LOAD_FILE_ALERT, EMPTY_INGREDIENT_ALERT , RESULT_ALERT } from '../../resources/strings/ru.js';
+import { UNABLE_LOAD_FILE_ALERT, EMPTY_INGREDIENT_ALERT , INITIAL_RESULT_TITLE, RESULT_ALERT } from '../../resources/strings/ru.js';
 
 
 // https://www.w3schools.com/jsref/prop_node_nodetype.asp
@@ -232,5 +232,6 @@ export function resetForm() {
 	$(deleteItemCls).remove();
 	$(imagePreviewCls).attr('src', '');
 	$(imageLabelCls).text('');
+	$(resultTitleCls).text(INITIAL_RESULT_TITLE);
 	$(resultJsonCls).text('');
 }
