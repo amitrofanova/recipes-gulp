@@ -1,8 +1,8 @@
-form.add-recipe(action="#" method="post")
+form(action="#" method="post" class="add-recipe")
 
 	section.add-recipe__section
 		.add-recipe__section-title Группа
-		select(name='select' class='add-recipe__dish-group')
+		select(name="select" class="add-recipe__dish-group")
 			option(value="deserts") Десерты
 			option(value="bread") Хлеб
 			option(value="meat") Блюда из мяса
@@ -23,9 +23,11 @@ form.add-recipe(action="#" method="post")
 	section.add-recipe__section
 		.add-recipe__image-button Изображение
 			input(type="file" name="image" class="add-recipe__image-input")
-		label(for='add-recipe__image-input' class='add-recipe__image-label')
+		label(for="add-recipe__image-input" class="add-recipe__image-label")
 		obj(type="image/png")
-			img(class='add-recipe__image-preview' src='')
+			img(class="add-recipe__image-preview" src="")
+		obj(type="image/png")
+			img(class="add-recipe__image-resized")
   
 	section.add-recipe__section
 		.add-recipe__section-title Ингредиенты
@@ -37,13 +39,13 @@ form.add-recipe(action="#" method="post")
 	section.add-recipe__section
 		.add-recipe__section-title Этапы приготовления 
 		.add-recipe__wrapper
-			input(type="text" name="step" class='add-recipe__step-input')
+			input(type="text" name="step" class="add-recipe__step-input")
 			.add-recipe__new-step-btn
 		.add-recipe__steps
 		
 	input(type="submit" value="Сохранить" class="add-recipe__save-btn")
-	input(type='reset' value='Очистить форму' class="add-recipe__reset-btn")
+	input(type="reset" value="Очистить форму" class="add-recipe__reset-btn")
 
 	section
-		.add-recipe__section-title.add-recipe__result-title Result JSON:
-		pre(contenteditable='true').add-recipe__result-json
+		.add-recipe__section-title.add-recipe__result-title Результат:
+		pre(spellcheck="false" autocomplete="off" contenteditable="true").add-recipe__result-json
