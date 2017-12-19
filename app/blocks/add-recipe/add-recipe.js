@@ -1,173 +1,163 @@
 import $ from 'jquery';
+import { UNABLE_LOAD_FILE_ALERT, EMPTY_INGREDIENT_ALERT , RESULT_ALERT } from '../../resources/strings/ru.js';
+
+
+// https://www.w3schools.com/jsref/prop_node_nodetype.asp
+const TEXT_NODE_TYPE = 3;
+
+const CLASS_PREFIX = '.add-recipe';
+var formCls             = CLASS_PREFIX,
+	dishGroupInputCls			= CLASS_PREFIX + '__dish-group',
+	titleInputCls					= CLASS_PREFIX + '__title-input',
+	descriptionInputCls		= CLASS_PREFIX + '__description-input',
+	imageInputCls         = CLASS_PREFIX + '__image-input',
+	imagePreviewCls       = CLASS_PREFIX + '__image-preview',
+	imageResizedCls       = CLASS_PREFIX + '__image-resized',
+	imageLabelCls         = CLASS_PREFIX + '__image-label',
+	ingredientsCls        = CLASS_PREFIX + '__ingredients',
+	ingredientInputCls    = CLASS_PREFIX + '__ingredient-input',
+	newIngredientBtnCls   = CLASS_PREFIX + '__new-ingredient-btn',
+	stepsCls        			= CLASS_PREFIX + '__steps',
+	stepInputCls          = CLASS_PREFIX + '__step-input',
+	newStepBtnCls         = CLASS_PREFIX + '__new-step-btn',
+	newItemCls            = CLASS_PREFIX + '__new-item',
+	deleteItemCls         = CLASS_PREFIX + '__delete-item',
+	resetBtnCls           = CLASS_PREFIX + '__reset-btn',
+	resultTitleCls				= CLASS_PREFIX + '__result-title',
+	resultJsonCls					= CLASS_PREFIX + '__result-json';
 
 
 $(document).ready(function(){
 
-	$(document).on('change', '.add-recipe__image-input', GetImageData);
-	// $('.add-recipe__image-preview').on('click', function() {
-	// 	resizeImage(100,100);
-	// });
-	// $(document).on('change', '.add-recipe__image-input', addImage);
-	$(document).on('click', '.add-recipe__new-ingredient-btn', addIngredient);
-	$(document).on('click', '.add-recipe__new-step-btn', addStep);
-	$(document).on('focus', '.add-recipe__ingredient-input', clearInput);
-	$(document).on('click', '.add-recipe__delete-item', deleteItem);
-	$(document).on('submit', '.add-recipe', addRecipe);
-	$(document).on('click', '.add-recipe__reset-btn', resetForm);
+	$(document).on('change', imageInputCls, getImageData);
+	$(document).on('click', newIngredientBtnCls, addIngredient);
+	$(document).on('click', newStepBtnCls, addStep);
+	$(document).on('focus', ingredientInputCls, clearInput);
+	$(document).on('click', deleteItemCls, deleteItem);
+	$(document).on('submit', formCls, addRecipe);
+	$(document).on('click', resetBtnCls, resetForm);
+	$(imagePreviewCls).on('load', resizeImage);
 
-	// $(".add-recipe__image-input").change(resizeImage);
 });
 
-function GetImageData(evt) {
+
+
+function getImageData(evt) {
 	var tgt = evt.target || window.event.srcElement;
 	var files = tgt.files;
 	var f = files[0];
-	$('.add-recipe__image-label').html(f.name);
+	$(imageLabelCls).html(f.name);
 
 	if (FileReader && files && files.length) {
 		var fr = new FileReader();
 		fr.onload = function () {
-			$('.add-recipe__image-preview').show();
-			$('.add-recipe__image-preview').attr('src', fr.result);
-			console.log('source: ' + fr.result.length);
-			return fr.result;
+			var res = fr.result;
+			$(imagePreviewCls).show();
+			$(imagePreviewCls).attr('src', res);
+			console.log('source: ' + res.length);
+			return res;
 		};
 		fr.readAsDataURL(f);
-		resizeImage(100,100);
 	}
 	else {
-		alert('Unable to load file');
+		alert(UNABLE_LOAD_FILE_ALERT);
 	}
 }
 
-function resizeImage(width, height) {
+
+function resizeImage() {
+	const MAX_WIDTH = 400;
+	const MAX_HEIGHT = 400;
+	var imageToResize = $(imagePreviewCls)[0];
+	var width = imageToResize.width;
+	var height = imageToResize.height;
+
+	if (width > height) {
+		if (width > MAX_WIDTH) {
+			height *= MAX_WIDTH / width;
+			width = MAX_WIDTH;
+		}
+	}	else {
+		if (height > MAX_HEIGHT) {
+			width *= MAX_HEIGHT / height;
+			height = MAX_HEIGHT;
+		}
+	}
+
 	var canvas = document.createElement('canvas');
 	canvas.width = width;
 	canvas.height = height;
+
 	var context = canvas.getContext('2d');
-	var imageToResize = document.getElementsByClassName('add-recipe__image-preview')[0];
-
-	$('.add-recipe__image-preview').on('load', function() {
-		context.scale(width / imageToResize.width, height / imageToResize.height);
-		context.drawImage(imageToResize, 0, 0);
-		$('.add-recipe__image-resized').attr('src', canvas.toDataURL());
-		console.log('result: ' + canvas.toDataURL().length);
-	});
+	context.drawImage(imageToResize, 0, 0, width, height);
+	$(imageResizedCls).attr('src', canvas.toDataURL());
+	console.log('result: ' + $(imageResizedCls).attr('src').length);
 }
-
-// function addImage(evt) {
-// 	var tgt = evt.target || window.event.srcElement;
-// 	var files = tgt.files;
-// 	var f = files[0];
-// 	$('.add-recipe__image-label').html(f.name);
-//
-// 	if (FileReader && files && files.length) {
-//
-// 		var fileReader = new FileReader();
-// 		fileReader.onload = function (evt) {
-// 			var img = new Image();
-// 			img.onload = function () {
-// 				const MAX_WIDTH = 150;
-// 				const MAX_HEIGHT = 150;
-// 				var width = img.width;
-// 				var height = img.height;
-//
-// 				if (width > height) {
-// 					if (width > MAX_WIDTH) {
-// 						height *= MAX_WIDTH / width;
-// 						width = MAX_WIDTH;
-// 					}
-// 				} else {
-// 					if (height > MAX_HEIGHT) {
-// 						width *= MAX_HEIGHT / height;
-// 						height = MAX_HEIGHT;
-// 					}
-// 				}
-//
-// 				var canvas = document.createElement('canvas');
-// 				canvas.width = width;
-// 				canvas.height = height;
-// 				canvas.getContext('2d').drawImage(this, 0, 0, width, height);
-// 				this.src = canvas.toDataURL();
-// 				$('.add-recipe__image-preview').show();
-// 				$('.add-recipe__image-preview-wrapper').append(this);
-// 				$(this).addClass('.add-recipe__image-preview');
-// 			};
-// 			img.src = evt.target.result;
-// 		}
-// 		fileReader.readAsDataURL(f);
-// 	}
-// 	else {
-// 		alert('Unable to load file');
-// 	}
-// }
-
-
-// function GetImageData(evt) {
-// 	var tgt = evt.target || window.event.srcElement;
-// 	var files = tgt.files;
-// 	var f = files[0];
-// 	$('.add-recipe__image-label').html(f.name);
-//
-// 	if (FileReader && files && files.length) {
-// 		var fr = new FileReader();
-// 		fr.onload = function () {
-// 			$('.add-recipe__image-preview').show();
-// 			$('.add-recipe__image-preview').attr('src', fr.result);
-// 			return fr.result;
-// 		};
-// 		fr.readAsDataURL(f);
-// 	}
-// 	else {
-// 		alert('Unable to load file');
-// 	}
-// }
 
 
 function addIngredient() {
-	var ingredient = $('.add-recipe__ingredient-input').val();
-	if ((ingredient !== '') && (ingredient !== 'Укажите ингредиент')) {
-		$('.add-recipe__ingredients').append('<div class="add-recipe__new-item">' + ingredient + '<div class="add-recipe__delete-item">x</div></div>');
-		$('.add-recipe__ingredient-input').val('');
+	var ingredient = $(ingredientInputCls).val();
+
+	if ((ingredient !== '') && (ingredient !== EMPTY_INGREDIENT_ALERT)) {
+		$(ingredientsCls).append('<div class=' + newItemCls + '>' + ingredient +
+			'<div class=' + deleteItemCls + '>x</div></div>');
+		$(ingredientInputCls).val('');
 	}
+
 	else {
-		$('.add-recipe__ingredient-input').val('Укажите ингредиент');
-		$('.add-recipe__ingredient-input').css('color', '#fff');
+		$(ingredientInputCls).val(EMPTY_INGREDIENT_ALERT);
+		$(ingredientInputCls).css('color', '#fff');
 	}
 }
 
 
 function addStep() {
-	var step = $('.add-recipe__step-input').val();
-	// Check if text input is not empty
+	var step = $(stepInputCls).val();
+
 	if (step !== '') {
-		$('.add-recipe__steps').append('<div class="add-recipe__new-item">' + step + '<div class="add-recipe__delete-item">x</div></div>');
-		$('.add-recipe__step-input').val('');
+		$(stepsCls).append('<div class=' + newItemCls + '>' + step +
+			'<div class=' + deleteItemCls + '>x</div></div>');
+		$(stepInputCls).val('');
 	}
 }
 
 
-// Reset input before typing
 function clearInput() {
-	$('.add-recipe__ingredient-input').val('');
-	$('.add-recipe__ingredient-input').css('color', '#000');
+	$(ingredientInputCls).val('');
+	$(ingredientInputCls).css('color', '#000');
 }
 
 
 function deleteItem() {
 	var ingredients = getIngredients();
 	var steps = getSteps();
+	var itemToDelete;
+
 	// Define if current section related to ingredients or steps
-	if ($(this).parents('.add-recipe__ingredients').length) {
-		// Find content of the element that have to be deleted
-		var elemToDeleteFromIngredients = ingredients.indexOf($(this).parent().contents().not($('.add-recipe__new-item').children()).text());
-		// Delete element from array
-		ingredients.splice(elemToDeleteFromIngredients, 1);
+	if ($(this).parents(ingredientsCls).length) {
+
+		itemToDelete = ingredients
+			.indexOf($(this)
+				.parent()
+				.contents().not($(newItemCls).children())
+				.text()
+			);
+
+		ingredients.splice(itemToDelete, 1);
 	}
-	else if ($(this).parents('.add-recipe__steps').length) {
-		var elemToDeleteFromSteps = steps.indexOf($(this).parent().contents().not($('.add-recipe__new-item').children()).text());
-		steps.splice(elemToDeleteFromSteps, 1);
+
+	else if ($(this).parents(stepsCls).length) {
+
+		itemToDelete = steps
+			.indexOf($(this)
+				.parent()
+				.contents().not($(newItemCls).children())
+				.text()
+			);
+
+		steps.splice(itemToDelete, 1);
 	}
+
 	// Delete element from DOM
 	$(this).parent().remove();
 }
@@ -176,12 +166,18 @@ function deleteItem() {
 function getIngredients() {
 	var ingredients = [];
 	var newIngredient;
-	$('.add-recipe__new-item').each(function() {
-		if ($(this).parents('.add-recipe__ingredients').length) {
-			newIngredient = $(this).contents().filter(function() {return this.nodeType === 3;}).text();
+
+	$(newItemCls).each(function() {
+		if ($(this).parents(ingredientsCls).length) {
+
+			newIngredient = $(this).contents().filter(function() {
+				return this.nodeType === TEXT_NODE_TYPE;
+			}).text();
+
 			ingredients.push(newIngredient);
 		}
 	});
+
 	return ingredients;
 }
 
@@ -189,32 +185,46 @@ function getIngredients() {
 function getSteps() {
 	var steps = [];
 	var newStep;
-	$('.add-recipe__new-item').each(function() {
-		if ($(this).parents('.add-recipe__steps').length) {
-			newStep = $(this).contents().filter(function() {return this.nodeType === 3;}).text();
+
+	$(newItemCls).each(function() {
+		if ($(this).parents(stepsCls).length) {
+
+			newStep = $(this).contents().filter(function() {
+				return this.nodeType === TEXT_NODE_TYPE;
+			}).text();
+
 			steps.push(newStep);
 		}
 	});
+
 	return steps;
 }
 
 
 function addRecipe(evt) {
-	var group = $('.add-recipe__dish-group option:selected').text();
-	var title = $('.add-recipe__title-input').val();
-	var description = $('.add-recipe__description-input').val();
-	var image = $('.add-recipe__image-preview').attr('src');
-	var newRecipe = {'title': title, 'description': description, 'image': image, 'components': getIngredients(), 'steps': getSteps()};
+	var group = $(dishGroupInputCls + 'option:selected').text();
+	var title = $(titleInputCls).val();
+	var description = $(descriptionInputCls).val();
+	var image = $(imageResizedCls).attr('src');
+	var newRecipe = {
+		'title': title,
+		'description': description,
+		'image': image,
+		'components': getIngredients(),
+		'steps': getSteps()
+	};
 	var newRecipeToJSON = JSON.stringify(newRecipe, null, '\t');
-	$('.add-recipe__result-title').text('Скопируйте результат в группу "' + group + '"');
-	$('.add-recipe__result-json').html(newRecipeToJSON);
+	$(resultTitleCls).text(RESULT_ALERT + '"' + group + '"');
+	$(resultJsonCls).html(newRecipeToJSON);
 	evt.preventDefault();
 }
 
 
-function resetForm() {
-	$('.add-recipe__new-item').remove();
-	$('.add-recipe__delete-item').remove();
-	$('.add-recipe__image-preview').attr('src', '');
-	$('.add-recipe__image-label').text('');
+export function resetForm() {
+	$(formCls)[0].reset();
+	$(newItemCls).remove();
+	$(deleteItemCls).remove();
+	$(imagePreviewCls).attr('src', '');
+	$(imageLabelCls).text('');
+	$(resultJsonCls).text('');
 }
