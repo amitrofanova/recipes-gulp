@@ -36,10 +36,9 @@ $(document).ready(function(){
 	$(document).on('click', deleteItemCls, deleteItem);
 	$(document).on('submit', formCls, addRecipe);
 	$(document).on('click', resetBtnCls, resetForm);
-	$(imagePreviewCls).on('load', resizeImage);
+	// $(imagePreviewCls).on('load', resizeImage);
 
 });
-
 
 
 function getImageData(evt) {
@@ -50,15 +49,18 @@ function getImageData(evt) {
 
 	if (FileReader && files && files.length) {
 		var fr = new FileReader();
+
 		fr.onload = function () {
 			var res = fr.result;
+
 			$(imagePreviewCls).show();
 			$(imagePreviewCls).attr('src', res);
-			console.log('source: ' + res.length);
+
 			return res;
 		};
 		fr.readAsDataURL(f);
 	}
+
 	else {
 		alert(UNABLE_LOAD_FILE_ALERT);
 	}
@@ -211,7 +213,8 @@ function addRecipe(evt) {
 	var group = $(selectedGroup).text();
 	var title = $(titleInputCls).val();
 	var description = $(descriptionInputCls).val();
-	var image = $(imageResizedCls).attr('src');
+	// var image = $(imageResizedCls).attr('src');
+	var image = $(imagePreviewCls).attr('src');
 	var newRecipe = {
 		'title': title,
 		'description': description,
