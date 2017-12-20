@@ -55,7 +55,7 @@ function openRecipe() {
 					$('.recipe-preview').hide();
 
 					$('<div class="recipe"></div>')
-						.insertAfter($('.recipe-preview')[k])
+						.insertAfter($('.recipe-preview')[0])
 						.append(
 							'<obj class="recipe__image"	type="image/png"><img src="' + recipe.image +
 							'"/></obj><div class="recipe__content"><div class="recipe__title">'	+ recipe.title +
