@@ -1,23 +1,8 @@
 import $ from 'jquery';
-import { resetForm } from '../add-recipe/add-recipe.js';
+import {resetForm}from '../add-recipe/add-recipe.js';
 
 // window size at which need to toggle from mobile to desktop version
 const windowBreakpoint = 768;
-
-
-$(document).ready(function() {
-
-	toggleNavButton();
-	$('.nav__all-recipes').on('click', showAllRecipes);
-	$('.nav__events').on('click', showEvents);
-	$('.nav__try-new').on('click', showTryNew);
-	$('.nav__add-recipe').on('click', showAddRecipe);
-	$('.nav__button').on('click', toggleMobileNav);
-	$('.nav__item').on('click', toggleMobileNav);
-	$(window).on('resize', showLargeNav);
-	$(window).on('resize', toggleNavButton);
-
-});
 
 
 function showAllRecipes() {
@@ -87,3 +72,18 @@ function showLargeNav() {
 		$('.nav__collapse').hide();
 	}
 }
+
+
+$(document).ready(function () {
+
+	toggleNavButton();
+	$('.nav__all-recipes').on('click', showAllRecipes);
+	$('.nav__events').on('click', showEvents);
+	$('.nav__try-new').on('click', showTryNew);
+	$('.nav__add-recipe').on('click', showAddRecipe);
+	$('.nav__button').on('click', toggleMobileNav);
+	$('.nav__item').on('click', toggleMobileNav);
+	$(window).on('resize', showLargeNav);
+	$(window).on('resize', toggleNavButton);
+
+});
