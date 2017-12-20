@@ -3,6 +3,7 @@ var gulp = require('gulp'),
 	babelify = require('babelify'),
 	source = require('vinyl-source-stream'),
 	eslint = require('gulp-eslint'),
+	gulpIf = require('gulp-if'),
 	sass = require('gulp-sass'),
 	bulkSass = require('gulp-sass-glob'),
 	pug = require('gulp-pug'),
@@ -35,10 +36,16 @@ gulp.task('scripts', function() {
 		.pipe(browserSync.reload({stream: true}));
 });
 
+function isFixed(file) {
+	return file.eslint && typeof file.eslint.output === 'string';
+}
+
 gulp.task('lint', () => {
-	return gulp.src(['**/*.js','!node_modules/**', '!dist/**'])
-		.pipe(eslint())
+	return gulp.src(['**/*.js', '!node_modules/**', '!dist/**'])
+		.pipe(eslint({fix: true}))
 		.pipe(eslint.format())
+		// https://github.com/adametry/gulp-eslint/issues/99#issuecomment-150752049
+		.pipe(gulpIf(isFixed, gulp.dest('./')))
 		.pipe(eslint.failAfterError());
 });
 

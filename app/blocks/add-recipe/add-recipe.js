@@ -7,9 +7,9 @@ const TEXT_NODE_TYPE = 3;
 
 const CLASS_PREFIX = '.add-recipe';
 var formCls             = CLASS_PREFIX,
-	dishGroupInputCls			= CLASS_PREFIX + '__dish-group',
-	titleInputCls					= CLASS_PREFIX + '__title-input',
-	descriptionInputCls		= CLASS_PREFIX + '__description-input',
+	dishGroupInputCls     = CLASS_PREFIX + '__dish-group',
+	titleInputCls         = CLASS_PREFIX + '__title-input',
+	descriptionInputCls   = CLASS_PREFIX + '__description-input',
 	imageInputCls         = CLASS_PREFIX + '__image-input',
 	imagePreviewCls       = CLASS_PREFIX + '__image-preview',
 	imageResizedCls       = CLASS_PREFIX + '__image-resized',
@@ -17,14 +17,14 @@ var formCls             = CLASS_PREFIX,
 	ingredientsCls        = CLASS_PREFIX + '__ingredients',
 	ingredientInputCls    = CLASS_PREFIX + '__ingredient-input',
 	newIngredientBtnCls   = CLASS_PREFIX + '__new-ingredient-btn',
-	stepsCls        			= CLASS_PREFIX + '__steps',
+	stepsCls              = CLASS_PREFIX + '__steps',
 	stepInputCls          = CLASS_PREFIX + '__step-input',
 	newStepBtnCls         = CLASS_PREFIX + '__new-step-btn',
 	newItemCls            = CLASS_PREFIX + '__new-item',
 	deleteItemCls         = CLASS_PREFIX + '__delete-item',
 	resetBtnCls           = CLASS_PREFIX + '__reset-btn',
-	resultTitleCls				= CLASS_PREFIX + '__result-title',
-	resultJsonCls					= CLASS_PREFIX + '__result-json';
+	resultTitleCls        = CLASS_PREFIX + '__result-title',
+	resultJsonCls         = CLASS_PREFIX + '__result-json';
 
 
 $(document).ready(function(){
@@ -67,7 +67,7 @@ function getImageData(evt) {
 }
 
 
-function resizeImage() {
+function resizeImage() {  // eslint-disable-line no-unused-vars
 	const MAX_WIDTH = 400;
 	const MAX_HEIGHT = 400;
 	var imageToResize = $(imagePreviewCls)[0];

@@ -32,4 +32,10 @@ gulp default
 
 ### Development
 
+Check syntax
+
+```
+gulp lint
+```
+
 The website uses AJAX to retrieve data from a JSON file on the fly.
