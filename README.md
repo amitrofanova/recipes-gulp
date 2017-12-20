@@ -1,33 +1,35 @@
 # Recipe book
 
-Website is intended for storing cook recipes.
+The website is intended for storing cook recipes.
 
 
-## Install
+### Install
 
-#### Clone repository and go to the project folder
+Clone repository and go to the project folder
 
 ```
 git clone git@gitlab.com:funnymitrofunny/recipe-book.git && cd recipe-book
 ```
 
-#### Install modules
+Install modules
 
 ```
 npm i
 ```
 
-#### Build to dist/ folder
+Build to dist/ folder
+
+```
+gulp build
+```
+
+Run in browser
 
 ```
 gulp default
 ```
 
-#### Access in browser
 
-http://localhost:3000
+### Development
 
-
-## Development
-
-The website uses AJAX to retrieve data from a JSON file.
+The website uses AJAX to retrieve data from a JSON file on the fly.
