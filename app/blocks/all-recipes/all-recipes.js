@@ -1,87 +1,124 @@
 import $ from 'jquery';
-import {INGREDIENTS_TITLE, STEPS_TITLE}from '../../resources/strings/ru.js';
+import {INGREDIENTS_TITLE, STEPS_TITLE} from '../../resources/strings/ru.js';
+
 
 const jsonPath = 'assets/data/recipes.json';
+
+
+function appendBreadcrumb(dishGroup) {
+	$('.all-recipes').append(
+		'<div class="all-recipes__breadcrumb breadcrumb">' +
+			'<div class="breadcrumb__all-dish-groups">Все рецепты</div>' +
+			'<div class="breadcrumb__arrow"/>' +
+			'<div class="breadcrumb__current-dish-group">' + dishGroup + '</div>' +
+		'</div>'
+	);
+}
+
+
+function appendRecipePreview(recipe) {
+	$('.dish-group_opened').append(
+		'<div class="recipe-preview">' +
+			'<div class="recipe-preview__image">' +
+				'<img src="' + recipe.image + '">' +
+			'</div>' +
+			'<div class="recipe-preview__content">' +
+				'<div class="recipe-preview__title">'	+	recipe.title + '</div>' +
+				'<div class="recipe-preview__description">' + recipe.description + '</div>' +
+			'</div>' +
+		'</div>'
+	);
+}
 
 
 function openDishGroup() {
 	const currentDishGroup = $(this).find('.dish-group__title').text();
 
 	$('.dish-group').hide();
-
-	$('.all-recipes').append('<div class="all-recipes__breadcrumb breadcrumb"><div class="breadcrumb__all-dish-groups">' +
-		'Все рецепты</div><div class="breadcrumb__arrow"/><div class="breadcrumb__current-dish-group">' +
-		currentDishGroup + '</div></div><section class="dish-group_opened"></section>');
+	appendBreadcrumb(currentDishGroup);
+	$('.all-recipes').append('<section class="dish-group_opened"></section>');
 
 	$.getJSON(jsonPath, function (dishGroups) {
-
 		for (let j = 0; j < dishGroups.length; j++) {
-			if (dishGroups[j].group === currentDishGroup) {
-				for (let i = 0; i < dishGroups[j].recipes.length; i++) {
-					const recipe = dishGroups[j].recipes[i];
+			var dishGroup = dishGroups[j];
 
-					$('.dish-group_opened').append(
-						'<div class="recipe-preview"><div class="recipe-preview__image"><img src="'
-						+ recipe.image + '"></div><div class="recipe-preview__content"><div class="recipe-preview__title">'
-						+	recipe.title + '</div><div class="recipe-preview__description">' + recipe.description + '</div></div></div>');
+			if (dishGroup.group === currentDishGroup) {
+				for (let i = 0; i < dishGroup.recipes.length; i++) {
+					var recipe = dishGroup.recipes[i];
+					appendRecipePreview(recipe);
 				}
+				break;
 			}
 		}
 	});
 }
 
 
-function openRecipe() {
-	const recipeTitle = $(this).find('.recipe-preview__title').text();
-
-	$('.all-recipes__breadcrumb')
-		.append('<div class="breadcrumb__arrow"/><div class="breadcrumb__current-recipe">' + recipeTitle + '</div>');
-
-	$.getJSON(jsonPath, function (dishGroups) {
-
-		for (let k = 0; k < dishGroups.length; k++) {
-			for (let j = 0; j < dishGroups[k].recipes.length; j++) {
-				const recipe = dishGroups[k].recipes[j];
-
-				if (recipe.title === recipeTitle) {
-					$('.recipe-preview').hide();
-
-					appendRecipe(recipe.title, recipe.image);
-
-					const components = [];
-					for (let i = 0; i < recipe.components.length; i++) {
-						components.push('<li class="recipe__ingredient">' + recipe.components[i] + '</li>');
-					}
-					$('.recipe__ingredients').append(components);
-
-					const steps = [];
-					for (let i = 0; i < recipe.steps.length; i++) {
-						steps.push('<p class="recipe__step">' + recipe.steps[i] + '</p');
-					}
-					$('.recipe__steps').append(steps);
-				}
-			}
-		}
-	});
-}
-
-
-function appendRecipe(title, image) {
+function appendRecipe(recipe) {
 	$('<div class="recipe"></div>')
 		.insertAfter($('.recipe-preview')[0])
 		.append(
 			'<obj class="recipe__image"	type="image/png">' +
-				'<img src="' + image + '"/>' +
+				'<img src="' + recipe.image + '"/>' +
 			'</obj>' +
 			'<div class="recipe__content">' +
-				'<div class="recipe__title">'	+ title + '</div>' +
+				'<div class="recipe__title">'	+ recipe.title + '</div>' +
 				'<div class="recipe__ingredients-title">' + INGREDIENTS_TITLE + '</div>'	+
 				'<ul class="recipe__ingredients"></ul>' +
 			'</div>' +
 			'<div class="recipe__steps">' +
 			'<div class="recipe__steps-title">' + STEPS_TITLE + '</div>'
 		);
+
+		var components = recipe.components;
+		for (let i = 0; i < components.length; i++) {
+			$('.recipe__ingredients').append('<li class="recipe__ingredient">' + components[i] + '</li>');
+		}
+
+		var steps = recipe.steps;
+		for (let i = 0; i < steps.length; i++) {
+			$('.recipe__steps').append('<p class="recipe__step">' + steps[i] + '</p');
+		}
 }
+
+
+function appendRecipeToBreadcrumb(title) {
+	$('.all-recipes__breadcrumb')
+		.append('<div class="breadcrumb__arrow"/><div class="breadcrumb__current-recipe">' + title + '</div>');
+}
+
+
+function openRecipe() {
+	const recipeTitle = $(this).find('.recipe-preview__title').text();
+
+	appendRecipeToBreadcrumb(recipeTitle);
+
+	$.getJSON(jsonPath, function (dishGroups) {
+		let recipe = null;
+
+		for (let k = 0; k < dishGroups.length; k++) {
+			const recipes = dishGroups[k].recipes;
+
+			for (let j = 0; j < recipes.length; j++) {
+				if (recipes[j].title === recipeTitle) {
+					recipe = recipes[j];
+					break;
+				}
+			}
+
+			// if found in current dish group
+			if (recipe !== null) {
+				break;
+			}
+		}
+
+		if (recipe !== null) {
+			$('.recipe-preview').hide();
+			appendRecipe(recipe);
+		}
+	});
+}
+
 
 
 $(document).ready(function (){
