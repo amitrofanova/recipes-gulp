@@ -46,20 +46,7 @@ function openRecipe() {
 				if (recipe.title === recipeTitle) {
 					$('.recipe-preview').hide();
 
-					$('<div class="recipe"></div>')
-						.insertAfter($('.recipe-preview')[0])
-						.append(
-							'<obj class="recipe__image"	type="image/png">' +
-								'<img src="' + recipe.image + '"/>' +
-							'</obj>' +
-							'<div class="recipe__content">' +
-								'<div class="recipe__title">'	+ recipe.title + '</div>' +
-								'<div class="recipe__ingredients-title">' + INGREDIENTS_TITLE + '</div>'	+
-								'<ul class="recipe__ingredients"></ul>' +
-							'</div>' +
-							'<div class="recipe__steps">' +
-							'<div class="recipe__steps-title">' + STEPS_TITLE + '</div>' +
-							'</div>');
+					appendRecipe(recipe.title, recipe.image);
 
 					const components = [];
 					for (let i = 0; i < recipe.components.length; i++) {
@@ -76,6 +63,24 @@ function openRecipe() {
 			}
 		}
 	});
+}
+
+
+function appendRecipe(title, image) {
+	$('<div class="recipe"></div>')
+		.insertAfter($('.recipe-preview')[0])
+		.append(
+			'<obj class="recipe__image"	type="image/png">' +
+				'<img src="' + image + '"/>' +
+			'</obj>' +
+			'<div class="recipe__content">' +
+				'<div class="recipe__title">'	+ title + '</div>' +
+				'<div class="recipe__ingredients-title">' + INGREDIENTS_TITLE + '</div>'	+
+				'<ul class="recipe__ingredients"></ul>' +
+			'</div>' +
+			'<div class="recipe__steps">' +
+			'<div class="recipe__steps-title">' + STEPS_TITLE + '</div>'
+		);
 }
 
 
