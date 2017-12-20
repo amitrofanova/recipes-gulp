@@ -70,7 +70,9 @@ gulp.task('browser-sync', function() {
 	});
 });
 
-gulp.task('default', ['browser-sync', 'lint', 'styles', 'templates', 'scripts', 'fonts', 'copy', 'images'], function() {
+gulp.task('build', ['styles', 'templates', 'scripts', 'copy', 'images', 'fonts']);
+
+gulp.task('default', ['lint', 'browser-sync'], function() {
 	gulp.watch(['app/blocks/**/*', 'app/styles/*'], ['styles']);
 	gulp.watch(['app/blocks/**/*', 'app/pages/index.pug'], ['templates']);
 	gulp.watch(['app/blocks/**/*', 'app/scripts/app.js'], ['scripts']);
