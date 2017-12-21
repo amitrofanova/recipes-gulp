@@ -1,5 +1,10 @@
 import $ from 'jquery';
-import {UNABLE_LOAD_FILE_ALERT, EMPTY_INGREDIENT_ALERT, INITIAL_RESULT_TITLE, RESULT_ALERT}from '../../resources/strings/ru.js';
+import {
+	UNABLE_LOAD_FILE_ALERT,
+	EMPTY_INGREDIENT_ALERT,
+	INITIAL_RESULT_TITLE,
+	RESULT_ALERT
+}from '../../resources/strings/ru.js';
 
 
 // https://www.w3schools.com/jsref/prop_node_nodetype.asp
@@ -48,7 +53,7 @@ function getImageData(evt) {
 	}
 
 	else {
-		alert(UNABLE_LOAD_FILE_ALERT);
+		$(imageLabelCls).html(UNABLE_LOAD_FILE_ALERT);
 	}
 }
 
