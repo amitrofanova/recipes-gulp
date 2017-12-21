@@ -38,4 +38,4 @@ Check syntax
 gulp lint
 ```
 
-The website uses AJAX to retrieve data from a JSON file on the fly.
+The website generates data from a JSON file on the fly.
