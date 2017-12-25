@@ -2,7 +2,8 @@ import $ from 'jquery';
 import {
 	UNABLE_LOAD_FILE_ALERT,
 	EMPTY_INGREDIENT_ALERT,
-	INITIAL_RESULT_TITLE
+	INITIAL_RESULT_TITLE,
+	SUCCESSFULLY_ADDED_RECIPE_ALERT
 }from '../../resources/strings/ru.js';
 
 
@@ -199,28 +200,9 @@ function deleteItem() {
 }
 
 
-function addContent(){
-	const selectedGroup = dishGroupInputCls + ' option:selected';
-	const group = $(selectedGroup).text();
-	const callback = function () {
-		return $(resultJsonCls).text();
-	};
-
-	$.ajax({
-		type: 'POST',
-		url: jsonPath + '?group=' + group,
-		dataType: 'json',
-		data: callback(),
-		success(data){
-			console.log(data);
-		}
-	});
-}
-
-
 function addRecipe(evt) {
-	const selectedGroup = dishGroupInputCls + ' option:selected';
-	const group = $(selectedGroup).text();
+	// const selectedGroup = dishGroupInputCls + ' option:selected';
+	// const group = $(selectedGroup).text();
 	const title = $(titleInputCls).val();
 	const description = $(descriptionInputCls).val();
 	// var image = $(imageResizedCls).attr('src');
@@ -239,6 +221,25 @@ function addRecipe(evt) {
 }
 
 
+function addContent(){
+	const selectedGroup = dishGroupInputCls + ' option:selected';
+	const group = $(selectedGroup).text();
+	const callback = function () {
+		return $(resultJsonCls).text();
+	};
+
+	$.ajax({
+		type: 'POST',
+		url: jsonPath + '?group=' + group,
+		dataType: 'json',
+		data: callback(),
+		success(data){
+			showSuccessAlert();
+		}
+	});
+}
+
+
 export function resetForm() {
 	$(formCls)[0].reset();
 	$(newItemCls).remove();
@@ -247,6 +248,44 @@ export function resetForm() {
 	$(imageLabelCls).text('');
 	$(resultTitleCls).text(INITIAL_RESULT_TITLE);
 	$(resultJsonCls).text('');
+}
+
+
+function deleteRecipe(){
+	const selectedGroup = dishGroupInputCls + ' option:selected';
+	const group = $(selectedGroup).text();
+	const recipeToDelete = $('.add-recipe__recipe-to-delete').text();
+
+	$.ajax({
+		type: 'DELETE',
+		url: jsonPath + '?group=' + group + '&recipe=' + recipeToDelete,
+		dataType: 'json',
+		success(data){
+			console.log(data);
+		},
+		error(data, status){
+			console.log(data);
+			console.log(status);
+		}
+	});
+}
+
+
+function showSuccessAlert() {
+	$('.add-recipe')
+		.append(
+			'<div class="add-recipe__modal">' +
+				'<div class="add-recipe__modal-content">' +
+					'<div class="add-recipe__modal-text">' + SUCCESSFULLY_ADDED_RECIPE_ALERT + '</div>' +
+					'<div class="add-recipe__close-modal"></div>' +
+				'</div>' +
+			'</div>'
+		);
+}
+
+
+function hideSuccessAlert() {
+	$('.add-recipe__modal').remove();
 }
 
 
@@ -260,6 +299,12 @@ $(document).ready(function (){
 	$(document).on('submit', formCls, addRecipe);
 	$(document).on('click', resetBtnCls, resetForm);
 	$(document).on('click', '.add-recipe__send-btn', addContent);
+
+
+	$(document).on('click', '.add-recipe__close-modal', hideSuccessAlert);
+
+
+	$(document).on('click', '.add-recipe__delete-recipe', deleteRecipe);
 	// $(imagePreviewCls).on('load', resizeImage);
 
 });
