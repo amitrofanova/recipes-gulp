@@ -5,41 +5,51 @@ import {resetForm}from '../add-recipe/add-recipe.js';
 const windowBreakpoint = 768;
 
 
+function setActive() {
+	var isForm = false;
+	var activeClass = this.className;
+	if (~activeClass.indexOf("nav__add-recipe")) {
+		isForm = true;
+	}
+
+	$('.nav__item').removeClass('nav__item_active');
+	$(this).addClass('nav__item_active');
+
+	$('.all-recipes, .events, .try-new, .add-recipe').removeClass('active').addClass('hidden');
+
+	if ($(this).hasClass('nav__all-recipes nav__item_active')) {
+		$('.all-recipes').addClass('active').removeClass('hidden');
+		if (!isForm) {
+			resetForm();
+		}
+	}
+
+	if ($(this).hasClass('nav__events nav__item_active')) {
+		$('.events').addClass('active').removeClass('hidden');
+		if (!isForm) {
+			resetForm();
+		}
+	}
+
+	if ($(this).hasClass('nav__try-new nav__item_active')) {
+		$('.try-new').addClass('active').removeClass('hidden');
+		if (!isForm) {
+			resetForm();
+		}
+	}
+
+	if ($(this).hasClass('nav__add-recipe nav__item_active')) {
+		$('.add-recipe').addClass('active').removeClass('hidden');
+	}
+}
+
+
 function showAllRecipes() {
-	$('.events').hide();
-	$('.try-new').hide();
-	$('.add-recipe').hide();
-	resetForm();
-	$('.all-recipes__breadcrumb').remove();
-	$('.dish-group_opened').remove();
-	$('.all-recipes').show();
-	$('.all-recipes__dish-group').show();
-}
-
-
-function showEvents() {
-	$('.all-recipes').hide();
-	$('.try-new').hide();
-	$('.add-recipe').hide();
-	resetForm();
-	$('.events').show();
-}
-
-
-function showTryNew() {
-	$('.all-recipes').hide();
-	$('.events').hide();
-	$('.add-recipe').hide();
-	resetForm();
-	$('.try-new').show();
-}
-
-
-function showAddRecipe() {
-	$('.all-recipes').hide();
-	$('.events').hide();
-	$('.try-new').hide();
-	$('.add-recipe').show();
+	if ($(this).hasClass('nav__all-recipes')) {
+		$('.all-recipes__breadcrumb').remove();
+		$('.dish-group_opened').remove();
+		$('.all-recipes__dish-group').show();
+	}
 }
 
 
@@ -78,10 +88,8 @@ $(document).ready(function () {
 
 	toggleNavButton();
 	$('.nav__all-recipes').on('click', showAllRecipes);
-	$('.nav__events').on('click', showEvents);
-	$('.nav__try-new').on('click', showTryNew);
-	$('.nav__add-recipe').on('click', showAddRecipe);
 	$('.nav__button').on('click', toggleMobileNav);
+	$('.nav__item').on('click', setActive);
 	$('.nav__item').on('click', toggleMobileNav);
 	$(window).on('resize', showLargeNav);
 	$(window).on('resize', toggleNavButton);
