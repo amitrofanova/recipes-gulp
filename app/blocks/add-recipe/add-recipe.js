@@ -2,13 +2,12 @@ import $ from 'jquery';
 import {
 	UNABLE_LOAD_FILE_ALERT,
 	EMPTY_INGREDIENT_ALERT,
-	INITIAL_RESULT_TITLE,
-	RESULT_ALERT
+	INITIAL_RESULT_TITLE
 }from '../../resources/strings/ru.js';
 
 
-// https://www.w3schools.com/jsref/prop_node_nodetype.asp
-const TEXT_NODE_TYPE = 3;
+// const jsonPath = 'http://192.168.1.46:5000/api/recipes';
+const jsonPath = 'https://amitrofanova.pythonanywhere.com/api/recipes';
 
 const CLASS_PREFIX = '.add-recipe';
 const formCls = CLASS_PREFIX, // eslint-disable-line one-var
@@ -30,6 +29,9 @@ const formCls = CLASS_PREFIX, // eslint-disable-line one-var
 	resetBtnCls = CLASS_PREFIX + '__reset-btn',
 	resultTitleCls = CLASS_PREFIX + '__result-title',
 	resultJsonCls = CLASS_PREFIX + '__result-json';
+
+// https://www.w3schools.com/jsref/prop_node_nodetype.asp
+const TEXT_NODE_TYPE = 3;
 
 
 function getImageData(evt) {
@@ -197,6 +199,25 @@ function deleteItem() {
 }
 
 
+function addContent(){
+	const selectedGroup = dishGroupInputCls + ' option:selected';
+	const group = $(selectedGroup).text();
+	const callback = function () {
+		return $(resultJsonCls).text();
+	};
+
+	$.ajax({
+		type: 'POST',
+		url: jsonPath + '?group=' + group,
+		dataType: 'json',
+		data: callback(),
+		success(data){
+			console.log(data);
+		}
+	});
+}
+
+
 function addRecipe(evt) {
 	const selectedGroup = dishGroupInputCls + ' option:selected';
 	const group = $(selectedGroup).text();
@@ -212,7 +233,7 @@ function addRecipe(evt) {
 		steps: getSteps()
 	};
 	const newRecipeToJSON = JSON.stringify(newRecipe, null, '\t');
-	$(resultTitleCls).text(RESULT_ALERT + '"' + group + '"');
+	// $(resultTitleCls).text(RESULT_ALERT + '"' + group + '"');
 	$(resultJsonCls).html(newRecipeToJSON);
 	evt.preventDefault();
 }
@@ -238,6 +259,7 @@ $(document).ready(function (){
 	$(document).on('click', deleteItemCls, deleteItem);
 	$(document).on('submit', formCls, addRecipe);
 	$(document).on('click', resetBtnCls, resetForm);
+	$(document).on('click', '.add-recipe__send-btn', addContent);
 	// $(imagePreviewCls).on('load', resizeImage);
 
 });
