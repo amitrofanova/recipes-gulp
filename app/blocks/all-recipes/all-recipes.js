@@ -1,8 +1,11 @@
 import $ from 'jquery';
-import {INGREDIENTS_TITLE, STEPS_TITLE} from '../../resources/strings/ru.js';
+import {INGREDIENTS_TITLE, STEPS_TITLE}from '../../resources/strings/ru.js';
 
 
-const jsonPath = 'assets/data/recipes.json';
+// const jsonPath = 'assets/data/recipes.json';
+// const jsonPath = 'http://192.168.43.130:5000/api/recipes';
+// const jsonPath = 'http://192.168.1.46:5000/api/recipes';
+const jsonPath = 'https://amitrofanova.pythonanywhere.com/api/recipes';
 
 
 function appendBreadcrumb(dishGroup) {
@@ -31,6 +34,28 @@ function appendRecipePreview(recipe) {
 }
 
 
+function getContent(callback, group, recipe){
+	const result = null;
+
+	let url = jsonPath;
+	if (recipe) {
+		url += '?recipe=' + recipe;
+	}
+	else if (group) {
+		url += '?group=' + group;
+	}
+
+	$.ajax({
+		url,
+		dataType: 'json',
+		success(data){
+			callback(data);
+		}
+	});
+	return result;
+}
+
+
 function openDishGroup() {
 	const currentDishGroup = $(this).find('.dish-group__title').text();
 
@@ -38,19 +63,14 @@ function openDishGroup() {
 	appendBreadcrumb(currentDishGroup);
 	$('.all-recipes').append('<section class="dish-group_opened"></section>');
 
-	$.getJSON(jsonPath, function (dishGroups) {
-		for (let j = 0; j < dishGroups.length; j++) {
-			var dishGroup = dishGroups[j];
-
-			if (dishGroup.group === currentDishGroup) {
-				for (let i = 0; i < dishGroup.recipes.length; i++) {
-					var recipe = dishGroup.recipes[i];
-					appendRecipePreview(recipe);
-				}
-				break;
-			}
+	const callback = function (dishGroup) {
+		for (let i = 0; i < dishGroup.recipes.length; i++) {
+			const recipe = dishGroup.recipes[i];
+			appendRecipePreview(recipe);
 		}
-	});
+	};
+
+	getContent(callback, currentDishGroup);
 }
 
 
@@ -70,15 +90,15 @@ function appendRecipe(recipe) {
 			'<div class="recipe__steps-title">' + STEPS_TITLE + '</div>'
 		);
 
-		var components = recipe.components;
-		for (let i = 0; i < components.length; i++) {
-			$('.recipe__ingredients').append('<li class="recipe__ingredient">' + components[i] + '</li>');
-		}
+	const components = recipe.components;
+	for (let i = 0; i < components.length; i++) {
+		$('.recipe__ingredients').append('<li class="recipe__ingredient">' + components[i] + '</li>');
+	}
 
-		var steps = recipe.steps;
-		for (let i = 0; i < steps.length; i++) {
-			$('.recipe__steps').append('<p class="recipe__step">' + steps[i] + '</p');
-		}
+	const steps = recipe.steps;
+	for (let i = 0; i < steps.length; i++) {
+		$('.recipe__steps').append('<p class="recipe__step">' + steps[i] + '</p');
+	}
 }
 
 
@@ -89,40 +109,21 @@ function appendRecipeToBreadcrumb(title) {
 
 
 function openRecipe() {
+	$('.recipe-preview').hide();
 	const recipeTitle = $(this).find('.recipe-preview__title').text();
 
-	appendRecipeToBreadcrumb(recipeTitle);
-
-	$.getJSON(jsonPath, function (dishGroups) {
-		let recipe = null;
-
-		for (let k = 0; k < dishGroups.length; k++) {
-			const recipes = dishGroups[k].recipes;
-
-			for (let j = 0; j < recipes.length; j++) {
-				if (recipes[j].title === recipeTitle) {
-					recipe = recipes[j];
-					break;
-				}
-			}
-
-			// if found in current dish group
-			if (recipe !== null) {
-				break;
-			}
-		}
-
+	const callback = function (recipe) {
 		if (recipe !== null) {
-			$('.recipe-preview').hide();
+			appendRecipeToBreadcrumb(recipeTitle);
 			appendRecipe(recipe);
 		}
-	});
+	};
+
+	getContent(callback, null, recipeTitle);
 }
 
 
-
 $(document).ready(function (){
-
 	$(document).on('click', '.dish-group', openDishGroup);
 	$(document).on('click', '.recipe-preview', openRecipe);
 
