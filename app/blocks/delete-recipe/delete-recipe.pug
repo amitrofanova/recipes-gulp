@@ -1,0 +1,22 @@
+mixin delete-recipe
+	form(action="#" method="post" class="delete-recipe")&attributes(attributes)
+
+		section.delete-recipe__section
+			label(for="delete-recipe__dish-group").delete-recipe__input-label Укажите группу
+			select(name="select").delete-recipe__dish-group.delete-recipe__select-input
+				option(value="deserts") Десерты
+				option(value="bread") Хлеб
+				option(value="meat") Блюда из мяса
+				option(value="soups") Супы
+				option(value="salads") Салаты
+				option(value="fish") Блюда из рыбы
+				option(value="canape") Фуршетный стол
+				option(value="drinks") Напитки
+			
+		section.delete-recipe__section
+			label(for="delete-recipe__recipe-to-delete").delete-recipe__input-label Укажите название рецепта
+			input(type="text" name="recipe-to-delete").delete-recipe__recipe-to-delete.delete-recipe__text-input
+		
+		section.delete-recipe__section
+			input(type="button" value="Удалить" class="delete-recipe__delete-recipe")
+		//- input(type="select" name="recipes" class="add-recipe__select-recipe-to-delete")
