@@ -1,51 +1,56 @@
-form(action="#" method="post" class="add-recipe")
+mixin add-recipe
+	form(action="#" method="post").add-recipe&attributes(attributes)
 
-	section.add-recipe__section
-		.add-recipe__section-title Группа
-		select(name="select" class="add-recipe__dish-group")
-			option(value="deserts") Десерты
-			option(value="bread") Хлеб
-			option(value="meat") Блюда из мяса
-			option(value="soups") Супы
-			option(value="salads") Салаты
-			option(value="fish") Блюда из рыбы
-			option(value="canape") Фуршетный стол
-			option(value="drinks") Напитки
+		section.add-recipe__section
+			.add-recipe__section-title Группа
+			select(name="select").add-recipe__dish-group.add-recipe__select-input
+				option(value="deserts") Десерты
+				option(value="bread") Хлеб
+				option(value="meat") Блюда из мяса
+				option(value="soups") Супы
+				option(value="salads") Салаты
+				option(value="fish") Блюда из рыбы
+				option(value="canape") Фуршетный стол
+				option(value="drinks") Напитки
+			
+		section.add-recipe__section
+			.add-recipe__section-title Название блюда 
+			input(type="text" name="title" required).add-recipe__title-input.add-recipe__text-input
+			
+		section.add-recipe__section
+			.add-recipe__section-title Описание 
+			input(type="text" name="description").add-recipe__description-input.add-recipe__text-input
+	  
+		section.add-recipe__section
+			.add-recipe__section-title Изображение
+			.add-recipe__image-button Выбрать файл
+				input(type="file" name="image" class="add-recipe__image-input")
+			//- label(for="add-recipe__image-input" class="add-recipe__image-label")
+			obj(type="image/png")
+				img(class="add-recipe__image-preview" src="")
+			obj(type="image/png")
+				img(class="add-recipe__image-resized")
+	  
+		section.add-recipe__section
+			.add-recipe__section-title Ингредиенты
+			.add-recipe__input-wrapper
+				input(type="text" name="ingredient").add-recipe__ingredient-input.add-recipe__text-input
+				.add-recipe__new-ingredient-btn
+			.add-recipe__ingredients
+	  
+		section.add-recipe__section
+			.add-recipe__section-title Этапы приготовления 
+			.add-recipe__input-wrapper
+				input(type="text" name="step").add-recipe__step-input.add-recipe__text-input
+				.add-recipe__new-step-btn
+			.add-recipe__steps
 		
-	section.add-recipe__section
-		.add-recipe__section-title Название блюда 
-		input(type="text" name="title" class="add-recipe__title-input" required)
-		
-	section.add-recipe__section
-		.add-recipe__section-title Описание 
-		input(type="text" name="description" class="add-recipe__description-input")
-  
-	section.add-recipe__section
-		.add-recipe__image-button Изображение
-			input(type="file" name="image" class="add-recipe__image-input")
-		label(for="add-recipe__image-input" class="add-recipe__image-label")
-		obj(type="image/png")
-			img(class="add-recipe__image-preview" src="")
-		obj(type="image/png")
-			img(class="add-recipe__image-resized")
-  
-	section.add-recipe__section
-		.add-recipe__section-title Ингредиенты
-		.add-recipe__wrapper
-			input(type="text" name="ingredient" class="add-recipe__ingredient-input")
-			.add-recipe__new-ingredient-btn
-		.add-recipe__ingredients
-  
-	section.add-recipe__section
-		.add-recipe__section-title Этапы приготовления 
-		.add-recipe__wrapper
-			input(type="text" name="step" class="add-recipe__step-input")
-			.add-recipe__new-step-btn
-		.add-recipe__steps
-		
-	input(type="submit" value="Сохранить" class="add-recipe__save-btn")
-	input(type="reset" value="Очистить форму" class="add-recipe__reset-btn")
+		section.add-recipe__section
+			input(type="submit" value="Добавить к рецепту" class="add-recipe__save-btn")
+			input(type="reset" value="Очистить форму" class="add-recipe__reset-btn")
 
-	section
 		.add-recipe__section-title.add-recipe__result-title Результат:
 		pre(spellcheck="false" autocomplete="off" contenteditable="true").add-recipe__result-json
+
+		section.add-recipe__section
+			input(type="button" value="Сохранить рецепт" class="add-recipe__send-btn")
