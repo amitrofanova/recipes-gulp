@@ -1,0 +1,10 @@
+include ../add-recipe/add-recipe
+include ../delete-recipe/delete-recipe
+
+.dashboard.hidden
+	.dashboard__section.dashboard__add-recipe Добавить рецепт
+		.dashboard__toggler
+	+add-recipe()(class="dashboard__form")
+	.dashboard__section.dashboard__delete-recipe Удалить рецепт
+		.dashboard__toggler
+	+delete-recipe()(class="dashboard__form")

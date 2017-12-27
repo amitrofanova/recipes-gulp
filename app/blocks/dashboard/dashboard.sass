@@ -1,0 +1,41 @@
+.dashboard
+	@media(min-width: 992px)
+		margin: 0 4rem
+
+.dashboard__section
+	margin-top: calc(16px + 2rem)
+	position: relative
+	border-radius: 4px
+	padding: calc(8px + 1rem) calc(16px + 1rem)
+	background-color: $tertiary-bg-color
+	color: #fff
+	font-size: calc(8px + .6rem)
+	cursor: pointer
+	&:hover
+		text-decoration: underline
+
+.dashboard__section_active
+	border-bottom-left-radius: 0
+	border-bottom-right-radius: 0
+
+.dashboard__toggler
+	position: absolute
+	top: 50%
+	right: calc(16px + 1rem)
+	width: calc(16px + 1rem)
+	height: calc(8px + 1rem)
+	transform: translateY(-50%)
+	background: url('../images/accordion-toggler.svg') no-repeat 0 0
+	background-size: calc(16px + 1rem) calc(8px + 1rem)
+
+.dashboard__toggler_active
+	transform: translateY(-50%) rotate(180deg)
+
+.dashboard__form
+	display: none
+	border: .3rem solid $tertiary-bg-color
+	border-radius: .5rem
+	border-top-left-radius: 0
+	border-top-right-radius: 0
+	padding: 2rem
+	color: $primary-text-color
