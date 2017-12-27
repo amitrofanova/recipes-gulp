@@ -1,58 +1,45 @@
-input, select
-	border: 1px solid $secondary-text-color
-	border-radius: 3px
-	color: $primary-text-color
+.add-recipe__text-input, .add-recipe__select-input
+	height: calc(16px + 1.5rem)
+	border-top: 1px solid $secondary-bg-color
+	border-right: 1px solid $secondary-bg-color
+	border-bottom: 1px solid $secondary-bg-color
+	border-left: 1px solid $secondary-bg-color
+	box-shadow: inset 0 1px 1px $secondary-bg-color
+	font-size: calc(8px + .4rem)
 	outline: none
 
-.add-recipe
-	// display: none
-	margin-top: 3rem
-	border: 4px solid $primary-bg-color
-
 .add-recipe__section
-	margin: calc(16px + 1rem) 0
-	border-radius: 4px
 	position: relative
 	display: flex
 	flex-wrap: wrap
 	align-items: center
 	padding: 2rem calc(10px + 1rem)
-	// background-color: $tertiary-bg-color
 
 .add-recipe__section-title
 	margin-right: 2rem
 	display: inline-block
-	font-size: calc(8px + .7rem)
-	color: $secondary-text-color
-
-.add-recipe__result-title
-	color: #000
+	font-size: calc(8px + .5rem)
 
 .add-recipe__dish-group
-	height: calc(16px + 1.5rem)
-	padding: 0 .5rem
-	font-size: calc(8px + .5rem)
+	padding-left: .5rem
 
 .add-recipe__title-input, .add-recipe__description-input
-	height: calc(16px + 1.5rem)
 	flex: 2
 	padding-left: 1rem
-	font-size: calc(8px + .5rem)
 
 .add-recipe__image-button
 	display: inline-block
+	position: relative
 	width: max-content
-	border: 3px solid $secondary-bg-color
+	border: .3rem solid $tertiary-bg-color
 	border-radius: 3px
-	padding: .7rem 1rem
-	background-color: $secondary-bg-color
-	font-size: calc(8px + .5rem)
-	color: $secondary-text-color
+	padding: .5rem 1rem
+	background-color: $tertiary-bg-color
+	font-size: calc(8px + .4rem)
+	color: #fff
 	transition-duration: .4s
-	cursor: pointer
 	&:hover
 		background-color: #fff
-		border: 3px solid $secondary-text-color
 		color: $secondary-text-color
 
 .add-recipe__image-input
@@ -83,12 +70,10 @@ input, select
 	align-items: stretch
 
 .add-recipe__ingredient-input, .add-recipe__step-input
-	height: calc(16px + 1.5rem)
 	border-top-right-radius: 0
 	border-bottom-right-radius: 0
 	border-right: none
 	padding-left: 1rem
-	font-size: calc(8px + .5rem)
 	transition: color 3s
 	user-select: none
 
@@ -100,74 +85,77 @@ input, select
 
 .add-recipe__ingredients, .add-recipe__steps
 	flex-basis: 100%
+	margin-top: 1.5rem
 
 .add-recipe__new-ingredient-btn, .add-recipe__new-step-btn
 	width: calc(16px + 1.5rem)
 	height: calc(16px + 1.5rem)
 	position: relative
-	border: 1px solid $secondary-text-color
-	border-left: none
+	// border: 1px solid $secondary-text-color
+	// border-left: none
 	background-color: $secondary-bg-color
 	cursor: pointer
 	&::before
-		width: calc(10px + .5rem)
-		height: calc(10px + .5rem)
+		width: calc(10px + .7rem)
+		height: calc(10px + .7rem)
 		position: absolute
 		top: 50%
 		left: 50%
 		transform: translate(-50%, -50%)
-		content: url('../images/add-recipe__new-item-btn.svg')
+		background-image: url('../images/add-recipe__new-item-btn.svg')
+		background-size: contain
+		content: ''
 	&:hover
 		background-color: #eee
 
 .add-recipe__new-item
 	display: inline-block
-	margin: 1.5rem .5rem 0 .5rem
+	margin: 1rem calc(16px + 3rem) 1rem 0
 	position: relative
-	padding-right: calc(8px + 1rem)
-	padding-left: .5rem
-	line-height: 2rem
-	@media (max-width: 767px)
-		line-height: 4rem
-		font-size: calc(8px + .5rem)
-	background-color: $primary-bg-color
-	color: $primary-text-color
+	padding: .5rem
+	background-color: $tertiary-bg-color
+	font-size: calc(8px + .5rem)
+	color: #fff
 
 .add-recipe__delete-item
 	position: absolute
 	top: 0
-	right: 0
-	padding-left: .3rem
-	line-height: 2rem
-	@media (max-width: 767px)
-		line-height: 4rem
-		font-size: calc(10px + .5rem)
-	background-color: #fff
-	color: $secondary-text-color
-	font-weight: 700
-	width: calc(8px + .5rem)
+	left: 100%
+	background-color: $secondary-bg-color
+	width: calc(16px + 1rem)
 	height: 100%
-	content: 'x'
 	cursor: pointer
+	&::after
+		width: calc(6px + .5rem)
+		height: calc(6px + .5rem)
+		position: absolute
+		top: 50%
+		left: 50%
+		transform: translate(-50%, -50%)
+		content: ''
+		background-image: url('../images/nav__close-button.svg')
+		background-size: cover
+	&:hover
+		background-color: #eee
 
 .add-recipe__save-btn, .add-recipe__reset-btn, .add-recipe__send-btn
-	margin: 2rem calc(10px + 1rem) 4rem
+	margin: 1rem 4rem 1rem 0
 	width: max-content
-	border: 3px solid $secondary-bg-color
+	border: .3rem solid $tertiary-bg-color
 	border-radius: 3px
-	padding: .7rem 1rem
-	background-color: $secondary-bg-color
+	padding: .5rem 1rem
+	background-color: $tertiary-bg-color
 	font-size: calc(8px + .5rem)
 	font-weight: 700
-	color: $secondary-text-color
+	color: #fff
 	transition-duration: .4s
 	cursor: pointer
 	&:hover
 		background-color: #fff
-		border: 3px solid $secondary-text-color
 		color: $secondary-text-color
 
 .add-recipe__result-title
+	padding-top: calc(10px + 1rem)
 	padding-left: calc(10px + 1rem)
 
 .add-recipe__result-json
@@ -199,6 +187,7 @@ input, select
 .add-recipe__modal-text
 	text-align: center
 	font-size: calc(8px + .5rem)
+	color: $secondary-text-color
 
 .add-recipe__close-modal
 	display: block
