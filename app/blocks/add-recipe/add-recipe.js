@@ -3,7 +3,7 @@ import {
 	UNABLE_LOAD_FILE_ALERT,
 	EMPTY_INGREDIENT_ALERT,
 	INITIAL_RESULT_TITLE,
-	SUCCESSFULLY_ADDED_RECIPE_ALERT
+	ADDED_RECIPE_ALERT
 }from '../../resources/strings/ru.js';
 
 
@@ -95,7 +95,7 @@ function addIngredient() {
 	const deleteElCls = deleteItemCls.substr(1);
 
 	if ((ingredient !== '') && (ingredient !== EMPTY_INGREDIENT_ALERT)) {
-		const newEl = '<div class="' + newElCls + '">' + ingredient + '<div class="' + deleteElCls + '">x</div></div>';
+		const newEl = '<div class="' + newElCls + '">' + ingredient + '<div class="' + deleteElCls + '"></div></div>';
 
 		$(ingredientsCls).append(newEl);
 		$(ingredientInputCls).val('');
@@ -114,7 +114,7 @@ function addStep() {
 	const deleteElCls = deleteItemCls.substr(1);
 
 	if (step !== '') {
-		const newEl = '<div class=' + newElCls + '>' + step +	'<div class="' + deleteElCls + '">x</div></div>';
+		const newEl = '<div class=' + newElCls + '>' + step +	'<div class="' + deleteElCls + '"></div></div>';
 		$(stepsCls).append(newEl);
 		$(stepInputCls).val('');
 	}
@@ -221,6 +221,24 @@ function addRecipe(evt) {
 }
 
 
+function showSuccessAlert() {
+	$('.add-recipe')
+		.append(
+			'<div class="add-recipe__modal">' +
+				'<div class="add-recipe__modal-content">' +
+					'<div class="add-recipe__modal-text">' + ADDED_RECIPE_ALERT + '</div>' +
+					'<div class="add-recipe__close-modal"></div>' +
+				'</div>' +
+			'</div>'
+		);
+}
+
+
+function hideSuccessAlert() {
+	$('.add-recipe__modal').remove();
+}
+
+
 function addContent(){
 	const selectedGroup = dishGroupInputCls + ' option:selected';
 	const group = $(selectedGroup).text();
@@ -233,7 +251,7 @@ function addContent(){
 		url: jsonPath + '?group=' + group,
 		dataType: 'json',
 		data: callback(),
-		success(data){
+		success(){
 			showSuccessAlert();
 		}
 	});
@@ -248,44 +266,6 @@ export function resetForm() {
 	$(imageLabelCls).text('');
 	$(resultTitleCls).text(INITIAL_RESULT_TITLE);
 	$(resultJsonCls).text('');
-}
-
-
-function deleteRecipe(){
-	const selectedGroup = dishGroupInputCls + ' option:selected';
-	const group = $(selectedGroup).text();
-	const recipeToDelete = $('.add-recipe__recipe-to-delete').text();
-
-	$.ajax({
-		type: 'DELETE',
-		url: jsonPath + '?group=' + group + '&recipe=' + recipeToDelete,
-		dataType: 'json',
-		success(data){
-			console.log(data);
-		},
-		error(data, status){
-			console.log(data);
-			console.log(status);
-		}
-	});
-}
-
-
-function showSuccessAlert() {
-	$('.add-recipe')
-		.append(
-			'<div class="add-recipe__modal">' +
-				'<div class="add-recipe__modal-content">' +
-					'<div class="add-recipe__modal-text">' + SUCCESSFULLY_ADDED_RECIPE_ALERT + '</div>' +
-					'<div class="add-recipe__close-modal"></div>' +
-				'</div>' +
-			'</div>'
-		);
-}
-
-
-function hideSuccessAlert() {
-	$('.add-recipe__modal').remove();
 }
 
 
@@ -304,7 +284,6 @@ $(document).ready(function (){
 	$(document).on('click', '.add-recipe__close-modal', hideSuccessAlert);
 
 
-	$(document).on('click', '.add-recipe__delete-recipe', deleteRecipe);
 	// $(imagePreviewCls).on('load', resizeImage);
 
 });
