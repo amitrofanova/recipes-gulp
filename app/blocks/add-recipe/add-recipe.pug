@@ -46,11 +46,5 @@ mixin add-recipe
 			.add-recipe__steps
 		
 		section.add-recipe__section
-			input(type="submit" value="Добавить к рецепту" class="add-recipe__save-btn")
+			input(type="submit" value="Сохранить" class="add-recipe__save-btn")
 			input(type="reset" value="Очистить форму" class="add-recipe__reset-btn")
-
-		.add-recipe__section-title.add-recipe__result-title Результат:
-		pre(spellcheck="false" autocomplete="off" contenteditable="true").add-recipe__result-json
-
-		section.add-recipe__section
-			input(type="button" value="Сохранить рецепт" class="add-recipe__send-btn")
