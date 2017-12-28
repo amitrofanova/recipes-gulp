@@ -200,25 +200,22 @@ function deleteItem() {
 }
 
 
-function addRecipe(evt) {
-	// const selectedGroup = dishGroupInputCls + ' option:selected';
-	// const group = $(selectedGroup).text();
-	const title = $(titleInputCls).val();
-	const description = $(descriptionInputCls).val();
-	// var image = $(imageResizedCls).attr('src');
-	const image = $(imagePreviewCls).attr('src');
-	const newRecipe = {
-		title,
-		description,
-		image,
-		components: getIngredients(),
-		steps: getSteps()
-	};
-	const newRecipeToJSON = JSON.stringify(newRecipe, null, '\t');
-	// $(resultTitleCls).text(RESULT_ALERT + '"' + group + '"');
-	$(resultJsonCls).html(newRecipeToJSON);
-	evt.preventDefault();
-}
+// function addRecipe(evt) {
+// 	const title = $(titleInputCls).val();
+// 	const description = $(descriptionInputCls).val();
+// 	const image = $(imagePreviewCls).attr('src');
+// 	const newRecipe = {
+// 		title,
+// 		description,
+// 		image,
+// 		components: getIngredients(),
+// 		steps: getSteps()
+// 	};
+// 	const newRecipeToJSON = JSON.stringify(newRecipe, null, '\t');
+// 	$(resultJsonCls).html(newRecipeToJSON);
+// 	$(window).off('beforeunload');
+// 	evt.preventDefault();
+// }
 
 
 function showSuccessAlert() {
@@ -234,27 +231,44 @@ function showSuccessAlert() {
 }
 
 
+function createRecipe() {
+	// const selectedGroup = dishGroupInputCls + ' option:selected';
+	// const group = $(selectedGroup).text();
+	const title = $(titleInputCls).val();
+	const description = $(descriptionInputCls).val();
+	// var image = $(imageResizedCls).attr('src');
+	const image = $(imagePreviewCls).attr('src');
+	const newRecipe = {
+		title,
+		description,
+		image,
+		components: getIngredients(),
+		steps: getSteps()
+	};
+	const newRecipeToJSON = JSON.stringify(newRecipe, null, '\t');
+	return newRecipeToJSON;
+}
+
 function hideSuccessAlert() {
 	$('.add-recipe__modal').remove();
 }
 
 
-function addContent(){
+function saveRecipe(evt){
 	const selectedGroup = dishGroupInputCls + ' option:selected';
 	const group = $(selectedGroup).text();
-	const callback = function () {
-		return $(resultJsonCls).text();
-	};
-
 	$.ajax({
 		type: 'POST',
 		url: jsonPath + '?group=' + group,
 		dataType: 'json',
-		data: callback(),
+		data: createRecipe(),
 		success(){
 			showSuccessAlert();
 		}
 	});
+
+	window.onbeforeunload = null;
+	evt.preventDefault();
 }
 
 
@@ -276,9 +290,8 @@ $(document).ready(function (){
 	$(document).on('click', newStepBtnCls, addStep);
 	$(document).on('focus', ingredientInputCls, clearInput);
 	$(document).on('click', deleteItemCls, deleteItem);
-	$(document).on('submit', formCls, addRecipe);
+	$(document).on('submit', formCls, saveRecipe);
 	$(document).on('click', resetBtnCls, resetForm);
-	$(document).on('click', '.add-recipe__send-btn', addContent);
 
 	$('.add-recipe :input').change(function () {
 		$('.add-recipe').data('changed', true);
@@ -287,10 +300,8 @@ $(document).ready(function (){
 
 	$(document).on('click', '.add-recipe__close-modal', hideSuccessAlert);
 
-
-	window.onbeforeunload = function() {
-		if ((window.location.pathname == '/dashboard.html') && ($('.add-recipe').data('changed') == true)) {
-			console.log(window.location.pathname); 
+	window.onbeforeunload = function () {
+		if ((window.location.pathname === '/dashboard.html') && ($('.add-recipe').data('changed') === true)) {
 			return 'sure?';
 		}
 	};
