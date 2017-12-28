@@ -280,9 +280,20 @@ $(document).ready(function (){
 	$(document).on('click', resetBtnCls, resetForm);
 	$(document).on('click', '.add-recipe__send-btn', addContent);
 
+	$('.add-recipe :input').change(function () {
+		$('.add-recipe').data('changed', true);
+		console.log($('.add-recipe').data('changed'));
+	});
 
 	$(document).on('click', '.add-recipe__close-modal', hideSuccessAlert);
 
+
+	window.onbeforeunload = function() {
+		if ((window.location.pathname == '/dashboard.html') && ($('.add-recipe').data('changed') == true)) {
+			console.log(window.location.pathname); 
+			return 'sure?';
+		}
+	};
 
 	// $(imagePreviewCls).on('load', resizeImage);
 
