@@ -49,7 +49,25 @@
 
 .nav__link
 	display: block
-	color: #49130c
-	font-size: calc(10px + .5rem)
+	position: relative
+	color: $primary-text-color
+	font-weight: 700
+	text-transform: uppercase
+	font-size: calc(8px + .5rem)
 	&:hover
-		text-decoration: underline
+		cursor: pointer
+		opacity: .8
+	&::after
+		position: absolute
+		bottom: 0
+		left: 0
+		right: 0
+		margin: auto
+		width: 0%
+		content: '.'
+		color: transparent
+		background: $primary-text-color
+		height: 1px
+		transition: .5s
+	&:hover::after
+		width: 100%
