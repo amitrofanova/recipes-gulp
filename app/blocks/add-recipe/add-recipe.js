@@ -9,6 +9,7 @@ import {
 
 // const jsonPath = 'http://192.168.1.46:5000/api/recipes';
 const jsonPath = 'https://amitrofanova.pythonanywhere.com/api/recipes';
+const pathToNames = 'https://amitrofanova.pythonanywhere.com/api/recipes/names';
 
 const CLASS_PREFIX = '.add-recipe';
 const formCls = CLASS_PREFIX, // eslint-disable-line one-var
@@ -272,6 +273,49 @@ function saveRecipe(evt){
 }
 
 
+function getGroupsList(){
+	var groups = [];
+
+	const callback = function (dishGroups) {
+		for (let i = 0; i < dishGroups.length; i++) {
+			groups.push(dishGroups[i].group);
+		}
+	};
+
+	$.ajax({
+		url: pathToNames,
+		dataType: 'json',
+		success(data){
+			callback(data);
+		}
+	});
+
+	return groups;
+}
+
+
+function getRecipesList(group) {
+	const url = pathToNames + '?group=' + group;
+	var recipesList = [];
+
+	const callback = function(dishGroup) {
+		for (let i = 0; i < dishGroup.recipes.length; i++) {
+			recipesList.push(dishGroup.recipes[i])
+		}
+	}
+
+	$.ajax({
+		url,
+		dataType: 'json',
+		success(data){
+			callback(data);
+		}
+	});
+
+	return recipesList;
+}
+
+
 export function resetForm() {
 	$(formCls)[0].reset();
 	$(newItemCls).remove();
@@ -295,7 +339,6 @@ $(document).ready(function (){
 
 	$('.add-recipe :input').change(function () {
 		$('.add-recipe').data('changed', true);
-		console.log($('.add-recipe').data('changed'));
 	});
 
 	$(document).on('click', '.add-recipe__close-modal', hideSuccessAlert);
@@ -306,6 +349,8 @@ $(document).ready(function (){
 		}
 	};
 
+	console.log(getGroupsList());
+	console.log(getRecipesList("Хлеб"));
 	// $(imagePreviewCls).on('load', resizeImage);
 
 });
