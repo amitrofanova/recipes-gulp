@@ -315,6 +315,35 @@ function getRecipesList(group) {
 	return recipesList;
 }
 
+function getList(group) {
+	var result = [];
+
+	let url = pathToNames;
+	var callback = function (data) {
+		for (let i = 0; i < data.length; i++) {
+			result.push(data[i].group);
+		}
+	};
+
+	if (group) {
+		url += '?group=' + group;
+		var callback = function(data) {
+			for (let i = 0; i < data.recipes.length; i++) {
+				result.push(data.recipes[i])
+			}
+		}
+	}
+
+	$.ajax({
+		url,
+		dataType: 'json',
+		success(data){
+			callback(data);
+		}
+	});
+
+	return result;
+}
 
 export function resetForm() {
 	$(formCls)[0].reset();
@@ -349,8 +378,8 @@ $(document).ready(function (){
 		}
 	};
 
-	console.log(getGroupsList());
-	console.log(getRecipesList("Хлеб"));
+	console.log(getList());
+	console.log(getList("Напитки"));
 	// $(imagePreviewCls).on('load', resizeImage);
 
 });
