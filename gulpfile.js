@@ -21,7 +21,7 @@ gulp.task('styles', function () {
 });
 
 gulp.task('templates', function () {
-	return gulp.src('app/pages/index.pug')
+	return gulp.src('app/pages/*')
 		.pipe(pug())
 		.pipe(gulp.dest('dist'))
 		.pipe(browserSync.reload({stream: true}));
