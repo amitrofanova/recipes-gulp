@@ -27,7 +27,9 @@ body {
 	padding: 0;
 }
 
-main {
+
+// For correct 'block' display in IE
+article, aside, footer, header, main, nav, section {
 	display: block;
 }
 
