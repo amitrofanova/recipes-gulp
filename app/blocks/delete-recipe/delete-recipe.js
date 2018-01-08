@@ -4,6 +4,11 @@ import $ from 'jquery';
 const jsonPath = 'https://amitrofanova.pythonanywhere.com/api/recipes';
 const pathToNames = 'https://amitrofanova.pythonanywhere.com/api/recipes/names';
 
+const CLASS_PREFIX = '.delete-recipe';
+const groupCls = CLASS_PREFIX + '__dish-group', // eslint-disable-line one-var
+	recipeCls = CLASS_PREFIX + '__recipe-to-delete',
+	deleteBtnCls = CLASS_PREFIX + '__delete-recipe';
+
 
 function getList(callback, group) {
 	const result = [];
@@ -28,7 +33,7 @@ function getList(callback, group) {
 function createGroupsSelect() {
 	const callback = function (data) {
 		for (let i = 0; i < data.length; i++) {
-			$('.delete-recipe__dish-group').append(
+			$(groupCls).append(
 				'<option value="' + data[i].group + '">' + data[i].group + '</option>'
 			);
 		}
@@ -38,19 +43,19 @@ function createGroupsSelect() {
 
 
 function clearRecipesSelect() {
-	$('.delete-recipe__recipe-to-delete').text('');
+	$(recipeCls).text('');
 }
 
 
 function createRecipesSelect() {
 	clearRecipesSelect();
 
-	const selectedGroup = '.delete-recipe__dish-group option:selected';
+	const selectedGroup = groupCls + ' option:selected';
 	const group = $(selectedGroup).text();
 
 	const callback = function (data) {
 		for (let i = 0; i < data.recipes.length; i++) {
-			$('.delete-recipe__recipe-to-delete').append(
+			$(recipeCls).append(
 				'<option value="' + data.recipes[i] + '">' + data.recipes[i] + '</option>'
 			);
 		}
@@ -60,9 +65,9 @@ function createRecipesSelect() {
 
 
 function deleteRecipe() {
-	const selectedGroup = '.delete-recipe__dish-group option:selected';
+	const selectedGroup = groupCls + ' option:selected';
 	const group = $(selectedGroup).text();
-	const selectedRecipe = '.delete-recipe__recipe-to-delete option:selected';
+	const selectedRecipe = recipeCls + ' option:selected';
 	const recipeToDelete = $(selectedRecipe).text();
 	const url = jsonPath + '?group=' + group + '&recipe=' + recipeToDelete;
 
@@ -84,7 +89,7 @@ function deleteRecipe() {
 $(document).ready(function (){
 
 	createGroupsSelect();
-	$(document).on('change', '.delete-recipe__dish-group', createRecipesSelect);
-	$(document).on('click', '.delete-recipe__delete-recipe', deleteRecipe);
+	$(document).on('change', groupCls, createRecipesSelect);
+	$(document).on('click', deleteBtnCls, deleteRecipe);
 
 });
