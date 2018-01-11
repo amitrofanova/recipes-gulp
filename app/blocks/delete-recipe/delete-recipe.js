@@ -37,7 +37,10 @@ function createGroupsSelect() {
 				'<option value="' + data[i].group + '">' + data[i].group + '</option>'
 			);
 		}
+		$(groupCls).val(data[0].group);
+		console.log($(groupCls).val());
 	};
+
 	getList(callback);
 }
 
@@ -50,8 +53,7 @@ function clearRecipesSelect() {
 function createRecipesSelect() {
 	clearRecipesSelect();
 
-	const selectedGroup = groupCls + ' option:selected';
-	const group = $(selectedGroup).text();
+	const group = $(groupCls).val();
 
 	const callback = function (data) {
 		for (let i = 0; i < data.recipes.length; i++) {
@@ -60,15 +62,14 @@ function createRecipesSelect() {
 			);
 		}
 	};
+
 	getList(callback, group);
 }
 
 
 function deleteRecipe() {
-	const selectedGroup = groupCls + ' option:selected';
-	const group = $(selectedGroup).text();
-	const selectedRecipe = recipeCls + ' option:selected';
-	const recipeToDelete = $(selectedRecipe).text();
+	const group = $(groupCls).val();
+	const recipeToDelete = $(recipeCls).val();
 	const url = jsonPath + '?group=' + group + '&recipe=' + recipeToDelete;
 
 	$.ajax({
@@ -89,6 +90,7 @@ function deleteRecipe() {
 $(document).ready(function (){
 
 	createGroupsSelect();
+
 	$(document).on('change', groupCls, createRecipesSelect);
 	$(document).on('click', deleteBtnCls, deleteRecipe);
 
