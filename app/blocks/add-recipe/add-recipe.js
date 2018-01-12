@@ -1,5 +1,9 @@
 import $ from 'jquery';
-import {UNABLE_LOAD_FILE_ALERT,	EMPTY_INGREDIENT_ALERT,	INITIAL_RESULT_TITLE} from '../../resources/strings/ru.js';
+import {
+	UNABLE_LOAD_FILE_ALERT,
+	EMPTY_INGREDIENT_ALERT,
+	INITIAL_RESULT_TITLE,
+	ADDED_RECIPE_ALERT} from '../../resources/strings/ru.js';
 import {showSuccessAlert, hideSuccessAlert} from '../modal-alert/modal-alert.js';
 
 
@@ -232,13 +236,14 @@ function createRecipe() {
 function saveRecipe(evt){
 	const selectedGroup = dishGroupInputCls + ' option:selected';
 	const group = $(selectedGroup).text();
+	const form = $(this);
 	$.ajax({
 		type: 'POST',
 		url: jsonPath + '?group=' + group,
 		dataType: 'json',
 		data: createRecipe(),
 		success(){
-			showSuccessAlert();
+			showSuccessAlert(form, ADDED_RECIPE_ALERT);
 		},
 		error(xhr) {
 			console.error(xhr.responseText);

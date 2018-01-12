@@ -1,14 +1,12 @@
 import $ from 'jquery';
 
-import {ADDED_RECIPE_ALERT}from '../../resources/strings/ru.js';
 
-
-export function showSuccessAlert() {
-	$('.add-recipe')
+export function showSuccessAlert(form, alert) {
+	form
 		.append(
 			'<div class="modal-alert">' +
 				'<div class="modal-alert__content">' +
-					'<div class="modal-alert__text">' + ADDED_RECIPE_ALERT + '</div>' +
+					'<div class="modal-alert__text">' + alert + '</div>' +
 					'<div class="modal-alert__close-btn"></div>' +
 				'</div>' +
 			'</div>'
