@@ -1,15 +1,11 @@
 import $ from 'jquery';
-import {
-	UNABLE_LOAD_FILE_ALERT,
-	EMPTY_INGREDIENT_ALERT,
-	INITIAL_RESULT_TITLE,
-	ADDED_RECIPE_ALERT
-}from '../../resources/strings/ru.js';
+import {UNABLE_LOAD_FILE_ALERT,	EMPTY_INGREDIENT_ALERT,	INITIAL_RESULT_TITLE} from '../../resources/strings/ru.js';
+import {showSuccessAlert, hideSuccessAlert} from '../modal-alert/modal-alert.js';
 
 
 // const jsonPath = 'http://192.168.1.46:5000/api/recipes';
 const jsonPath = 'https://amitrofanova.pythonanywhere.com/api/recipes';
-const pathToNames = 'https://amitrofanova.pythonanywhere.com/api/recipes/names';
+// const pathToNames = 'https://amitrofanova.pythonanywhere.com/api/recipes/names';
 
 const CLASS_PREFIX = '.add-recipe';
 const formCls = CLASS_PREFIX, // eslint-disable-line one-var
@@ -201,35 +197,17 @@ function deleteItem() {
 }
 
 
-// function addRecipe(evt) {
-// 	const title = $(titleInputCls).val();
-// 	const description = $(descriptionInputCls).val();
-// 	const image = $(imagePreviewCls).attr('src');
-// 	const newRecipe = {
-// 		title,
-// 		description,
-// 		image,
-// 		components: getIngredients(),
-// 		steps: getSteps()
-// 	};
-// 	const newRecipeToJSON = JSON.stringify(newRecipe, null, '\t');
-// 	$(resultJsonCls).html(newRecipeToJSON);
-// 	$(window).off('beforeunload');
-// 	evt.preventDefault();
+// function showSuccessAlert() {
+// 	$('.add-recipe')
+// 		.append(
+// 			'<div class="add-recipe__modal">' +
+// 				'<div class="add-recipe__modal-content">' +
+// 					'<div class="add-recipe__modal-text">' + ADDED_RECIPE_ALERT + '</div>' +
+// 					'<div class="add-recipe__close-modal"></div>' +
+// 				'</div>' +
+// 			'</div>'
+// 		);
 // }
-
-
-function showSuccessAlert() {
-	$('.add-recipe')
-		.append(
-			'<div class="add-recipe__modal">' +
-				'<div class="add-recipe__modal-content">' +
-					'<div class="add-recipe__modal-text">' + ADDED_RECIPE_ALERT + '</div>' +
-					'<div class="add-recipe__close-modal"></div>' +
-				'</div>' +
-			'</div>'
-		);
-}
 
 
 function createRecipe() {
@@ -250,10 +228,6 @@ function createRecipe() {
 	return newRecipeToJSON;
 }
 
-function hideSuccessAlert() {
-	$('.add-recipe__modal').remove();
-}
-
 
 function saveRecipe(evt){
 	const selectedGroup = dishGroupInputCls + ' option:selected';
@@ -265,6 +239,9 @@ function saveRecipe(evt){
 		data: createRecipe(),
 		success(){
 			showSuccessAlert();
+		},
+		error(xhr) {
+			console.error(xhr.responseText);
 		}
 	});
 
@@ -272,78 +249,6 @@ function saveRecipe(evt){
 	evt.preventDefault();
 }
 
-
-function getGroupsList(){
-	var groups = [];
-
-	const callback = function (dishGroups) {
-		for (let i = 0; i < dishGroups.length; i++) {
-			groups.push(dishGroups[i].group);
-		}
-	};
-
-	$.ajax({
-		url: pathToNames,
-		dataType: 'json',
-		success(data){
-			callback(data);
-		}
-	});
-
-	return groups;
-}
-
-
-function getRecipesList(group) {
-	const url = pathToNames + '?group=' + group;
-	var recipesList = [];
-
-	const callback = function(dishGroup) {
-		for (let i = 0; i < dishGroup.recipes.length; i++) {
-			recipesList.push(dishGroup.recipes[i])
-		}
-	}
-
-	$.ajax({
-		url,
-		dataType: 'json',
-		success(data){
-			callback(data);
-		}
-	});
-
-	return recipesList;
-}
-
-function getList(group) {
-	var result = [];
-
-	let url = pathToNames;
-	var callback = function (data) {
-		for (let i = 0; i < data.length; i++) {
-			result.push(data[i].group);
-		}
-	};
-
-	if (group) {
-		url += '?group=' + group;
-		var callback = function(data) {
-			for (let i = 0; i < data.recipes.length; i++) {
-				result.push(data.recipes[i])
-			}
-		}
-	}
-
-	$.ajax({
-		url,
-		dataType: 'json',
-		success(data){
-			callback(data);
-		}
-	});
-
-	return result;
-}
 
 export function resetForm() {
 	$(formCls)[0].reset();
@@ -370,7 +275,7 @@ $(document).ready(function (){
 		$('.add-recipe').data('changed', true);
 	});
 
-	$(document).on('click', '.add-recipe__close-modal', hideSuccessAlert);
+	$(document).on('click', '.modal-alert__close-btn', hideSuccessAlert);
 
 	window.onbeforeunload = function () {
 		if ((window.location.pathname === '/dashboard.html') && ($('.add-recipe').data('changed') === true)) {
@@ -378,8 +283,6 @@ $(document).ready(function (){
 		}
 	};
 
-	console.log(getList());
-	console.log(getList("Напитки"));
 	// $(imagePreviewCls).on('load', resizeImage);
 
 });
