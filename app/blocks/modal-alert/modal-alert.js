@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
 
-export function showSuccessAlert(form, alert) {
+export function showAlert(form, alert) {
 	form
 		.append(
 			'<div class="modal-alert">' +
@@ -14,6 +14,6 @@ export function showSuccessAlert(form, alert) {
 }
 
 
-export function hideSuccessAlert() {
+export function hideAlert() {
 	$('.modal-alert').remove();
 }
