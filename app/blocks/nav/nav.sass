@@ -57,17 +57,18 @@
 	&:hover
 		cursor: pointer
 		opacity: .8
-	&::after
-		position: absolute
-		bottom: 0
-		left: 0
-		right: 0
-		margin: auto
-		width: 0%
-		content: '.'
-		color: transparent
-		background: $primary-text-color
-		height: 1px
-		transition: .5s
-	&:hover::after
-		width: 100%
+	@media (min-width: 768px)
+		&::after
+			position: absolute
+			bottom: 0
+			left: 0
+			right: 0
+			margin: auto
+			width: 0%
+			content: '.'
+			color: transparent
+			background: $primary-text-color
+			height: 1px
+			transition: .5s
+		&:hover::after
+			width: 100%
