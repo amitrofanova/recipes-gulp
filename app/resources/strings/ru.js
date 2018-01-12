@@ -4,6 +4,8 @@ export const EMPTY_INGREDIENT_ALERT = 'Укажите ингредиент';
 export const INITIAL_RESULT_TITLE = 'Результат:';
 export const RESULT_ALERT = 'Скопируйте результат в группу ';
 export const ADDED_RECIPE_ALERT = 'Рецепт сохранён!';
+export const DELETED_RECIPE_ALERT = 'Рецепт удалён!';
+export const ERROR_ALERT = 'Произошла ошибка!';
 
 // Full recipe constants
 export const INGREDIENTS_TITLE = 'Что понадобится:';
