@@ -1,5 +1,7 @@
 import $ from 'jquery';
-
+import {
+	DELETED_RECIPE_ALERT}from '../../resources/strings/ru.js';
+import {showAlert, hideAlert}from '../modal-alert/modal-alert.js';
 
 const jsonPath = 'https://amitrofanova.pythonanywhere.com/api/recipes';
 const pathToNames = 'https://amitrofanova.pythonanywhere.com/api/recipes/names';
@@ -71,17 +73,20 @@ function deleteRecipe() {
 	const group = $(groupCls).val();
 	const recipeToDelete = $(recipeCls).val();
 	const url = jsonPath + '?group=' + group + '&recipe=' + recipeToDelete;
+	const form = $(CLASS_PREFIX);
 
 	$.ajax({
 		type: 'DELETE',
 		url,
 		dataType: 'json',
 		success(data){
+			showAlert(form, DELETED_RECIPE_ALERT);
+			createRecipesSelect();
 			console.log(data);
 		},
-		error(data, status){
-			console.log(data);
-			console.log(status);
+		error(xhr) {
+			const err = ERROR_ALERT + xhr.responseText;
+			showAlert(form, err);
 		}
 	});
 }
@@ -93,5 +98,6 @@ $(document).ready(function (){
 
 	$(document).on('change', groupCls, createRecipesSelect);
 	$(document).on('click', deleteBtnCls, deleteRecipe);
+	$(document).on('click', '.modal-alert__close-btn', hideAlert);
 
 });

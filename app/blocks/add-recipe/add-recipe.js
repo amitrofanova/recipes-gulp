@@ -3,8 +3,9 @@ import {
 	UNABLE_LOAD_FILE_ALERT,
 	EMPTY_INGREDIENT_ALERT,
 	INITIAL_RESULT_TITLE,
-	ADDED_RECIPE_ALERT} from '../../resources/strings/ru.js';
-import {showSuccessAlert, hideSuccessAlert} from '../modal-alert/modal-alert.js';
+	ADDED_RECIPE_ALERT,
+	ERROR_ALERT}from '../../resources/strings/ru.js';
+import {showAlert, hideAlert}from '../modal-alert/modal-alert.js';
 
 
 // const jsonPath = 'http://192.168.1.46:5000/api/recipes';
@@ -201,22 +202,7 @@ function deleteItem() {
 }
 
 
-// function showSuccessAlert() {
-// 	$('.add-recipe')
-// 		.append(
-// 			'<div class="add-recipe__modal">' +
-// 				'<div class="add-recipe__modal-content">' +
-// 					'<div class="add-recipe__modal-text">' + ADDED_RECIPE_ALERT + '</div>' +
-// 					'<div class="add-recipe__close-modal"></div>' +
-// 				'</div>' +
-// 			'</div>'
-// 		);
-// }
-
-
 function createRecipe() {
-	// const selectedGroup = dishGroupInputCls + ' option:selected';
-	// const group = $(selectedGroup).text();
 	const title = $(titleInputCls).val();
 	const description = $(descriptionInputCls).val();
 	// var image = $(imageResizedCls).attr('src');
@@ -236,17 +222,18 @@ function createRecipe() {
 function saveRecipe(evt){
 	const selectedGroup = dishGroupInputCls + ' option:selected';
 	const group = $(selectedGroup).text();
-	const form = $(this);
+	const form = $(CLASS_PREFIX);
 	$.ajax({
 		type: 'POST',
 		url: jsonPath + '?group=' + group,
 		dataType: 'json',
 		data: createRecipe(),
 		success(){
-			showSuccessAlert(form, ADDED_RECIPE_ALERT);
+			showAlert(form, ADDED_RECIPE_ALERT);
 		},
 		error(xhr) {
-			console.error(xhr.responseText);
+			const err = ERROR_ALERT + xhr.responseText;
+			showAlert(form, err);
 		}
 	});
 
@@ -280,7 +267,7 @@ $(document).ready(function (){
 		$('.add-recipe').data('changed', true);
 	});
 
-	$(document).on('click', '.modal-alert__close-btn', hideSuccessAlert);
+	$(document).on('click', '.modal-alert__close-btn', hideAlert);
 
 	window.onbeforeunload = function () {
 		if ((window.location.pathname === '/dashboard.html') && ($('.add-recipe').data('changed') === true)) {
