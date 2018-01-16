@@ -1,0 +1,23 @@
+.auth-form
+	.auth-form__inner
+	.auth-form__content
+		
+		.auth-form__tabs
+			a(href="#login" class="auth-form__tab auth-form__tab_active") Login
+			a(href="#register" class="auth-form__tab") Register
+			
+		form.auth-form__form.auth-form__login-form.auth-form__form_active#login
+			.auth-form__header Welcome to Recipe Book
+			.auth-form__sub-header Your own recipes collection
+			input(type="text" placeholder="Username" class="auth-form__login-username" required)
+			input(type="password" placeholder="Password" class="auth-form__login-password" required)
+			input(type="submit" value="Login" class="auth-form__login-submit auth-form__button")
+			
+		form.auth-form__form.auth-form__register-form.auth-form__form_hidden#register
+			.auth-form__header Are you new to Recipe Book?
+			.auth-form__sub-header Sign up with email
+			input(type="text" placeholder="Email" class="auth-form__register-email" required)
+			input(type="text" placeholder="Username" class="auth-form__register-username" required)
+			input(type="password" placeholder="Password (use at least 6 characters)" class="auth-form__register-password" required)
+			input(type="password" placeholder="Confirm password" class="auth-form__register-password-confirm" required)
+			input(type="submit" value="Sign up" class="auth-form__register-submit auth-form__button")

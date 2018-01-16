@@ -1,0 +1,84 @@
+.auth-form
+	background: url('../images/index-bg.png') repeat 0 0
+
+.auth-form__inner
+	background-color: #000
+	min-height: 100vh
+	opacity: .6
+
+// TODO: move positioning to parent block
+.auth-form__content
+	position: fixed
+	top: 50%
+	left: 50%
+	transform: translate(-50%, -50%)
+	width: calc(200px + 20rem)
+	@media (max-width: 575px)
+		max-width: 100%
+	border: 1px solid #000
+	border-radius: 4px
+	background-color: #fff
+
+.auth-form__tab
+	display: inline-block
+	width: 50%
+	padding: 10px 20px
+	background-color: #ccc
+	text-align: center
+	font-size: calc(12px + .5rem)
+	color: lighten(#000, 20%)
+	&:hover
+		background-color: lighten(#ccc, 10%)
+	&:first-child
+		border-top-left-radius: 4px
+	&:last-child
+		border-top-right-radius: 4px
+
+.auth-form__tab_active
+	background-color: #fff
+	&:hover
+		background-color: darken(#fff, 2%)
+
+.auth-form__form
+	padding: calc(16px + 1rem)
+
+.auth-form__form_active
+	display: block
+
+.auth-form__form_hidden
+	display: none
+
+.auth-form__header
+	text-align: center
+	font-size: calc(14px + 1rem)
+
+.auth-form__sub-header
+	text-align: center
+	font-size: calc(10px + 1rem)
+
+.auth-form input
+	font-size: calc(10px + .4rem)
+
+.auth-form input[type=text], input[type=password]
+	display: block
+	margin: calc(10px + 1rem) 0
+	width: calc(100% - 1px)
+	border: 1px solid #ccc
+	padding: 10px 15px
+
+.auth-form__button
+	margin-bottom: calc(10px + 1rem)
+	padding: 8px 20px
+	border: 1px solid #ccc
+	border-radius: 4px
+	background-color: #ccc
+	color: #fff
+	transition: 500ms
+	cursor: pointer
+	&:hover
+		background-color: #fff
+		color: #000
+
+.auth-form__error
+	font-size: calc(10px + .5rem)
+	color: red
