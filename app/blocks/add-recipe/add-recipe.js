@@ -1,11 +1,12 @@
 import $ from 'jquery';
+
 import {
 	UNABLE_LOAD_FILE_ALERT,
 	EMPTY_INGREDIENT_ALERT,
-	INITIAL_RESULT_TITLE,
 	ADDED_RECIPE_ALERT,
 	ERROR_ALERT}from '../../resources/strings/ru.js';
-import {showAlert, hideAlert}from '../modal-alert/modal-alert.js';
+
+import {showAlert}from '../modal-alert/modal-alert.js';
 
 
 // const jsonPath = 'http://192.168.1.46:5000/api/recipes';
@@ -30,8 +31,7 @@ const formCls = CLASS_PREFIX, // eslint-disable-line one-var
 	newItemCls = CLASS_PREFIX + '__new-item',
 	deleteItemCls = CLASS_PREFIX + '__delete-item',
 	resetBtnCls = CLASS_PREFIX + '__reset-btn',
-	resultTitleCls = CLASS_PREFIX + '__result-title',
-	resultJsonCls = CLASS_PREFIX + '__result-json';
+	formInputs = CLASS_PREFIX + ' :input';
 
 // https://www.w3schools.com/jsref/prop_node_nodetype.asp
 const TEXT_NODE_TYPE = 3;
@@ -229,7 +229,7 @@ function saveRecipe(evt){
 		dataType: 'json',
 		data: createRecipe(),
 		success(){
-			showAlert(form, ADDED_RECIPE_ALERT);
+			showAlert(ADDED_RECIPE_ALERT);
 		},
 		error(xhr) {
 			const err = ERROR_ALERT + xhr.responseText;
@@ -248,8 +248,6 @@ export function resetForm() {
 	$(deleteItemCls).remove();
 	$(imagePreviewCls).attr('src', '');
 	$(imageLabelCls).text('');
-	$(resultTitleCls).text(INITIAL_RESULT_TITLE);
-	$(resultJsonCls).text('');
 }
 
 
@@ -263,18 +261,14 @@ $(document).ready(function (){
 	$(document).on('submit', formCls, saveRecipe);
 	$(document).on('click', resetBtnCls, resetForm);
 
-	$('.add-recipe :input').change(function () {
-		$('.add-recipe').data('changed', true);
+	$(formInputs).change(function () {
+		$(formCls).data('changed', true);
 	});
 
-	$(document).on('click', '.modal-alert__close-btn', hideAlert);
-
 	window.onbeforeunload = function () {
-		if ((window.location.pathname === '/dashboard.html') && ($('.add-recipe').data('changed') === true)) {
-			return 'sure?';
+		if ((window.location.pathname === '/dashboard.html') && ($(formCls).data('changed') === true)) {
+			return 'Are you sure you want to leave this page? You can lose changes you have made.';
 		}
 	};
-
-	// $(imagePreviewCls).on('load', resizeImage);
 
 });
