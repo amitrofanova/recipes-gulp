@@ -32,3 +32,8 @@ export function showAlert(alertText, isConfirmation) {
 export function hideAlert() {
 	$('.modal-alert').remove();
 }
+
+
+$(document).ready(function () {
+	$(document).on('click', '.modal-alert__close-btn', hideAlert);
+});
