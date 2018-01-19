@@ -1,6 +1,5 @@
 import $ from 'jquery';
-import {
-	DELETED_RECIPE_ALERT}from '../../resources/strings/ru.js';
+import {CONFIRM_DELETE_ALERT, DELETED_RECIPE_ALERT, ERROR_ALERT}from '../../resources/strings/ru.js';
 import {showAlert, hideAlert}from '../modal-alert/modal-alert.js';
 
 const jsonPath = 'https://amitrofanova.pythonanywhere.com/api/recipes';
@@ -13,7 +12,6 @@ const groupCls = CLASS_PREFIX + '__dish-group', // eslint-disable-line one-var
 
 
 function getList(callback, group) {
-	const result = [];
 	let url = pathToNames;
 
 	if (group) {
@@ -27,23 +25,6 @@ function getList(callback, group) {
 			callback(data);
 		}
 	});
-
-	return result;
-}
-
-
-function createGroupsSelect() {
-	const callback = function (data) {
-		for (let i = 0; i < data.length; i++) {
-			$(groupCls).append(
-				'<option value="' + data[i].group + '">' + data[i].group + '</option>'
-			);
-		}
-		$(groupCls).val(data[0].group);
-		console.log($(groupCls).val());
-	};
-
-	getList(callback);
 }
 
 
@@ -69,24 +50,39 @@ function createRecipesSelect() {
 }
 
 
+function createGroupsSelect() {
+	const callback = function (data) {
+		for (let i = 0; i < data.length; i++) {
+			$(groupCls).append(
+				'<option value="' + data[i].group + '">' + data[i].group + '</option>'
+			);
+		}
+		$(groupCls).val(data[0].group);
+		console.log($(groupCls).val());
+		createRecipesSelect();
+	};
+
+	getList(callback);
+}
+
+
 function deleteRecipe() {
 	const group = $(groupCls).val();
 	const recipeToDelete = $(recipeCls).val();
 	const url = jsonPath + '?group=' + group + '&recipe=' + recipeToDelete;
-	const form = $(CLASS_PREFIX);
 
 	$.ajax({
 		type: 'DELETE',
 		url,
 		dataType: 'json',
 		success(data){
-			showAlert(form, DELETED_RECIPE_ALERT);
+			showAlert(DELETED_RECIPE_ALERT);
 			createRecipesSelect();
 			console.log(data);
 		},
 		error(xhr) {
 			const err = ERROR_ALERT + xhr.responseText;
-			showAlert(form, err);
+			showAlert(err);
 		}
 	});
 }
@@ -94,10 +90,25 @@ function deleteRecipe() {
 
 $(document).ready(function (){
 
-	createGroupsSelect();
+	if (window.location.pathname === '/dashboard.html') {
+		window.onload = createGroupsSelect();
+	}
 
 	$(document).on('change', groupCls, createRecipesSelect);
-	$(document).on('click', deleteBtnCls, deleteRecipe);
+
+	$(document).on('click', deleteBtnCls, function () {
+		showAlert(CONFIRM_DELETE_ALERT, true);
+
+		$(document).on('click', '.modal-alert__confirm-btn', function () {
+			hideAlert();
+			deleteRecipe();
+		});
+
+		$(document).on('click', '.modal-alert__decline-btn', hideAlert);
+	});
+
 	$(document).on('click', '.modal-alert__close-btn', hideAlert);
+
+	$(document).on('click', '.delete-recipe__refresh-btn', createRecipesSelect);
 
 });

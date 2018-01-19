@@ -18,6 +18,30 @@
 .delete-recipe__recipe-to-delete
 	padding-left: 1rem
 
+.delete-recipe__refresh-btn
+	margin-left: 1rem
+	display: inline-block
+	position: relative
+	height: calc(16px + 1rem)
+	width: calc(16px + 1rem)
+	background: url('../images/refresh.png') no-repeat 0 0
+	background-size: contain
+	vertical-align: middle
+	cursor: pointer
+	&:hover
+		.delete-recipe__hint
+			visibility: visible
+
+.delete-recipe__hint
+	visibility: hidden
+	position: absolute
+	width: max-content
+	padding: .5rem
+	top: 80%
+	left: 80%
+	border-radius: 3px
+	background-color: #eee
+
 .delete-recipe__delete-recipe
 	padding: .5rem 1rem
 	width: max-content
