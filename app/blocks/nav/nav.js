@@ -46,6 +46,12 @@ function showLargeNav() {
 }
 
 
+function logout() {
+	localStorage.removeItem('username');
+	localStorage.removeItem('password');
+}
+
+
 $(document).ready(function () {
 
 	toggleNavButton();
@@ -54,5 +60,6 @@ $(document).ready(function () {
 	$('.nav__item').on('click', toggleMobileNav);
 	$(window).on('resize', showLargeNav);
 	$(window).on('resize', toggleNavButton);
+	$('.nav__logout').on('click', logout);
 
 });
