@@ -12,16 +12,22 @@
 	position: relative
 	margin: auto
 	margin-top: 20%
-	padding: calc(16px + 3rem) calc(48px + 5rem)
+	padding: calc(16px + 3rem) calc(48px + 3rem)
 	width: max-content
 	max-width: 80%
 	border-radius: 3px
 	background-color: $primary-bg-color
 
+	display: flex
+	justify-content: space-around
+	flex-wrap: wrap
+
 .modal-alert__text
 	text-align: center
-	font-size: calc(8px + .5rem)
+	font-size: calc(10px + .5rem)
 	color: $secondary-text-color
+
+	flex-basis: 100%
 
 .modal-alert__close-btn
 	display: block
@@ -35,3 +41,14 @@
 	&:hover
 		color: #000
 		cursor: pointer
+
+.modal-alert__confirm-btn, .modal-alert__decline-btn
+	margin-top: 2rem
+	padding: calc(5px + .5rem) calc(5px + 1rem)
+	background-color: #fff
+	box-shadow: 0px 1px 1px $secondary-text-color
+	font-size: calc(8px + .5rem)
+	color: $secondary-text-color
+	cursor: pointer
+	&:hover
+		box-shadow: 0px 1px 3px $secondary-text-color
