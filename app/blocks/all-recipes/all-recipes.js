@@ -7,7 +7,7 @@ const jsonPath = 'https://amitrofanova.pythonanywhere.com/api/recipes';
 
 function appendBreadcrumb(dishGroup) {
 	$('.all-recipes').append(
-		'<div class="all-recipes__breadcrumb breadcrumb">' +
+		'<div class="all-recipes__breadcrumb breadcrumb breadcrumb_with-border-bottom">' +
 			'<div class="breadcrumb__all-dish-groups">Все рецепты</div>' +
 			'<div class="breadcrumb__arrow"/>' +
 			'<div class="breadcrumb__current-dish-group">' + dishGroup + '</div>' +
