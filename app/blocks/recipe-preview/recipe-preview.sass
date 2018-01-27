@@ -1,13 +1,14 @@
 .recipe-preview
-	display: flex
-	margin-bottom: 3rem
-	width: 48%
 	height: 15rem
+	flex-basis: 48%
 	@media (max-width: 575px)
 		flex-basis: 100%
 	@media (max-width: 767px)
 		height: 25rem
-
+	margin-bottom: 2.2rem
+	&:last-child
+		margin-bottom: 0
+	display: flex
 	overflow: hidden
 	box-shadow: 1px 1px 2px #ccc
 	cursor: pointer
