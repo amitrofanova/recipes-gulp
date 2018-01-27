@@ -2,9 +2,6 @@ import $ from 'jquery';
 import {INGREDIENTS_TITLE, STEPS_TITLE}from '../../resources/strings/ru.js';
 
 
-// const jsonPath = 'assets/data/recipes.json';
-// const jsonPath = 'http://192.168.43.130:5000/api/recipes';
-// const jsonPath = 'http://192.168.1.46:5000/api/recipes';
 const jsonPath = 'https://amitrofanova.pythonanywhere.com/api/recipes';
 
 
@@ -39,10 +36,10 @@ function getContent(callback, group, recipe){
 
 	let url = jsonPath;
 	if (recipe) {
-		url += '?recipe=' + recipe;
+		url += '?recipe=' + encodeURIComponent(recipe);
 	}
 	else if (group) {
-		url += '?group=' + group;
+		url += '?group=' + encodeURIComponent(group);
 	}
 
 	$.ajax({
@@ -61,7 +58,7 @@ function openDishGroup() {
 
 	$('.dish-group').hide();
 	appendBreadcrumb(currentDishGroup);
-	$('.all-recipes').append('<section class="dish-group_opened"></section>');
+	$('.all-recipes').append('<div class="dish-group_opened"></div>');
 
 	const callback = function (dishGroup) {
 		for (let i = 0; i < dishGroup.recipes.length; i++) {

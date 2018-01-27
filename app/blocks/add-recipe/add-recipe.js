@@ -9,7 +9,6 @@ import {
 import {showAlert}from '../modal-alert/modal-alert.js';
 
 
-// const jsonPath = 'http://192.168.1.46:5000/api/recipes';
 const jsonPath = 'https://amitrofanova.pythonanywhere.com/api/recipes';
 // const pathToNames = 'https://amitrofanova.pythonanywhere.com/api/recipes/names';
 
@@ -225,7 +224,7 @@ function saveRecipe(evt){
 	const form = $(CLASS_PREFIX);
 	$.ajax({
 		type: 'POST',
-		url: jsonPath + '?group=' + group,
+		url: jsonPath + '?group=' + encodeURIComponent(group),
 		dataType: 'json',
 		data: createRecipe(),
 		success(){

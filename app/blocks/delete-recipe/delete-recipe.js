@@ -18,7 +18,7 @@ function getList(callback, group) {
 	let url = pathToNames;
 
 	if (group) {
-		url += '?group=' + group;
+		url += '?group=' + encodeURIComponent(group);
 	}
 
 	$.ajax({
@@ -71,7 +71,7 @@ function createGroupsSelect() {
 function deleteRecipe() {
 	const group = $(groupsSelect).val();
 	const recipeToDelete = $(recipesSelect).val();
-	const url = jsonPath + '?group=' + group + '&recipe=' + recipeToDelete;
+	const url = jsonPath + '?group=' + encodeURIComponent(group) + '&recipe=' + encodeURIComponent(recipeToDelete);
 
 	$.ajax({
 		type: 'DELETE',
