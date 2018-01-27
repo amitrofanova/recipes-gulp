@@ -1,5 +1,5 @@
 {
-  "name": "Recipe book",
+  "name": "recipe-book",
   "version": "1.0.0",
   "description": "Personal collections of cooking recipes",
   "main": "index.js",
