@@ -82,6 +82,16 @@ function validateForm() {
 }
 
 
+export function getUsernameFromStorage() {
+	return username = localStorage.getItem('username');
+}
+
+
+export function getPasswordFromStorage() {
+	return password = localStorage.getItem('password');
+}
+
+
 function getRegisterData() {
 	const email = $(registerEmail).val();
 	const username = $(registerUsername).val();

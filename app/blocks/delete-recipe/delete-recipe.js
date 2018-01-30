@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import {CONFIRM_DELETE_ALERT, DELETED_RECIPE_ALERT, ERROR_ALERT}from '../../resources/strings/ru.js';
 import {showAlert, hideAlert}from '../modal-alert/modal-alert.js';
+import {getUsernameFromStorage, getPasswordFromStorage}from '../auth-form/auth-form.js';
 
 const jsonPath = 'https://amitrofanova.pythonanywhere.com/api/recipes';
 const pathToNames = 'https://amitrofanova.pythonanywhere.com/api/recipes/names';
@@ -23,6 +24,8 @@ function getList(callback, group) {
 
 	$.ajax({
 		url,
+		username: getUsernameFromStorage(),
+		password: getPasswordFromStorage(),
 		dataType: 'json',
 		success(data){
 			callback(data);
@@ -76,6 +79,8 @@ function deleteRecipe() {
 	$.ajax({
 		type: 'DELETE',
 		url,
+		username: getUsernameFromStorage(),
+		password: getPasswordFromStorage(),
 		dataType: 'json',
 		success(data){
 			showAlert(DELETED_RECIPE_ALERT);

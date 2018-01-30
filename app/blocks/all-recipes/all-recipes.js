@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import {INGREDIENTS_TITLE, STEPS_TITLE}from '../../resources/strings/ru.js';
+import {getUsernameFromStorage, getPasswordFromStorage}from '../auth-form/auth-form.js';
 
 
 const jsonPath = 'https://amitrofanova.pythonanywhere.com/api/recipes';
@@ -44,6 +45,8 @@ function getContent(callback, group, recipe){
 
 	$.ajax({
 		url,
+		username: getUsernameFromStorage(),
+		password: getPasswordFromStorage(),
 		dataType: 'json',
 		success(data){
 			callback(data);

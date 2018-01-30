@@ -7,6 +7,7 @@ import {
 	ERROR_ALERT}from '../../resources/strings/ru.js';
 
 import {showAlert}from '../modal-alert/modal-alert.js';
+import {getUsernameFromStorage, getPasswordFromStorage}from '../auth-form/auth-form.js';
 
 
 const jsonPath = 'https://amitrofanova.pythonanywhere.com/api/recipes';
@@ -225,6 +226,8 @@ function saveRecipe(evt){
 	$.ajax({
 		type: 'POST',
 		url: jsonPath + '?group=' + encodeURIComponent(group),
+		username: getUsernameFromStorage(),
+		password: getPasswordFromStorage(),
 		dataType: 'json',
 		data: createRecipe(),
 		success(){
