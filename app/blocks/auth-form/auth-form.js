@@ -83,12 +83,14 @@ function validateForm() {
 
 
 export function getUsernameFromStorage() {
-	return username = localStorage.getItem('username');
+	const username = localStorage.getItem('username');
+	return username;
 }
 
 
 export function getPasswordFromStorage() {
-	return password = localStorage.getItem('password');
+	const password = localStorage.getItem('password');
+	return password;
 }
 
 
