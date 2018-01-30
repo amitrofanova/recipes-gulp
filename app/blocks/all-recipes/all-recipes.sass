@@ -1,14 +1,14 @@
 .all-recipes
+	position: relative
+	margin: 3rem 0
 	display: flex
-	justify-content: space-around
+	justify-content: flex-start
 	align-items: stretch
 	flex-flow: row wrap
 	align-content: space-around
-	position: relative
-	margin: 3rem 0
+	background-color: $primary-bg-color
 
 .all-recipes__breadcrumb
-	// margin-top: 3rem
 	position: absolute
 	top: 0
 	left: 0
@@ -19,6 +19,3 @@
 	width: 50%
 	@media (min-width: 768px)
 		width: 25%
-
-.all-recipes.hidden
-	display: none
