@@ -25,6 +25,7 @@ const formCls = CLASS_PREFIX, // eslint-disable-line one-var
 	imageResizedCls = CLASS_PREFIX + '__image-resized',
 	imageResultCls = CLASS_PREFIX + '__image-result',
 	imageCropBtn = CLASS_PREFIX + '__crop-btn',
+	imageAbortBtn = CLASS_PREFIX + '__abort-btn',
 	imagePreviewWrap = CLASS_PREFIX + '__image-preview-wrap',
 	imageResultWrap = CLASS_PREFIX + '__image-result-wrap',
 	imageLabelCls = CLASS_PREFIX + '__image-label',
@@ -207,6 +208,7 @@ export function resetForm() {
 
 function cropImage() {
 	$(imageCropBtn).show();
+	$(imageAbortBtn).show();
 	const image = $('.add-recipe__image-preview')[0];
 	const cropper = new Cropper(image, {
 		aspectRatio: 16 / 9,
@@ -220,7 +222,8 @@ function cropImage() {
 		$(imageResultWrap).show();
 		$(imageResultCls).attr('src', cropper.getCroppedCanvas({maxWidth: 1600, maxHeight: 900}).toDataURL());
 		$(imagePreviewWrap).hide();
-		$(imageCropBtn).hide();
+		// $(imageCropBtn).hide();
+		// $(imageAbortBtn).hide();
 	});
 }
 
@@ -237,7 +240,7 @@ function uploadImage(evt) {
 		fr.onload = function () {
 			const res = fr.result;
 
-			$(imagePreviewWrap).show();
+			// $(imagePreviewWrap).show();
 			$(imagePreviewCls).attr('src', res);
 
 			cropImage();

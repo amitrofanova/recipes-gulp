@@ -23,14 +23,17 @@ mixin add-recipe
 	  
 		
 		section.add-recipe__section
-			.add-recipe__section-title Изображение
-			.add-recipe__image-button Выбрать файл
-				input(type="file" name="image" class="add-recipe__image-input")
 			.add-recipe__image-preview-wrap
+				.add-recipe__image-wrap-content
+					.add-recipe__image-label Вы можете добавить фото вашего блюда
+					.add-recipe__image-button Выбрать изображение
+						input(type="file" name="image" class="add-recipe__image-input")
 				img(class="add-recipe__image-preview")
-				input(type="button" value="Обрезать изображение" class="add-recipe__crop-btn")
 			.add-recipe__image-result-wrap
 				img(class="add-recipe__image-result")
+					
+			input(type="button" value="Готово" class="add-recipe__crop-btn")
+			input(type="button" value="Не нажимать" class="add-recipe__abort-btn")
 			//- obj(type="image/png")
 			//- 	img(class="add-recipe__image-preview")
 			//- obj(type="image/png")
