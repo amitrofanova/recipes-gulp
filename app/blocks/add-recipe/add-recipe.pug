@@ -21,16 +21,20 @@ mixin add-recipe
 			.add-recipe__section-title Описание 
 			input(type="text" name="description").add-recipe__description-input.add-recipe__text-input
 	  
+		
 		section.add-recipe__section
 			.add-recipe__section-title Изображение
 			.add-recipe__image-button Выбрать файл
 				input(type="file" name="image" class="add-recipe__image-input")
-			//- label(for="add-recipe__image-input" class="add-recipe__image-label")
-			obj(type="image/png")
-				//- img(class="add-recipe__image-preview" src="")
+			.add-recipe__image-preview-wrap
 				img(class="add-recipe__image-preview")
-			obj(type="image/png")
-				img(class="add-recipe__image-resized")
+				input(type="button" value="Обрезать изображение" class="add-recipe__crop-btn")
+			.add-recipe__image-result-wrap
+				img(class="add-recipe__image-result")
+			//- obj(type="image/png")
+			//- 	img(class="add-recipe__image-preview")
+			//- obj(type="image/png")
+			//- 	img(class="add-recipe__image-resized")
 	  
 		section.add-recipe__section
 			.add-recipe__section-title Ингредиенты

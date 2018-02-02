@@ -1,4 +1,6 @@
 import $ from 'jquery';
+// import Croppie from 'croppie';
+import Cropper from 'cropperjs';
 
 import {
 	UNABLE_LOAD_FILE_ALERT,
@@ -21,6 +23,9 @@ const formCls = CLASS_PREFIX, // eslint-disable-line one-var
 	imageInputCls = CLASS_PREFIX + '__image-input',
 	imagePreviewCls = CLASS_PREFIX + '__image-preview',
 	imageResizedCls = CLASS_PREFIX + '__image-resized',
+	imageResultCls = CLASS_PREFIX + '__image-result',
+	imageCropBtn = CLASS_PREFIX + '__crop-btn',
+	imageWrapper = CLASS_PREFIX + '__image-preview-wrap',
 	imageLabelCls = CLASS_PREFIX + '__image-label',
 	ingredientsCls = CLASS_PREFIX + '__ingredients',
 	ingredientInputCls = CLASS_PREFIX + '__ingredient-input',
@@ -35,60 +40,6 @@ const formCls = CLASS_PREFIX, // eslint-disable-line one-var
 
 // https://www.w3schools.com/jsref/prop_node_nodetype.asp
 const TEXT_NODE_TYPE = 3;
-
-
-function getImageData(evt) {
-	const tgt = evt.target || window.event.srcElement;
-	const files = tgt.files;
-	const f = files[0];
-	$(imageLabelCls).html(f.name);
-
-	if (FileReader && files && files.length) {
-		const fr = new FileReader();
-
-		fr.onload = function () {
-			const res = fr.result;
-
-			$(imagePreviewCls).show();
-			$(imagePreviewCls).attr('src', res);
-
-			return res;
-		};
-		fr.readAsDataURL(f);
-	}
-
-	else {
-		$(imageLabelCls).html(UNABLE_LOAD_FILE_ALERT);
-	}
-}
-
-
-function resizeImage() { // eslint-disable-line no-unused-vars
-	const MAX_WIDTH = 400;
-	const MAX_HEIGHT = 400;
-	const imageToResize = $(imagePreviewCls)[0];
-	let width = imageToResize.width;
-	let height = imageToResize.height;
-
-	if (width > height) {
-		if (width > MAX_WIDTH) {
-			height *= MAX_WIDTH / width;
-			width = MAX_WIDTH;
-		}
-	}else if (height > MAX_HEIGHT) {
-		width *= MAX_HEIGHT / height;
-		height = MAX_HEIGHT;
-	}
-
-	const canvas = document.createElement('canvas');
-	canvas.width = width;
-	canvas.height = height;
-
-	const context = canvas.getContext('2d');
-	context.drawImage(imageToResize, 0, 0, width, height);
-	$(imageResizedCls).attr('src', canvas.toDataURL());
-	console.log('result: ' + $(imageResizedCls).attr('src').length);
-}
 
 
 function addIngredient() {
@@ -205,8 +156,8 @@ function deleteItem() {
 function createRecipe() {
 	const title = $(titleInputCls).val();
 	const description = $(descriptionInputCls).val();
-	// var image = $(imageResizedCls).attr('src');
-	const image = $(imagePreviewCls).attr('src');
+	const image = $(imageResultCls).attr('src');
+	// const image = $(imagePreviewCls).attr('src');
 	const newRecipe = {
 		title,
 		description,
@@ -253,9 +204,106 @@ export function resetForm() {
 }
 
 
-$(document).ready(function (){
+function cropImage() {
+	$(imageCropBtn).show();
+	const image = $('.add-recipe__image-preview')[0];
+	const cropper = new Cropper(image, {
+		aspectRatio: 16 / 9,
+		rotatable: false,
+		zoomable: false,
+		minContainerWidth: 320,
+		minContainerHeight: 180
+	});
 
-	$(document).on('change', imageInputCls, getImageData);
+	$(imageCropBtn).on('click', function () {
+		$(imageResultCls).show();
+		$(imageResultCls).attr('src', cropper.getCroppedCanvas({maxWidth: 1600, maxHeight: 900}).toDataURL());
+		$(imageWrapper).hide();
+		$(imageCropBtn).hide();
+	});
+}
+
+
+function uploadImage(evt) {
+	const tgt = evt.target || window.event.srcElement;
+	const files = tgt.files;
+	const f = files[0];
+	$(imageLabelCls).html(f.name);
+
+	if (FileReader && files && files.length) {
+		const fr = new FileReader();
+
+		fr.onload = function () {
+			const res = fr.result;
+
+			$(imagePreviewCls).show();
+			$(imagePreviewCls).attr('src', res);
+
+			cropImage();
+
+			return res;
+		};
+		fr.readAsDataURL(f);
+	}
+
+	else {
+		$(imageLabelCls).html(UNABLE_LOAD_FILE_ALERT);
+	}
+}
+
+
+// function bind(func, context) {
+// 	return function() {
+// 		return func.apply(context, arguments);
+// 	};
+// }
+//
+//
+// function showUploadedImage() {
+// 	console.log('start');
+// 	const evtSrc = $(imageInputCls);
+// 	const res = bind(uploadImage, evtSrc);
+// 	$(imagePreviewCls).show();
+// 	$(imagePreviewCls).attr('src', res);
+// }
+
+
+function resizeImage() { // eslint-disable-line no-unused-vars
+	const MAX_WIDTH = 400;
+	const MAX_HEIGHT = 400;
+	const imageToResize = $(imagePreviewCls)[0];
+	let width = imageToResize.width;
+	let height = imageToResize.height;
+
+	if (width > height) {
+		if (width > MAX_WIDTH) {
+			height *= MAX_WIDTH / width;
+			width = MAX_WIDTH;
+		}
+	}else if (height > MAX_HEIGHT) {
+		width *= MAX_HEIGHT / height;
+		height = MAX_HEIGHT;
+	}
+
+	const canvas = document.createElement('canvas');
+	canvas.width = width;
+	canvas.height = height;
+
+	const context = canvas.getContext('2d');
+	context.drawImage(imageToResize, 0, 0, width, height);
+	$(imageResizedCls).attr('src', canvas.toDataURL());
+	console.log('result: ' + $(imageResizedCls).attr('src').length);
+}
+
+
+$(document).ready(function () {
+
+	$(document).on('change', imageInputCls, uploadImage);
+
+	// $(imagePreviewCls)[0].onload = function () {
+	// 	cropImage();
+	// };
+
 	$(document).on('click', newIngredientBtnCls, addIngredient);
 	$(document).on('click', newStepBtnCls, addStep);
 	$(document).on('focus', ingredientInputCls, clearInput);
@@ -272,5 +320,7 @@ $(document).ready(function (){
 			return 'Are you sure you want to leave this page? You can lose changes you have made.';
 		}
 	};
+
+
 
 });
