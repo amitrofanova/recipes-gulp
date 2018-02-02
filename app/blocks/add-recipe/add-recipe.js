@@ -25,7 +25,8 @@ const formCls = CLASS_PREFIX, // eslint-disable-line one-var
 	imageResizedCls = CLASS_PREFIX + '__image-resized',
 	imageResultCls = CLASS_PREFIX + '__image-result',
 	imageCropBtn = CLASS_PREFIX + '__crop-btn',
-	imageWrapper = CLASS_PREFIX + '__image-preview-wrap',
+	imagePreviewWrap = CLASS_PREFIX + '__image-preview-wrap',
+	imageResultWrap = CLASS_PREFIX + '__image-result-wrap',
 	imageLabelCls = CLASS_PREFIX + '__image-label',
 	ingredientsCls = CLASS_PREFIX + '__ingredients',
 	ingredientInputCls = CLASS_PREFIX + '__ingredient-input',
@@ -216,9 +217,9 @@ function cropImage() {
 	});
 
 	$(imageCropBtn).on('click', function () {
-		$(imageResultCls).show();
+		$(imageResultWrap).show();
 		$(imageResultCls).attr('src', cropper.getCroppedCanvas({maxWidth: 1600, maxHeight: 900}).toDataURL());
-		$(imageWrapper).hide();
+		$(imagePreviewWrap).hide();
 		$(imageCropBtn).hide();
 	});
 }
@@ -236,7 +237,7 @@ function uploadImage(evt) {
 		fr.onload = function () {
 			const res = fr.result;
 
-			$(imagePreviewCls).show();
+			$(imagePreviewWrap).show();
 			$(imagePreviewCls).attr('src', res);
 
 			cropImage();

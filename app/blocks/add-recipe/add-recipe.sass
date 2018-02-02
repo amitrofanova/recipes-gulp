@@ -13,7 +13,7 @@
 	display: flex
 	flex-wrap: wrap
 	align-items: center
-	padding: 2rem calc(10px + 1rem)
+	padding: calc(12px + .5rem) calc(8px + 1rem)
 
 .add-recipe__section-title
 	margin-right: 2rem
@@ -61,13 +61,14 @@
 	font-size: calc(8px + .5rem)
 
 .add-recipe__image-preview-wrap, .add-recipe__image-result-wrap
+	display: none
 	margin: 2rem 0
 
 .add-recipe__image-preview, .add-recipe__image-result
-	max-height: 20rem
+	height: calc(100px + 10rem)
 
-.add-recipe__image-result
-	display: none
+// .add-recipe__image-result
+// 	display: none
 
 // .add-recipe__image-resized
 // 	display: none
