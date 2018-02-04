@@ -26,14 +26,14 @@ mixin add-recipe
 			.add-recipe__image-preview-wrap
 				.add-recipe__image-wrap-content
 					.add-recipe__image-label Вы можете добавить фото вашего блюда
-					.add-recipe__image-button Выбрать изображение
+					.add-recipe__image-button.button Выбрать изображение
 						input(type="file" name="image" class="add-recipe__image-input")
 				img(class="add-recipe__image-preview")
 			.add-recipe__image-result-wrap
 				img(class="add-recipe__image-result")
 					
-			input(type="button" value="Готово" class="add-recipe__crop-btn")
-			input(type="button" value="Не нажимать" class="add-recipe__abort-btn")
+			input(type="button" value="Готово" class="add-recipe__crop-btn button")
+			input(type="button" value="Не нажимать" class="add-recipe__abort-btn button")
 			//- obj(type="image/png")
 			//- 	img(class="add-recipe__image-preview")
 			//- obj(type="image/png")
@@ -54,5 +54,5 @@ mixin add-recipe
 			.add-recipe__steps
 		
 		section.add-recipe__section
-			input(type="submit" value="Сохранить" class="add-recipe__save-btn")
-			input(type="reset" value="Очистить форму" class="add-recipe__reset-btn")
+			input(type="submit" value="Сохранить" class="add-recipe__save-btn button")
+			input(type="reset" value="Очистить форму" class="add-recipe__reset-btn button")

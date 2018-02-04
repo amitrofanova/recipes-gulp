@@ -202,7 +202,9 @@ export function resetForm() {
 	$(newItemCls).remove();
 	$(deleteItemCls).remove();
 	$(imagePreviewCls).attr('src', '');
-	$(imageLabelCls).text('');
+	$(imageResultCls).attr('src', '');
+	$(imagePreviewWrap).show();
+	$(imageResultWrap).hide();
 }
 
 
