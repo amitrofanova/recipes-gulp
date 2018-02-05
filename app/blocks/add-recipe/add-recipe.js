@@ -155,6 +155,99 @@ function deleteItem() {
 }
 
 
+function cropImage() {
+	$(imageCropBtn).show();
+	$(imageAbortBtn).show();
+	const image = $('.add-recipe__image-preview')[0];
+	const cropper = new Cropper(image, {
+		aspectRatio: 16 / 9,
+		rotatable: false,
+		zoomable: false,
+		minContainerWidth: 320,
+		minContainerHeight: 180
+	});
+
+	$(imageCropBtn).on('click', function () {
+		$(imageResultWrap).show();
+		$(imageResultCls).attr('src', cropper.getCroppedCanvas({maxWidth: 1600, maxHeight: 900}).toDataURL());
+		$(imagePreviewWrap).hide();
+		// $(imageCropBtn).hide();
+		// $(imageAbortBtn).hide();
+	});
+}
+
+
+function uploadImage(evt) {
+	const tgt = evt.target || window.event.srcElement;
+	const files = tgt.files;
+	const f = files[0];
+	// $(imageLabelCls).html(f.name);
+
+	if (FileReader && files && files.length) {
+		const fr = new FileReader();
+
+		fr.onload = function () {
+			const res = fr.result;
+
+			// $(imagePreviewWrap).show();
+			$(imagePreviewCls).attr('src', res);
+
+			cropImage();
+
+			return res;
+		};
+		fr.readAsDataURL(f);
+	}
+
+	else {
+		$(imageLabelCls).html(UNABLE_LOAD_FILE_ALERT);
+	}
+}
+
+
+function resizeImage() { // eslint-disable-line no-unused-vars
+	const MAX_WIDTH = 400;
+	const MAX_HEIGHT = 400;
+	const imageToResize = $(imagePreviewCls)[0];
+	let width = imageToResize.width;
+	let height = imageToResize.height;
+
+	if (width > height) {
+		if (width > MAX_WIDTH) {
+			height *= MAX_WIDTH / width;
+			width = MAX_WIDTH;
+		}
+	}else if (height > MAX_HEIGHT) {
+		width *= MAX_HEIGHT / height;
+		height = MAX_HEIGHT;
+	}
+
+	const canvas = document.createElement('canvas');
+	canvas.width = width;
+	canvas.height = height;
+
+	const context = canvas.getContext('2d');
+	context.drawImage(imageToResize, 0, 0, width, height);
+	$(imageResizedCls).attr('src', canvas.toDataURL());
+	console.log('result: ' + $(imageResizedCls).attr('src').length);
+}
+
+
+function createLoader() {
+	const modal = '<div class="add-recipe__modal ajax-loader">' +
+		'<div class="add-recipe__modal-content">' +
+			'<div class="add-recipe__modal-text">Пожалуйста подождите, ваш запрос обрабатывается</div>' +
+		'</div>' +
+	'</div>';
+	$('body').append(modal);
+}
+
+
+function deleteLoader() {
+	$('.ajax-loader').remove();
+}
+
+
 function createRecipe() {
 	const title = $(titleInputCls).val();
 	const description = $(descriptionInputCls).val();
@@ -205,104 +298,14 @@ export function resetForm() {
 	$(imageResultCls).attr('src', '');
 	$(imagePreviewWrap).show();
 	$(imageResultWrap).hide();
-}
-
-
-function cropImage() {
-	$(imageCropBtn).show();
-	$(imageAbortBtn).show();
-	const image = $('.add-recipe__image-preview')[0];
-	const cropper = new Cropper(image, {
-		aspectRatio: 16 / 9,
-		rotatable: false,
-		zoomable: false,
-		minContainerWidth: 320,
-		minContainerHeight: 180
-	});
-
-	$(imageCropBtn).on('click', function () {
-		$(imageResultWrap).show();
-		$(imageResultCls).attr('src', cropper.getCroppedCanvas({maxWidth: 1600, maxHeight: 900}).toDataURL());
-		$(imagePreviewWrap).hide();
-		// $(imageCropBtn).hide();
-		// $(imageAbortBtn).hide();
-	});
-}
-
-
-function uploadImage(evt) {
-	const tgt = evt.target || window.event.srcElement;
-	const files = tgt.files;
-	const f = files[0];
-	$(imageLabelCls).html(f.name);
-
-	if (FileReader && files && files.length) {
-		const fr = new FileReader();
-
-		fr.onload = function () {
-			const res = fr.result;
-
-			// $(imagePreviewWrap).show();
-			$(imagePreviewCls).attr('src', res);
-
-			cropImage();
-
-			return res;
-		};
-		fr.readAsDataURL(f);
-	}
-
-	else {
-		$(imageLabelCls).html(UNABLE_LOAD_FILE_ALERT);
-	}
-}
-
-
-// function bind(func, context) {
-// 	return function() {
-// 		return func.apply(context, arguments);
-// 	};
-// }
-//
-//
-// function showUploadedImage() {
-// 	console.log('start');
-// 	const evtSrc = $(imageInputCls);
-// 	const res = bind(uploadImage, evtSrc);
-// 	$(imagePreviewCls).show();
-// 	$(imagePreviewCls).attr('src', res);
-// }
-
-
-function resizeImage() { // eslint-disable-line no-unused-vars
-	const MAX_WIDTH = 400;
-	const MAX_HEIGHT = 400;
-	const imageToResize = $(imagePreviewCls)[0];
-	let width = imageToResize.width;
-	let height = imageToResize.height;
-
-	if (width > height) {
-		if (width > MAX_WIDTH) {
-			height *= MAX_WIDTH / width;
-			width = MAX_WIDTH;
-		}
-	}else if (height > MAX_HEIGHT) {
-		width *= MAX_HEIGHT / height;
-		height = MAX_HEIGHT;
-	}
-
-	const canvas = document.createElement('canvas');
-	canvas.width = width;
-	canvas.height = height;
-
-	const context = canvas.getContext('2d');
-	context.drawImage(imageToResize, 0, 0, width, height);
-	$(imageResizedCls).attr('src', canvas.toDataURL());
-	console.log('result: ' + $(imageResizedCls).attr('src').length);
+	// $(imagePreviewCls).text('');
+	$('.cropper-container').remove();
 }
 
 
 $(document).ready(function () {
+
+  // TODO: animation during recipe saving
 
 	$(document).on('change', imageInputCls, uploadImage);
 
@@ -327,6 +330,12 @@ $(document).ready(function () {
 		}
 	};
 
+	$( document ).ajaxStart(function() {
+		createLoader();
+	});
 
+	$( document ).ajaxStop(function() {
+		deleteLoader();
+	});
 
 });
