@@ -9,11 +9,11 @@ import {
 	ERROR_ALERT}from '../../resources/strings/ru.js';
 
 import {showAlert}from '../modal-alert/modal-alert.js';
-import {getUsernameFromStorage, getPasswordFromStorage}from '../auth-form/auth-form.js';
+import {authHeader, getUsernameFromStorage, getPasswordFromStorage}from '../auth-form/auth-form.js';
 
 
-const jsonPath = 'https://amitrofanova.pythonanywhere.com/api/recipes';
-// const pathToNames = 'https://amitrofanova.pythonanywhere.com/api/recipes/names';
+const jsonPath = 'https://amitrofanova.pythonanywhere.com/api/recipes/';
+// const pathToNames = 'https://amitrofanova.pythonanywhere.com/api/groups/?short';
 
 const CLASS_PREFIX = '.add-recipe';
 const formCls = CLASS_PREFIX, // eslint-disable-line one-var
@@ -268,12 +268,13 @@ function createRecipe() {
 function saveRecipe(evt){
 	const selectedGroup = dishGroupInputCls + ' option:selected';
 	const group = $(selectedGroup).text();
-	const form = $(CLASS_PREFIX);
+	// const form = $(CLASS_PREFIX);
 	$.ajax({
 		type: 'POST',
 		url: jsonPath + '?group=' + encodeURIComponent(group),
-		username: getUsernameFromStorage(),
-		password: getPasswordFromStorage(),
+		headers: {
+      "Authorization": authHeader()
+    },
 		dataType: 'json',
 		data: createRecipe(),
 		success(){
@@ -281,7 +282,8 @@ function saveRecipe(evt){
 		},
 		error(xhr) {
 			const err = ERROR_ALERT + xhr.responseText;
-			showAlert(form, err);
+			showAlert(err);
+			// showAlert(form, err);
 		}
 	});
 
@@ -305,7 +307,7 @@ export function resetForm() {
 
 $(document).ready(function () {
 
-  // TODO: animation during recipe saving
+	// TODO: animation during recipe saving
 
 	$(document).on('change', imageInputCls, uploadImage);
 
@@ -330,11 +332,11 @@ $(document).ready(function () {
 		}
 	};
 
-	$( document ).ajaxStart(function() {
+	$( document ).ajaxStart(function () {
 		createLoader();
 	});
 
-	$( document ).ajaxStop(function() {
+	$( document ).ajaxStop(function () {
 		deleteLoader();
 	});
 

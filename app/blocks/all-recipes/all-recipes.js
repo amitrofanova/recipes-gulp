@@ -1,9 +1,12 @@
 import $ from 'jquery';
-import {INGREDIENTS_TITLE, STEPS_TITLE}from '../../resources/strings/ru.js';
-import {getUsernameFromStorage, getPasswordFromStorage}from '../auth-form/auth-form.js';
+import {INGREDIENTS_TITLE, STEPS_TITLE, ERROR_ALERT}from '../../resources/strings/ru.js';
+import {authHeader, getUsernameFromStorage, getPasswordFromStorage}from '../auth-form/auth-form.js';
+import {showAlert}from '../modal-alert/modal-alert.js';
 
 
-const jsonPath = 'https://amitrofanova.pythonanywhere.com/api/recipes';
+const pathToJson = 'https://amitrofanova.pythonanywhere.com/api/users/';
+const pathToGroups = 'https://amitrofanova.pythonanywhere.com/api/groups/';
+const pathToRecipes = 'https://amitrofanova.pythonanywhere.com/api/recipes/';
 
 
 function appendBreadcrumb(dishGroup) {
@@ -34,22 +37,27 @@ function appendRecipePreview(recipe) {
 
 function getContent(callback, group, recipe){
 	const result = null;
+	let url = pathToJson;
 
-	let url = jsonPath;
 	if (recipe) {
-		url += '?recipe=' + encodeURIComponent(recipe);
+		url = pathToRecipes + encodeURIComponent(recipe);
 	}
 	else if (group) {
-		url += '?group=' + encodeURIComponent(group);
+		url = pathToGroups + encodeURIComponent(group);
 	}
 
 	$.ajax({
 		url,
-		username: getUsernameFromStorage(),
-		password: getPasswordFromStorage(),
+		headers: {
+      "Authorization": authHeader()
+    },
 		dataType: 'json',
 		success(data){
 			callback(data);
+		},
+		error(xhr) {
+			const err = ERROR_ALERT + xhr.responseText;
+			showAlert(err);
 		}
 	});
 	return result;

@@ -1,10 +1,10 @@
 import $ from 'jquery';
 import {CONFIRM_DELETE_ALERT, DELETED_RECIPE_ALERT, ERROR_ALERT}from '../../resources/strings/ru.js';
 import {showAlert, hideAlert}from '../modal-alert/modal-alert.js';
-import {getUsernameFromStorage, getPasswordFromStorage}from '../auth-form/auth-form.js';
+import {authHeader, getUsernameFromStorage, getPasswordFromStorage}from '../auth-form/auth-form.js';
 
-const jsonPath = 'https://amitrofanova.pythonanywhere.com/api/recipes';
-const pathToNames = 'https://amitrofanova.pythonanywhere.com/api/recipes/names';
+const jsonPath = 'https://amitrofanova.pythonanywhere.com/api/recipes/';
+const pathToNames = 'https://amitrofanova.pythonanywhere.com/api/groups/';
 
 const CLASS_PREFIX = '.delete-recipe';
 const groupsSelect = CLASS_PREFIX + '__dish-group', // eslint-disable-line one-var
@@ -16,16 +16,20 @@ const groupsSelect = CLASS_PREFIX + '__dish-group', // eslint-disable-line one-v
 
 
 function getList(callback, group) {
-	let url = pathToNames;
+	let url = pathToNames + '?short';
 
 	if (group) {
-		url += '?group=' + encodeURIComponent(group);
+		// url += '?group=' + encodeURIComponent(group);
+		url = pathToNames + encodeURIComponent(group) + '?short';
 	}
 
 	$.ajax({
 		url,
-		username: getUsernameFromStorage(),
-		password: getPasswordFromStorage(),
+		// username: localStorage.getItem('username'),
+		// password: localStorage.getItem('password'),
+		headers: {
+      "Authorization": authHeader()
+    },
 		dataType: 'json',
 		success(data){
 			callback(data);
@@ -58,6 +62,9 @@ function createRecipesSelect() {
 
 function createGroupsSelect() {
 	const callback = function (data) {
+
+		if (!data.length) return;
+
 		for (let i = 0; i < data.length; i++) {
 			$(groupsSelect).append(
 				'<option value="' + data[i].group + '">' + data[i].group + '</option>'
