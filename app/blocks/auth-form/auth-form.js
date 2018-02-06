@@ -9,7 +9,7 @@ import {
 
 import {showAlert}from '../modal-alert/modal-alert.js';
 
-// const pathToUsersTable = '';
+const pathToUsers = 'https://amitrofanova.pythonanywhere.com/api/users/';
 const CLASS_PREFIX = '.auth-form';
 const activeTab = CLASS_PREFIX + '__tab_active', // eslint-disable-line one-var
 	activeForm = CLASS_PREFIX + '__form_active',
@@ -47,7 +47,7 @@ function toggleForm(evt) {
 }
 
 
-function showError(errorText) {
+function showFormError(errorText) {
 	if ($('.auth-form__error').length) {
 		$('.auth-form__error').text(errorText);
 	}
@@ -65,17 +65,17 @@ function validateForm() {
 	// const emailPattern = /^[A-Za-z0-9._]+@[A-Za-z]*\.[A-Za-z]{2,5}$/;
 
 	// if (!emailPattern.test(email)) {
-	// 	showError(INVALID_EMAIL_ERR);
+	// 	showFormError(INVALID_EMAIL_ERR);
 	// 	return false;
 	// }
 
 	if (pwd.length < MIN_PWD_LENGTH) {
-		showError(SHORT_PWD_ERR);
+		showFormError(SHORT_PWD_ERR);
 		return false;
 	}
 
 	if (pwd !== confirmPwd) {
-		showError(NOT_EQUAL_PWD_ERR);
+		showFormError(NOT_EQUAL_PWD_ERR);
 		return false;
 	}
 	return true;
@@ -83,19 +83,7 @@ function validateForm() {
 
 
 export function authHeader() {
-	return "Basic " + btoa( localStorage.getItem('username') + ":" +  localStorage.getItem('password'));
-}
-
-
-export function getUsernameFromStorage() {
-	const username = localStorage.getItem('username');
-	return username;
-}
-
-
-export function getPasswordFromStorage() {
-	const password = localStorage.getItem('password');
-	return password;
+	return 'Basic ' + btoa( localStorage.getItem('username') + ':' + localStorage.getItem('password'));
 }
 
 
@@ -108,18 +96,7 @@ function getRegisterData() {
 }
 
 
-// function saveRegisterDataToStorage() {
-// 	const data = getRegisterData();
-// 	const username = data.username;
-// 	const pwd = data.pwd;
-//
-// 	localStorage.setItem('username', username);
-// 	localStorage.setItem('password', pwd);
-// }
-
-
 function sendRegisterData() {
-	const pathToUsers = 'https://amitrofanova.pythonanywhere.com/api/users/';
 	const dataToSave = JSON.parse(getRegisterData());
 	$.ajax({
 		type: 'POST',
@@ -130,9 +107,7 @@ function sendRegisterData() {
 			showAlert(USER_REGISTERED_ALERT);
 			localStorage.setItem('username', dataToSave.user_name);
 			localStorage.setItem('password', dataToSave.password);
-			// console.log('after saving');
-			// console.log(localStorage.getItem('username'));
-			// window.location.pathname = '/home.html';
+			window.location.pathname = '/home.html';
 		},
 		error(xhr) {
 			const err = ERROR_ALERT + xhr.responseText;
@@ -155,31 +130,27 @@ function getLoginData() {
 	const user_name = $(loginUsername).val();
 	const password = $(loginPwd).val();
 	const loginData = {user_name, password};
-	return JSON.stringify(loginData, null, '\t');
+	return loginData;
 }
 
 
 function validateLoginData() {
 	const data = getLoginData();
-	const user_name = data.username;
-	const password = data.pwd;
-	const pathToUsers = 'https://amitrofanova.pythonanywhere.com/api/users/';
+	const username = data.user_name;
+	const password = data.password;
 
 	$.ajax({
-		type: 'POST',
 		url: pathToUsers,
-		username: user_name,
-		password,
-		dataType: 'json',
-		data: user_name,
+		headers: {
+			Authorization: 'Basic ' + btoa( username + ':' + password)
+		},
 		success() {
-			// saveRegisterDataToStorage();
+			localStorage.setItem('username', username);
+			localStorage.setItem('password', password);
 			window.location.pathname = '/home.html';
 		},
 		error(xhr) {
-			const err = ERROR_ALERT + xhr.responseText;
-			showAlert(err);
-			showError(INVALID_LOGIN_ERR);
+			showFormError(INVALID_LOGIN_ERR);
 		}
 	});
 }
