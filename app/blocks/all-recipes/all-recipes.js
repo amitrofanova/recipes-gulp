@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import {INGREDIENTS_TITLE, STEPS_TITLE, ERROR_ALERT}from '../../resources/strings/ru.js';
-import {authHeader, getUsernameFromStorage, getPasswordFromStorage}from '../auth-form/auth-form.js';
+import {authHeader}from '../auth-form/auth-form.js';
 import {showAlert}from '../modal-alert/modal-alert.js';
 
 
@@ -49,8 +49,8 @@ function getContent(callback, group, recipe){
 	$.ajax({
 		url,
 		headers: {
-      "Authorization": authHeader()
-    },
+			Authorization: authHeader()
+		},
 		dataType: 'json',
 		success(data){
 			callback(data);

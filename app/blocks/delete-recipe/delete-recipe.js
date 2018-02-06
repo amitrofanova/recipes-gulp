@@ -25,8 +25,8 @@ function getList(callback, group) {
 	$.ajax({
 		url,
 		headers: {
-      "Authorization": authHeader()
-    },
+			Authorization: authHeader()
+		},
 		dataType: 'json',
 		success(data){
 			callback(data);
@@ -60,7 +60,7 @@ function createRecipesSelect() {
 function createGroupsSelect() {
 	const callback = function (data) {
 
-		if (!data.length) return;
+		if (!data.length){return;}
 
 		for (let i = 0; i < data.length; i++) {
 			$(groupsSelect).append(
@@ -84,8 +84,8 @@ function deleteRecipe() {
 		type: 'DELETE',
 		url,
 		headers: {
-      "Authorization": authHeader()
-    },
+			Authorization: authHeader()
+		},
 		dataType: 'json',
 		success(data){
 			showAlert(DELETED_RECIPE_ALERT);
@@ -107,7 +107,7 @@ $(document).ready(function (){
 	}
 
 	$(document).on('change', groupsSelect, createRecipesSelect);
-	
+
 	$(document).on('click', refreshBtn, createRecipesSelect);
 
 	$(document).on('click', deleteBtn, function () {

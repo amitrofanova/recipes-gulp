@@ -9,7 +9,7 @@ import {
 	ERROR_ALERT}from '../../resources/strings/ru.js';
 
 import {showAlert}from '../modal-alert/modal-alert.js';
-import {authHeader, getUsernameFromStorage, getPasswordFromStorage}from '../auth-form/auth-form.js';
+import {authHeader}from '../auth-form/auth-form.js';
 
 
 const jsonPath = 'https://amitrofanova.pythonanywhere.com/api/recipes/';
@@ -273,8 +273,8 @@ function saveRecipe(evt){
 		type: 'POST',
 		url: jsonPath + '?group=' + encodeURIComponent(group),
 		headers: {
-      "Authorization": authHeader()
-    },
+			Authorization: authHeader()
+		},
 		dataType: 'json',
 		data: createRecipe(),
 		success(){
