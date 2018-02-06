@@ -81,19 +81,17 @@ function openDishGroup() {
 	getContent(callback, currentDishGroup);
 }
 
-
+// TODO: move to recipe block
 function appendRecipe(recipe) {
 	$('<div class="recipe"></div>')
 		.insertAfter($('.recipe-preview')[0])
 		.append(
+			'<div class="recipe__title">'	+ recipe.title + '</div>' +
 			'<obj class="recipe__image"	type="image/png">' +
 				'<img src="' + recipe.image + '"/>' +
 			'</obj>' +
-			'<div class="recipe__content">' +
-				'<div class="recipe__title">'	+ recipe.title + '</div>' +
-				'<div class="recipe__ingredients-title">' + INGREDIENTS_TITLE + '</div>'	+
-				'<ul class="recipe__ingredients"></ul>' +
-			'</div>' +
+			'<div class="recipe__ingredients-title">' + INGREDIENTS_TITLE + '</div>'	+
+			'<ul class="recipe__ingredients"></ul>' +
 			'<div class="recipe__steps">' +
 			'<div class="recipe__steps-title">' + STEPS_TITLE + '</div>'
 		);
@@ -109,7 +107,7 @@ function appendRecipe(recipe) {
 	}
 }
 
-
+// TODO: move to breadcrumb block
 function appendRecipeToBreadcrumb(title) {
 	$('.all-recipes__breadcrumb')
 		.append('<div class="breadcrumb__arrow"/><div class="breadcrumb__current-recipe">' + title + '</div>');
