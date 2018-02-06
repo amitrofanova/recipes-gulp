@@ -149,7 +149,7 @@ function validateLoginData() {
 			localStorage.setItem('password', password);
 			window.location.pathname = '/home.html';
 		},
-		error(xhr) {
+		error() {
 			showFormError(INVALID_LOGIN_ERR);
 		}
 	});
