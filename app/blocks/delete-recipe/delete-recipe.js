@@ -1,10 +1,10 @@
 import $ from 'jquery';
 import {CONFIRM_DELETE_ALERT, DELETED_RECIPE_ALERT, ERROR_ALERT}from '../../resources/strings/ru.js';
 import {showAlert, hideAlert}from '../modal-alert/modal-alert.js';
-import {authHeader, getUsernameFromStorage, getPasswordFromStorage}from '../auth-form/auth-form.js';
+import {authHeader}from '../auth-form/auth-form.js';
 
-const jsonPath = 'https://amitrofanova.pythonanywhere.com/api/recipes/';
-const pathToNames = 'https://amitrofanova.pythonanywhere.com/api/groups/';
+const pathToRecipes = 'https://amitrofanova.pythonanywhere.com/api/recipes/';
+const pathToGroups = 'https://amitrofanova.pythonanywhere.com/api/groups/';
 
 const CLASS_PREFIX = '.delete-recipe';
 const groupsSelect = CLASS_PREFIX + '__dish-group', // eslint-disable-line one-var
@@ -16,17 +16,14 @@ const groupsSelect = CLASS_PREFIX + '__dish-group', // eslint-disable-line one-v
 
 
 function getList(callback, group) {
-	let url = pathToNames + '?short';
+	let url = pathToGroups + '?short';
 
 	if (group) {
-		// url += '?group=' + encodeURIComponent(group);
-		url = pathToNames + encodeURIComponent(group) + '?short';
+		url = pathToGroups + encodeURIComponent(group) + '?short';
 	}
 
 	$.ajax({
 		url,
-		// username: localStorage.getItem('username'),
-		// password: localStorage.getItem('password'),
 		headers: {
       "Authorization": authHeader()
     },
@@ -81,13 +78,14 @@ function createGroupsSelect() {
 function deleteRecipe() {
 	const group = $(groupsSelect).val();
 	const recipeToDelete = $(recipesSelect).val();
-	const url = jsonPath + '?group=' + encodeURIComponent(group) + '&recipe=' + encodeURIComponent(recipeToDelete);
+	const url = pathToRecipes + encodeURIComponent(recipeToDelete) + '?group=' + encodeURIComponent(group);
 
 	$.ajax({
 		type: 'DELETE',
 		url,
-		username: getUsernameFromStorage(),
-		password: getPasswordFromStorage(),
+		headers: {
+      "Authorization": authHeader()
+    },
 		dataType: 'json',
 		success(data){
 			showAlert(DELETED_RECIPE_ALERT);
@@ -109,6 +107,8 @@ $(document).ready(function (){
 	}
 
 	$(document).on('change', groupsSelect, createRecipesSelect);
+	
+	$(document).on('click', refreshBtn, createRecipesSelect);
 
 	$(document).on('click', deleteBtn, function () {
 		showAlert(CONFIRM_DELETE_ALERT, true);
@@ -120,7 +120,5 @@ $(document).ready(function (){
 
 		$(document).on('click', declineBtn, hideAlert);
 	});
-
-	$(document).on('click', refreshBtn, createRecipesSelect);
 
 });
