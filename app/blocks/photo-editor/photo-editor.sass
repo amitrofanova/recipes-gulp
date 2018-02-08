@@ -1,0 +1,85 @@
+.photo-editor
+	display: none
+	position: fixed
+	z-index: 100
+	top: 0
+	left: 0
+	width: 100%
+	height: 100%
+	background-color: $primary-text-color
+
+.photo-editor__inner
+	position: relative
+	margin: auto
+	margin-top: 5%
+	width: 70%
+	border-radius: 3px
+	background-color: $primary-bg-color
+
+.photo-editor__section
+	display: none
+
+.photo-editor__section-active
+	display: block
+
+.photo-editor__tab
+	display: inline-block
+	width: 33.333%
+	padding: 10px 20px
+	background-color: #ccc
+	text-align: center
+	font-size: calc(8px + .5rem)
+	color: lighten(#000, 20%)
+	&:hover
+		background-color: lighten(#ccc, 10%)
+
+.photo-editor__tab-active
+	background-color: #fff
+	&:hover
+		background-color: darken(#fff, 2%)
+
+.photo-editor__section
+	text-align: center
+
+.photo-editor__description
+	padding: 2rem
+	font-size: calc(8px + .5rem)
+
+.photo-editor__choose-file-btn, .photo-editor__crop-btn, .photo-editor__crop-min-btn
+	position: relative
+	margin: 2rem auto
+
+.photo-editor__file-input
+	position: absolute
+	top: 0
+	left: 0
+	width: 100%
+	height: 100%
+	opacity: 0
+	cursor: pointer
+
+.photo-editor__image-load-wrap, .photo-editor__image-crop-wrap, .photo-editor__crop-min-wrap
+	position: relative
+	width: 100%
+	height: calc(100px + 10rem)
+	background-color: #ccc
+	text-align: center
+
+.photo-editor__image-load, .photo-editor__image-crop, .photo-editor__image-crop-min
+	max-height: calc(100px + 10rem)
+	max-width: 100%
+
+.photo-editor__controls
+	position: relative
+	width: 100%
+	height: 8rem
+
+.photo-editor__btn_left
+	position: absolute
+	left: 2rem
+	bottom: 2rem
+
+.photo-editor__btn_right
+	position: absolute
+	right: 2rem
+	bottom: 2rem

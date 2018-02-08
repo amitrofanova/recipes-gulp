@@ -1,0 +1,41 @@
+.photo-editor
+	
+	.photo-editor__inner
+		
+		.photo-editor__tabs
+			.photo-editor__tab.photo-editor__choose-file-tab.photo-editor__tab-active 1. Загрузить фото
+			.photo-editor__tab.photo-editor__crop-tab 2. Обрезать фото
+			.photo-editor__tab.photo-editor__crop-min-tab 3. Выбрать миниатюру
+				
+		section.photo-editor__section.photo-editor__section-active.photo-editor__choose-file-section
+			.photo-editor__title
+			.photo-editor__description Загрузите фото с вашим блюдом
+			.photo-editor__section-content
+				.photo-editor__image-load-wrap
+					img(class="photo-editor__image-load")
+				.photo-editor__choose-file-btn.button Выбрать изображение
+					input(type="file" name="newfile" class="photo-editor__file-input")
+			.photo-editor__controls
+				.photo-editor__to-crop-btn.photo-editor__btn_right.button Продолжить
+			
+		section.photo-editor__section.photo-editor__crop-section
+			.photo-editor__title
+			.photo-editor__description Пожалуйста обрежьте фото. Фото будет сохранено в пропорции 16:9. Такая пропорция нужна, чтобы ваше фото лучше смотрелось на странице :)
+			.photo-editor__section-content
+				.photo-editor__image-crop-wrap
+					img(class="photo-editor__image-crop")
+				.photo-editor__crop-btn.button Обрезать
+			.photo-editor__controls
+				.photo-editor__to-choose-file-btn.photo-editor__btn_left.button Вернуться
+				.photo-editor__to-crop-min-btn.photo-editor__btn_right.button Продолжить
+				
+		section.photo-editor__section.photo-editor__crop-min-section
+			.photo-editor__title
+			.photo-editor__description Пожалуйста выберите область изображения, которая будет использоваться для предпросмотра вашего рецепта.
+			.photo-editor__section-content
+				.photo-editor__crop-min-wrap
+					img(class="photo-editor__image-crop-min")
+				.photo-editor__crop-min-btn.button Обрезать
+			.photo-editor__controls
+				.photo-editor__to-crop-btn.photo-editor__btn_left.button Вернуться
+				.photo-editor__submit-btn.photo-editor__btn_right.button Готово
