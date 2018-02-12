@@ -1,9 +1,8 @@
 import $ from 'jquery';
-// import Croppie from 'croppie';
-import Cropper from 'cropperjs';
+// import Cropper from 'cropperjs';
 
 import {
-	UNABLE_LOAD_FILE_ALERT,
+	// UNABLE_LOAD_FILE_ALERT,
 	EMPTY_INGREDIENT_ALERT,
 	ADDED_RECIPE_ALERT,
 	ERROR_ALERT}from '../../resources/strings/ru.js';
@@ -20,15 +19,15 @@ const formCls = CLASS_PREFIX, // eslint-disable-line one-var
 	dishGroupInputCls = CLASS_PREFIX + '__dish-group',
 	titleInputCls = CLASS_PREFIX + '__title-input',
 	descriptionInputCls = CLASS_PREFIX + '__description-input',
-	imageInputCls = CLASS_PREFIX + '__image-input',
+	// imageInputCls = CLASS_PREFIX + '__image-input',
 	imagePreviewCls = CLASS_PREFIX + '__image-preview',
 	imageResizedCls = CLASS_PREFIX + '__image-resized',
 	imageResultCls = CLASS_PREFIX + '__image-result',
-	imageCropBtn = CLASS_PREFIX + '__crop-btn',
-	imageAbortBtn = CLASS_PREFIX + '__abort-btn',
+	// imageCropBtn = CLASS_PREFIX + '__crop-btn',
+	// imageAbortBtn = CLASS_PREFIX + '__abort-btn',
 	imagePreviewWrap = CLASS_PREFIX + '__image-preview-wrap',
 	imageResultWrap = CLASS_PREFIX + '__image-result-wrap',
-	imageLabelCls = CLASS_PREFIX + '__image-label',
+	// imageLabelCls = CLASS_PREFIX + '__image-label',
 	ingredientsCls = CLASS_PREFIX + '__ingredients',
 	ingredientInputCls = CLASS_PREFIX + '__ingredient-input',
 	newIngredientBtnCls = CLASS_PREFIX + '__new-ingredient-btn',
@@ -155,56 +154,6 @@ function deleteItem() {
 }
 
 
-function cropImage() {
-	$(imageCropBtn).show();
-	$(imageAbortBtn).show();
-	const image = $('.add-recipe__image-preview')[0];
-	const cropper = new Cropper(image, {
-		aspectRatio: 16 / 9,
-		rotatable: false,
-		zoomable: false,
-		minContainerWidth: 320,
-		minContainerHeight: 180
-	});
-
-	$(imageCropBtn).on('click', function () {
-		$(imageResultWrap).show();
-		$(imageResultCls).attr('src', cropper.getCroppedCanvas({maxWidth: 1600, maxHeight: 900}).toDataURL());
-		$(imagePreviewWrap).hide();
-		// $(imageCropBtn).hide();
-		// $(imageAbortBtn).hide();
-	});
-}
-
-
-function uploadImage(evt) {
-	const tgt = evt.target || window.event.srcElement;
-	const files = tgt.files;
-	const f = files[0];
-	// $(imageLabelCls).html(f.name);
-
-	if (FileReader && files && files.length) {
-		const fr = new FileReader();
-
-		fr.onload = function () {
-			const res = fr.result;
-
-			// $(imagePreviewWrap).show();
-			$(imagePreviewCls).attr('src', res);
-
-			cropImage();
-
-			return res;
-		};
-		fr.readAsDataURL(f);
-	}
-
-	else {
-		$(imageLabelCls).html(UNABLE_LOAD_FILE_ALERT);
-	}
-}
-
-
 function resizeImage() { // eslint-disable-line no-unused-vars
 	const MAX_WIDTH = 400;
 	const MAX_HEIGHT = 400;
@@ -233,19 +182,19 @@ function resizeImage() { // eslint-disable-line no-unused-vars
 }
 
 
-function createLoader() {
-	const modal = '<div class="add-recipe__modal ajax-loader">' +
-		'<div class="add-recipe__modal-content">' +
-			'<div class="add-recipe__modal-text">Пожалуйста подождите, ваш запрос обрабатывается</div>' +
-		'</div>' +
-	'</div>';
-	$('body').append(modal);
-}
-
-
-function deleteLoader() {
-	$('.ajax-loader').remove();
-}
+// function createLoader() {
+// 	const modal = '<div class="add-recipe__modal ajax-loader">' +
+// 		'<div class="add-recipe__modal-content">' +
+// 			'<div class="add-recipe__modal-text">Пожалуйста подождите, ваш запрос обрабатывается</div>' +
+// 		'</div>' +
+// 	'</div>';
+// 	$('body').append(modal);
+// }
+//
+//
+// function deleteLoader() {
+// 	$('.ajax-loader').remove();
+// }
 
 
 function createRecipe() {
@@ -305,15 +254,18 @@ export function resetForm() {
 }
 
 
+function openPhotoEditor() {
+	$('.photo-editor').show();
+	$('.add-recipe__image-preview-wrap').css('display', 'flex');
+}
+
+
 $(document).ready(function () {
 
 	// TODO: animation during recipe saving
 
-	$(document).on('change', imageInputCls, uploadImage);
 
-	// $(imagePreviewCls)[0].onload = function () {
-	// 	cropImage();
-	// };
+	$('.add-recipe__open-editor-btn').on('click', openPhotoEditor);
 
 	$(document).on('click', newIngredientBtnCls, addIngredient);
 	$(document).on('click', newStepBtnCls, addStep);
@@ -332,12 +284,12 @@ $(document).ready(function () {
 		}
 	};
 
-	$( document ).ajaxStart(function () {
-		createLoader();
-	});
-
-	$( document ).ajaxStop(function () {
-		deleteLoader();
-	});
+	// $( document ).ajaxStart(function () {
+	// 	createLoader();
+	// });
+	//
+	// $( document ).ajaxStop(function () {
+	// 	deleteLoader();
+	// });
 
 });

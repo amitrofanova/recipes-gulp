@@ -1,6 +1,7 @@
 mixin add-recipe
 	form(action="#" method="post").add-recipe&attributes(attributes)
 
+		//- TODO: add fieldsets
 		section.add-recipe__section
 			.add-recipe__section-title Группа
 			select(name="select").add-recipe__dish-group.add-recipe__select-input
@@ -21,24 +22,29 @@ mixin add-recipe
 			.add-recipe__section-title Описание 
 			input(type="text" name="description").add-recipe__description-input.add-recipe__text-input
 	  
-		
+		//- TODO: add form with step-tabs for setting image and image-min
 		section.add-recipe__section
+			.add-recipe__image-label Вы можете добавить фото вашего блюда
+			.add-recipe__open-editor-btn.button Добавить фото
 			.add-recipe__image-preview-wrap
-				.add-recipe__image-wrap-content
-					.add-recipe__image-label Вы можете добавить фото вашего блюда
-					.add-recipe__image-button.button Выбрать изображение
-						input(type="file" name="image" class="add-recipe__image-input")
 				img(class="add-recipe__image-preview")
-			.add-recipe__image-result-wrap
-				img(class="add-recipe__image-result")
+				img(class="add-recipe__image-preview-min")
+			//- 		.add-recipe__image-label Вы можете добавить фото вашего блюда
+			//- 		.add-recipe__image-button.button Выбрать изображение
+			//- 			input(type="file" name="image" class="add-recipe__image-input")
+			//- 	img(class="add-recipe__image-preview")
+			//- .add-recipe__image-result-wrap
+			//- 	img(class="add-recipe__image-result")
 					
-			input(type="button" value="Готово" class="add-recipe__crop-btn button")
-			input(type="button" value="Не нажимать" class="add-recipe__abort-btn button")
+			//- input(type="button" value="Готово" class="add-recipe__crop-btn button")
+			//- input(type="button" value="Не нажимать" class="add-recipe__abort-btn button")
 			//- obj(type="image/png")
 			//- 	img(class="add-recipe__image-preview")
 			//- obj(type="image/png")
 			//- 	img(class="add-recipe__image-resized")
 	  
+			include ../photo-editor/photo-editor 
+			
 		section.add-recipe__section
 			.add-recipe__section-title Ингредиенты
 			.add-recipe__input-wrapper
