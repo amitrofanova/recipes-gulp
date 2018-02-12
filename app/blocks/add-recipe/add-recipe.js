@@ -19,15 +19,11 @@ const formCls = CLASS_PREFIX, // eslint-disable-line one-var
 	dishGroupInputCls = CLASS_PREFIX + '__dish-group',
 	titleInputCls = CLASS_PREFIX + '__title-input',
 	descriptionInputCls = CLASS_PREFIX + '__description-input',
-	// imageInputCls = CLASS_PREFIX + '__image-input',
 	imagePreviewCls = CLASS_PREFIX + '__image-preview',
-	imageResizedCls = CLASS_PREFIX + '__image-resized',
+	// imagePreviewMin = CLASS_PREFIX + '__image-preview-min',
 	imageResultCls = CLASS_PREFIX + '__image-result',
-	// imageCropBtn = CLASS_PREFIX + '__crop-btn',
-	// imageAbortBtn = CLASS_PREFIX + '__abort-btn',
 	imagePreviewWrap = CLASS_PREFIX + '__image-preview-wrap',
 	imageResultWrap = CLASS_PREFIX + '__image-result-wrap',
-	// imageLabelCls = CLASS_PREFIX + '__image-label',
 	ingredientsCls = CLASS_PREFIX + '__ingredients',
 	ingredientInputCls = CLASS_PREFIX + '__ingredient-input',
 	newIngredientBtnCls = CLASS_PREFIX + '__new-ingredient-btn',
@@ -154,34 +150,6 @@ function deleteItem() {
 }
 
 
-function resizeImage() { // eslint-disable-line no-unused-vars
-	const MAX_WIDTH = 400;
-	const MAX_HEIGHT = 400;
-	const imageToResize = $(imagePreviewCls)[0];
-	let width = imageToResize.width;
-	let height = imageToResize.height;
-
-	if (width > height) {
-		if (width > MAX_WIDTH) {
-			height *= MAX_WIDTH / width;
-			width = MAX_WIDTH;
-		}
-	}else if (height > MAX_HEIGHT) {
-		width *= MAX_HEIGHT / height;
-		height = MAX_HEIGHT;
-	}
-
-	const canvas = document.createElement('canvas');
-	canvas.width = width;
-	canvas.height = height;
-
-	const context = canvas.getContext('2d');
-	context.drawImage(imageToResize, 0, 0, width, height);
-	$(imageResizedCls).attr('src', canvas.toDataURL());
-	console.log('result: ' + $(imageResizedCls).attr('src').length);
-}
-
-
 // function createLoader() {
 // 	const modal = '<div class="add-recipe__modal ajax-loader">' +
 // 		'<div class="add-recipe__modal-content">' +
@@ -200,8 +168,8 @@ function resizeImage() { // eslint-disable-line no-unused-vars
 function createRecipe() {
 	const title = $(titleInputCls).val();
 	const description = $(descriptionInputCls).val();
-	const image = $(imageResultCls).attr('src');
-	// const image = $(imagePreviewCls).attr('src');
+	// const imageMin = $(imagePreviewMin).attr('src');
+	const image = $(imagePreviewCls).attr('src');
 	const newRecipe = {
 		title,
 		description,
