@@ -6,6 +6,11 @@ function showAddForm() {
 }
 
 
+function showModifyForm() {
+	$('.modify-recipe').toggle();
+}
+
+
 function showDeleteForm() {
 	$('.delete-recipe').toggle();
 }
@@ -23,6 +28,7 @@ function deleteRoundCorners() {
 $(document).ready(function () {
 	$(document).on('click', '.dashboard__add-recipe', showAddForm);
 	$(document).on('click', '.dashboard__delete-recipe', showDeleteForm);
+	$(document).on('click', '.dashboard__modify-recipe', showModifyForm);
 	$(document).on('click', '.dashboard__section', rotateToggler);
 	$(document).on('click', '.dashboard__section', deleteRoundCorners);
 });

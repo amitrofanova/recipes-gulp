@@ -5,5 +5,6 @@ import '../blocks/modal-alert/modal-alert.js';
 import '../blocks/dashboard/dashboard.js';
 import '../blocks/add-recipe/add-recipe.js';
 import '../blocks/delete-recipe/delete-recipe.js';
+import '../blocks/modify-recipe/modify-recipe.js';
 import '../blocks/auth-form/auth-form.js';
 import '../blocks/photo-editor/photo-editor.js';
