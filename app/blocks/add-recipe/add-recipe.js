@@ -9,7 +9,7 @@ import {
 
 import {showAlert}from '../modal-alert/modal-alert.js';
 import {authHeader}from '../auth-form/auth-form.js';
-
+import {createEditor}from '../photo-editor/photo-editor.js';
 
 const jsonPath = 'https://amitrofanova.pythonanywhere.com/api/recipes/';
 // const pathToNames = 'https://amitrofanova.pythonanywhere.com/api/groups/?short';
@@ -222,15 +222,9 @@ export function resetForm() {
 }
 
 
-function openPhotoEditor() {
-	$('.photo-editor').show();
-	$('.add-recipe__image-preview-wrap').css('display', 'flex');
-}
-
-
 function getCroppedImg() {
-	const img = $('.photo-editor__image-crop').attr('src')
-	const imgMin = $('.photo-editor__image-crop-min').attr('src')
+	const img = $('.photo-editor__image-crop').attr('src');
+	const imgMin = $('.photo-editor__image-crop-min').attr('src');
 	$('.add-recipe__image-preview').attr('src', img);
 	$('.add-recipe__image-preview-min').attr('src', imgMin);
 
@@ -241,7 +235,7 @@ $(document).ready(function () {
 	// TODO: animation during recipe saving
 
 
-	$('.add-recipe__open-editor-btn').on('click', openPhotoEditor);
+	$('.add-recipe__open-editor-btn').on('click', createEditor);
 	$(document).on('click', '.photo-editor__submit-btn', getCroppedImg);
 	$(document).on('click', newIngredientBtnCls, addIngredient);
 	$(document).on('click', newStepBtnCls, addStep);
