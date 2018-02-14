@@ -16,7 +16,6 @@ function cropImage() {
 		const res = cropper.getCroppedCanvas({maxWidth: 1600, maxHeight: 900}).toDataURL();
 		cropper.destroy();
 		$('.photo-editor__image-crop').attr('src', res);
-		$('.add-recipe__image-preview').attr('src', res);
 	});
 }
 
@@ -35,7 +34,6 @@ function cropImageMin() {
 		const res = cropper.getCroppedCanvas({maxWidth: 1600, maxHeight: 900}).toDataURL();
 		cropper.destroy();
 		$('.photo-editor__image-crop-min').attr('src', res);
-		$('.add-recipe__image-preview-min').attr('src', res);
 	});
 }
 

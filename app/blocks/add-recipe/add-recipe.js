@@ -228,13 +228,21 @@ function openPhotoEditor() {
 }
 
 
+function getCroppedImg() {
+	const img = $('.photo-editor__image-crop').attr('src')
+	const imgMin = $('.photo-editor__image-crop-min').attr('src')
+	$('.add-recipe__image-preview').attr('src', img);
+	$('.add-recipe__image-preview-min').attr('src', imgMin);
+
+}
+
 $(document).ready(function () {
 
 	// TODO: animation during recipe saving
 
 
 	$('.add-recipe__open-editor-btn').on('click', openPhotoEditor);
-
+	$(document).on('click', '.photo-editor__submit-btn', getCroppedImg);
 	$(document).on('click', newIngredientBtnCls, addIngredient);
 	$(document).on('click', newStepBtnCls, addStep);
 	$(document).on('focus', ingredientInputCls, clearInput);
