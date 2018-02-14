@@ -25,6 +25,7 @@ export const EMPTY_INGREDIENT_ALERT = 'Укажите ингредиент';
 export const CONFIRM_DELETE_ALERT = 'Вы уверены, что хотите удалить рецепт?';
 export const ADDED_RECIPE_ALERT = 'Рецепт сохранён!';
 export const DELETED_RECIPE_ALERT = 'Рецепт удалён!';
+export const MODIFIED_RECIPE_ALERT = 'Рецепт изменён!';
 export const ERROR_ALERT = 'Произошла ошибка!';
 
 // A recipe constants
