@@ -2,6 +2,7 @@ import $ from 'jquery';
 import {CONFIRM_MODIFY_ALERT, MODIFIED_RECIPE_ALERT, ERROR_ALERT, EMPTY_INGREDIENT_ALERT}from '../../resources/strings/ru.js';
 import {showAlert, hideAlert}from '../modal-alert/modal-alert.js';
 import {authHeader}from '../auth-form/auth-form.js';
+import {createEditor}from '../photo-editor/photo-editor.js';
 
 const pathToRecipes = 'https://amitrofanova.pythonanywhere.com/api/recipes/';
 const pathToGroups = 'https://amitrofanova.pythonanywhere.com/api/groups/';
@@ -76,6 +77,45 @@ function createGroupsSelect() {
 	};
 
 	getList(callback);
+}
+
+
+function getIngredients() {
+	const ingredients = [];
+	let newIngredient;
+
+	$(newItem).each(function () {
+		console.log('start');
+		if ($(this).parents('.modify-recipe__ingredients').length) {
+
+			newIngredient = $(this).contents().filter(function () {
+				return this.nodeType === TEXT_NODE_TYPE;
+			}).text();
+			console.log(newIngredient);
+			ingredients.push(newIngredient);
+		}
+	});
+	console.log(ingredients);
+	return ingredients;
+}
+
+
+function getSteps() {
+	const steps = [];
+	let newStep;
+
+	$(newItem).each(function () {
+		if ($(this).parents('.modify-recipe__steps').length) {
+
+			newStep = $(this).contents().filter(function () {
+				return this.nodeType === TEXT_NODE_TYPE;
+			}).text();
+
+			steps.push(newStep);
+		}
+	});
+
+	return steps;
 }
 
 
@@ -189,45 +229,6 @@ function deleteItem() {
 }
 
 
-function getIngredients() {
-	const ingredients = [];
-	let newIngredient;
-
-	$(newItem).each(function () {
-		console.log('start');
-		if ($(this).parents('.modify-recipe__ingredients').length) {
-
-			newIngredient = $(this).contents().filter(function () {
-				return this.nodeType === TEXT_NODE_TYPE;
-			}).text();
-			console.log(newIngredient);
-			ingredients.push(newIngredient);
-		}
-	});
-	console.log(ingredients);
-	return ingredients;
-}
-
-
-function getSteps() {
-	const steps = [];
-	let newStep;
-
-	$(newItem).each(function () {
-		if ($(this).parents('.modify-recipe__steps').length) {
-
-			newStep = $(this).contents().filter(function () {
-				return this.nodeType === TEXT_NODE_TYPE;
-			}).text();
-
-			steps.push(newStep);
-		}
-	});
-
-	return steps;
-}
-
-
 function getNewData() {
 	const title = $('.modify-recipe__title-input').val();
 	const description = $('.modify-recipe__description-input').val();
@@ -247,7 +248,6 @@ function getNewData() {
 
 function saveRecipe() {
 	const group = $('.modify-recipe__dish-group').val();
-	const recipeToModify = $('.modify-recipe__title-input').val();
 	const url = pathToRecipes + '?group=' + encodeURIComponent(group);
 
 	$.ajax({
@@ -293,10 +293,15 @@ function deleteRecipe() {
 	});
 }
 
-function openPhotoEditor() {
-	$('.photo-editor').show();
-	$('.modify-recipe__image-preview-wrap').css('display', 'flex');
+
+function getCroppedImg() {
+	const img = $('.photo-editor__image-crop').attr('src');
+	const imgMin = $('.photo-editor__image-crop-min').attr('src');
+	$('.modify-recipe__image-preview').attr('src', img);
+	$('.modify-recipe__image-preview-min').attr('src', imgMin);
+
 }
+
 
 $(document).ready(function (){
 
@@ -313,7 +318,9 @@ $(document).ready(function (){
 
 	$(document).on('click', refreshBtn, createRecipesSelect);
 
-	$('.modify-recipe__open-editor-btn').on('click', openPhotoEditor);
+	$('.modify-recipe__open-editor-btn').on('click', createEditor);
+
+	$(document).on('click', '.photo-editor__submit-btn', getCroppedImg);
 	$(document).on('click', '.modify-recipe__new-ingredient-btn', addIngredient);
 	$(document).on('click', '.modify-recipe__new-step-btn', addStep);
 	$(document).on('click', '.modify-recipe__delete-item', deleteItem);

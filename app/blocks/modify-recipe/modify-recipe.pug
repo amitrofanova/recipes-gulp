@@ -20,11 +20,12 @@ mixin modify-recipe
 			input(type="text" name="description").modify-recipe__description-input.modify-recipe__text-input
 			
 		section.modify-recipe__section
-			.modify-recipe__open-editor-btn.button Изменить фото
+			.modify-recipe__section-title Фотографии
 			.modify-recipe__image-preview-wrap
 				img(class="modify-recipe__image-preview")
 				img(class="modify-recipe__image-preview-min")
-			include ../photo-editor/photo-editor
+			.modify-recipe__open-editor-btn.button Изменить фото
+			//- include ../photo-editor/photo-editor
 			
 		section.modify-recipe__section
 			.modify-recipe__section-title Ингредиенты
