@@ -2,7 +2,7 @@ import $ from 'jquery';
 import {CONFIRM_MODIFY_ALERT, MODIFIED_RECIPE_ALERT, ERROR_ALERT, EMPTY_INGREDIENT_ALERT}from '../../resources/strings/ru.js';
 import {showAlert, hideAlert}from '../modal-alert/modal-alert.js';
 import {authHeader}from '../auth-form/auth-form.js';
-import {createEditor}from '../photo-editor/photo-editor.js';
+import {createEditor, destroyEditor}from '../photo-editor/photo-editor.js';
 
 const pathToRecipes = 'https://amitrofanova.pythonanywhere.com/api/recipes/';
 const pathToGroups = 'https://amitrofanova.pythonanywhere.com/api/groups/';
@@ -299,7 +299,7 @@ function getCroppedImg() {
 	const imgMin = $('.photo-editor__image-crop-min').attr('src');
 	$('.modify-recipe__image-preview').attr('src', img);
 	$('.modify-recipe__image-preview-min').attr('src', imgMin);
-
+	destroyEditor();
 }
 
 

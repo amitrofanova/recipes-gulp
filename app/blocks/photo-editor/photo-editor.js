@@ -69,6 +69,11 @@ export function createEditor() {
 }
 
 
+export function destroyEditor() {
+	$('.photo-editor').remove();
+}
+
+
 function cropImage() {
 	const image = $('.photo-editor__image-crop')[0];
 	const cropper = new Cropper(image, {
