@@ -140,6 +140,7 @@ function getCurrentData(recipeToModify) {
 		$('.modify-recipe__title-input').val(recipe.title);
 		$('.modify-recipe__description-input').val(recipe.description);
 		$('.modify-recipe__image-preview').attr('src', recipe.image);
+		$('.modify-recipe__image-preview-min').attr('src', recipe.image_min);
 
 		for (let i = 0; i < recipe.components.length; i++) {
 			const ingredient = recipe.components[i];
@@ -261,6 +262,7 @@ function saveRecipe() {
 		data: getNewData(),
 		success(data){
 			showAlert(MODIFIED_RECIPE_ALERT);
+			resetForm();
 			console.log(data);
 		},
 		error(xhr) {
@@ -306,6 +308,15 @@ function getCroppedImg() {
 }
 
 
+function resetForm() {
+	$('.modify-recipe')[0].reset();
+	$('.modify-recipe__new-item').remove();
+	$('.modify-recipe__delete-item').remove();
+	$('.modify-recipe__image-preview').attr('src', '');
+	$('.modify-recipe__image-preview-min').attr('src', '');
+}
+
+
 $(document).ready(function (){
 
 	if (window.location.pathname === '/dashboard.html') {
@@ -314,6 +325,7 @@ $(document).ready(function (){
 
 	$(document).on('change', groupsSelect, createRecipesSelect);
 	$(document).on('change', recipesSelect, function () {
+
 		const recipe = $(recipesSelect).val();
 		getCurrentData(recipe);
 	});
