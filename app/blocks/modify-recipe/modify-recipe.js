@@ -10,7 +10,8 @@ const pathToGroups = 'https://amitrofanova.pythonanywhere.com/api/groups/';
 const CLASS_PREFIX = '.modify-recipe';
 const groupsSelect = CLASS_PREFIX + '__dish-group', // eslint-disable-line one-var
 	recipesSelect = CLASS_PREFIX + '__recipe-to-modify',
-	modifyBtn = CLASS_PREFIX + '__modify-recipe',
+	modifyBtn = CLASS_PREFIX + '__modify-btn',
+	submitBtn = CLASS_PREFIX + '__submit-btn',
 	confirmBtn = '.modal-alert__confirm-btn',
 	declineBtn = '.modal-alert__decline-btn',
 	refreshBtn = CLASS_PREFIX + '__refresh-btn',
@@ -324,13 +325,13 @@ $(document).ready(function (){
 	}
 
 	$(document).on('change', groupsSelect, createRecipesSelect);
-	$(document).on('change', recipesSelect, function () {
+	$(document).on('click', refreshBtn, createRecipesSelect);
 
+	$(document).on('click', modifyBtn, function() {
 		const recipe = $(recipesSelect).val();
 		getCurrentData(recipe);
 	});
-	$(document).on('click', refreshBtn, createRecipesSelect);
-
+	
 	$(document).on('click', '.modify-recipe__open-editor-btn', createEditor);
 	$(document).on('click', '.photo-editor__submit-btn', getCroppedImg);
 
@@ -338,7 +339,7 @@ $(document).ready(function (){
 	$(document).on('click', '.modify-recipe__new-step-btn', addStep);
 	$(document).on('click', '.modify-recipe__delete-item', deleteItem);
 
-	$(document).on('click', modifyBtn, function () {
+	$(document).on('click', submitBtn, function () {
 		showAlert(CONFIRM_MODIFY_ALERT, true);
 
 		$(document).on('click', confirmBtn, function () {

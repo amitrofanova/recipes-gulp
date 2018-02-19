@@ -10,6 +10,7 @@ mixin modify-recipe
 			select(name="recipes").modify-recipe__recipe-to-modify.modify-recipe__select-input
 			.modify-recipe__refresh-btn
 				.modify-recipe__hint Обновить список
+			.modify-recipe__modify-btn.button Начать
 		
 		section.modify-recipe__section
 			.modify-recipe__section-title Название блюда
@@ -42,4 +43,4 @@ mixin modify-recipe
 				.modify-recipe__new-step-btn
 								
 		section.modify-recipe__section
-			input(type="button" value="Сохранить изменения" class="modify-recipe__modify-recipe button")
+			input(type="button" value="Сохранить изменения" class="modify-recipe__submit-btn button")
