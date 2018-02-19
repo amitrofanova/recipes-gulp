@@ -20,7 +20,7 @@ const formCls = CLASS_PREFIX, // eslint-disable-line one-var
 	titleInputCls = CLASS_PREFIX + '__title-input',
 	descriptionInputCls = CLASS_PREFIX + '__description-input',
 	imagePreviewCls = CLASS_PREFIX + '__image-preview',
-	// imagePreviewMin = CLASS_PREFIX + '__image-preview-min',
+	imagePreviewMin = CLASS_PREFIX + '__image-preview-min',
 	imageResultCls = CLASS_PREFIX + '__image-result',
 	imagePreviewWrap = CLASS_PREFIX + '__image-preview-wrap',
 	imageResultWrap = CLASS_PREFIX + '__image-result-wrap',
@@ -168,11 +168,12 @@ function deleteItem() {
 function createRecipe() {
 	const title = $(titleInputCls).val();
 	const description = $(descriptionInputCls).val();
-	// const imageMin = $(imagePreviewMin).attr('src');
+	const image_min = $(imagePreviewMin).attr('src');
 	const image = $(imagePreviewCls).attr('src');
 	const newRecipe = {
 		title,
 		description,
+		image_min,
 		image,
 		components: getIngredients(),
 		steps: getSteps()
@@ -185,7 +186,6 @@ function createRecipe() {
 function saveRecipe(evt){
 	const selectedGroup = dishGroupInputCls + ' option:selected';
 	const group = $(selectedGroup).text();
-	// const form = $(CLASS_PREFIX);
 	$.ajax({
 		type: 'POST',
 		url: jsonPath + '?group=' + encodeURIComponent(group),

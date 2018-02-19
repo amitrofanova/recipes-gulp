@@ -24,7 +24,7 @@ function appendRecipePreview(recipe) {
 	$('.dish-group_opened').append(
 		'<div class="recipe-preview">' +
 			'<div class="recipe-preview__image">' +
-				'<img src="' + recipe.image + '">' +
+				'<img src="' + recipe.image_min + '">' +
 			'</div>' +
 			'<div class="recipe-preview__content">' +
 				'<div class="recipe-preview__title">'	+	recipe.title + '</div>' +

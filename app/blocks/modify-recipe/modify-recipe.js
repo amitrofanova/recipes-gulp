@@ -232,11 +232,12 @@ function deleteItem() {
 function getNewData() {
 	const title = $('.modify-recipe__title-input').val();
 	const description = $('.modify-recipe__description-input').val();
-	// const imageMin = $(imagePreviewMin).attr('src');
+	const image_min = $('.modify-recipe__image-preview-min').attr('src');
 	const image = $('.modify-recipe__image-preview').attr('src');
 	const newRecipe = {
 		title,
 		description,
+		image_min,
 		image,
 		components: getIngredients(),
 		steps: getSteps()
@@ -320,7 +321,7 @@ $(document).ready(function (){
 
 	$(document).on('click', '.modify-recipe__open-editor-btn', createEditor);
 	$(document).on('click', '.photo-editor__submit-btn', getCroppedImg);
-	
+
 	$(document).on('click', '.modify-recipe__new-ingredient-btn', addIngredient);
 	$(document).on('click', '.modify-recipe__new-step-btn', addStep);
 	$(document).on('click', '.modify-recipe__delete-item', deleteItem);
