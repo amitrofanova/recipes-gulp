@@ -264,7 +264,8 @@ function saveRecipe() {
 		},
 		error(xhr) {
 			const err = ERROR_ALERT + xhr.responseText;
-			showAlert(err);
+			// showAlert(err);
+			console.log(err);
 		}
 	});
 }
@@ -288,7 +289,8 @@ function deleteRecipe() {
 		},
 		error(xhr) {
 			const err = ERROR_ALERT + xhr.responseText;
-			showAlert(err);
+			// showAlert(err);
+			console.log(err);
 		}
 	});
 }
@@ -314,20 +316,14 @@ $(document).ready(function (){
 		const recipe = $(recipesSelect).val();
 		getCurrentData(recipe);
 	});
-
-
 	$(document).on('click', refreshBtn, createRecipesSelect);
 
-	$('.modify-recipe__open-editor-btn').on('click', createEditor);
-
+	$(document).on('click', '.modify-recipe__open-editor-btn', createEditor);
 	$(document).on('click', '.photo-editor__submit-btn', getCroppedImg);
+	
 	$(document).on('click', '.modify-recipe__new-ingredient-btn', addIngredient);
 	$(document).on('click', '.modify-recipe__new-step-btn', addStep);
 	$(document).on('click', '.modify-recipe__delete-item', deleteItem);
-
-	$(document).on('click', '.modify-recipe__modify-recipe', function () {
-		deleteRecipe();
-	});
 
 	$(document).on('click', modifyBtn, function () {
 		showAlert(CONFIRM_MODIFY_ALERT, true);
