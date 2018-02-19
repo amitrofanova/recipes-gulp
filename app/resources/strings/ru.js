@@ -23,6 +23,7 @@ export const INVALID_LOGIN_ERR = 'Неверное имя пользовател
 export const UNABLE_LOAD_FILE_ALERT = 'Не удалось загрузить файл';
 export const EMPTY_INGREDIENT_ALERT = 'Укажите ингредиент';
 export const CONFIRM_DELETE_ALERT = 'Вы уверены, что хотите удалить рецепт?';
+export const CONFIRM_MODIFY_ALERT = 'Вы уверены, что хотите изменить рецепт?';
 export const ADDED_RECIPE_ALERT = 'Рецепт сохранён!';
 export const DELETED_RECIPE_ALERT = 'Рецепт удалён!';
 export const MODIFIED_RECIPE_ALERT = 'Рецепт изменён!';
