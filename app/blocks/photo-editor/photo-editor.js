@@ -135,32 +135,31 @@ function uploadImage(evt) {
 }
 
 
-// function resizeImage() { // eslint-disable-line no-unused-vars
-// 	const MAX_WIDTH = 400;
-// 	const MAX_HEIGHT = 400;
-// 	const imageToResize = $(imagePreviewCls)[0];
-// 	let width = imageToResize.width;
-// 	let height = imageToResize.height;
-//
-// 	if (width > height) {
-// 		if (width > MAX_WIDTH) {
-// 			height *= MAX_WIDTH / width;
-// 			width = MAX_WIDTH;
-// 		}
-// 	}else if (height > MAX_HEIGHT) {
-// 		width *= MAX_HEIGHT / height;
-// 		height = MAX_HEIGHT;
-// 	}
-//
-// 	const canvas = document.createElement('canvas');
-// 	canvas.width = width;
-// 	canvas.height = height;
-//
-// 	const context = canvas.getContext('2d');
-// 	context.drawImage(imageToResize, 0, 0, width, height);
-// 	$(imageResizedCls).attr('src', canvas.toDataURL());
-// 	console.log('result: ' + $(imageResizedCls).attr('src').length);
-// }
+export function resizeImage(imageToResize) { // eslint-disable-line no-unused-vars
+	const MAX_WIDTH = 200;
+	const MAX_HEIGHT = 200;
+	let width = imageToResize.width;
+	let height = imageToResize.height;
+
+	if (width > MAX_WIDTH) {
+		height *= MAX_WIDTH / width;
+		width = MAX_WIDTH;
+	}
+	else if (height > MAX_HEIGHT) {
+		width *= MAX_HEIGHT / height;
+		height = MAX_HEIGHT;
+	}
+
+	const canvas = document.createElement('canvas');
+	canvas.width = width;
+	canvas.height = height;
+
+	const context = canvas.getContext('2d');
+	context.drawImage(imageToResize, 0, 0, width, height);
+	const res = canvas.toDataURL();
+	// $(imageResizedCls).attr('src', canvas.toDataURL());
+	return res;
+}
 
 
 $(document).ready(function () {

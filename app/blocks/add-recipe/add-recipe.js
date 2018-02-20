@@ -9,7 +9,7 @@ import {
 
 import {showAlert}from '../modal-alert/modal-alert.js';
 import {authHeader}from '../auth-form/auth-form.js';
-import {createEditor, destroyEditor}from '../photo-editor/photo-editor.js';
+import {createEditor, destroyEditor, resizeImage}from '../photo-editor/photo-editor.js';
 
 const jsonPath = 'https://amitrofanova.pythonanywhere.com/api/recipes/';
 // const pathToNames = 'https://amitrofanova.pythonanywhere.com/api/groups/?short';
@@ -225,11 +225,18 @@ export function resetForm() {
 function getCroppedImg() {
 	const img = $('.photo-editor__image-crop').attr('src');
 	const imgMin = $('.photo-editor__image-crop-min').attr('src');
+
+	const imageToResize = $('.photo-editor__image-crop-min')[0];
+	console.log('initial: ' + imgMin.length);
+	const resizedImgMin = resizeImage(imageToResize);
+	console.log('resized: ' + resizedImgMin.length);
+	
 	$('.add-recipe__image-preview-wrap').css('display', 'flex');
 	$('.add-recipe__image-preview').attr('src', img);
-	$('.add-recipe__image-preview-min').attr('src', imgMin);
+	$('.add-recipe__image-preview-min').attr('src', resizedImgMin);
 	destroyEditor();
 }
+
 
 $(document).ready(function () {
 

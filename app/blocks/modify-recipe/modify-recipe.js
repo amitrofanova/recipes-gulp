@@ -2,7 +2,7 @@ import $ from 'jquery';
 import {CONFIRM_MODIFY_ALERT, MODIFIED_RECIPE_ALERT, ERROR_ALERT, EMPTY_INGREDIENT_ALERT}from '../../resources/strings/ru.js';
 import {showAlert, hideAlert}from '../modal-alert/modal-alert.js';
 import {authHeader}from '../auth-form/auth-form.js';
-import {createEditor, destroyEditor}from '../photo-editor/photo-editor.js';
+import {createEditor, destroyEditor, resizeImage}from '../photo-editor/photo-editor.js';
 
 const pathToRecipes = 'https://amitrofanova.pythonanywhere.com/api/recipes/';
 const pathToGroups = 'https://amitrofanova.pythonanywhere.com/api/groups/';
@@ -86,17 +86,14 @@ function getIngredients() {
 	let newIngredient;
 
 	$(newItem).each(function () {
-		console.log('start');
 		if ($(this).parents('.modify-recipe__ingredients').length) {
 
 			newIngredient = $(this).contents().filter(function () {
 				return this.nodeType === TEXT_NODE_TYPE;
 			}).text();
-			console.log(newIngredient);
 			ingredients.push(newIngredient);
 		}
 	});
-	console.log(ingredients);
 	return ingredients;
 }
 
@@ -249,6 +246,15 @@ function getNewData() {
 }
 
 
+function resetForm() {
+	$('.modify-recipe')[0].reset();
+	$('.modify-recipe__new-item').remove();
+	$('.modify-recipe__delete-item').remove();
+	$('.modify-recipe__image-preview').attr('src', '');
+	$('.modify-recipe__image-preview-min').attr('src', '');
+}
+
+
 function saveRecipe() {
 	const group = $('.modify-recipe__dish-group').val();
 	const url = pathToRecipes + '?group=' + encodeURIComponent(group);
@@ -303,18 +309,15 @@ function deleteRecipe() {
 function getCroppedImg() {
 	const img = $('.photo-editor__image-crop').attr('src');
 	const imgMin = $('.photo-editor__image-crop-min').attr('src');
+
+	const imageToResize = $('.photo-editor__image-crop-min')[0];
+	console.log('initial: ' + imgMin.length);
+	const resizedImgMin = resizeImage(imageToResize);
+	console.log('resized: ' + resizedImgMin.length);
+
 	$('.modify-recipe__image-preview').attr('src', img);
-	$('.modify-recipe__image-preview-min').attr('src', imgMin);
+	$('.modify-recipe__image-preview-min').attr('src', resizedImgMin);
 	destroyEditor();
-}
-
-
-function resetForm() {
-	$('.modify-recipe')[0].reset();
-	$('.modify-recipe__new-item').remove();
-	$('.modify-recipe__delete-item').remove();
-	$('.modify-recipe__image-preview').attr('src', '');
-	$('.modify-recipe__image-preview-min').attr('src', '');
 }
 
 
@@ -327,11 +330,11 @@ $(document).ready(function (){
 	$(document).on('change', groupsSelect, createRecipesSelect);
 	$(document).on('click', refreshBtn, createRecipesSelect);
 
-	$(document).on('click', modifyBtn, function() {
+	$(document).on('click', modifyBtn, function () {
 		const recipe = $(recipesSelect).val();
 		getCurrentData(recipe);
 	});
-	
+
 	$(document).on('click', '.modify-recipe__open-editor-btn', createEditor);
 	$(document).on('click', '.photo-editor__submit-btn', getCroppedImg);
 
