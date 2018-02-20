@@ -150,7 +150,7 @@ rules:
   prefer-const: 1
   prefer-spread: 2
   quote-props: [2, 'as-needed']
-  quotes: [2, 'single']
+  quotes: [2, 'double']
   radix: 1
   semi: [2, 'always']
   semi-spacing: [2, {before: false, after: true}]

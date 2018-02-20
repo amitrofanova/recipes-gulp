@@ -1,11 +1,11 @@
 // Register form constants
-export const INVALID_EMAIL_ERR = 'Неверный адрес электронной почты';
-export const SHORT_PWD_ERR = 'Пароль слишком короткий';
-export const NOT_EQUAL_PWD_ERR = 'Пароли должны совпадать';
-export const USER_REGISTERED_ALERT = 'Вы успешно зарегистрированы!';
+export const INVALID_EMAIL_ERR = "Неверный адрес электронной почты";
+export const SHORT_PWD_ERR = "Пароль слишком короткий";
+export const NOT_EQUAL_PWD_ERR = "Пароли должны совпадать";
+export const USER_REGISTERED_ALERT = "Вы успешно зарегистрированы!";
 
 // Login form constants
-export const INVALID_LOGIN_ERR = 'Неверное имя пользователя или пароль';
+export const INVALID_LOGIN_ERR = "Неверное имя пользователя или пароль";
 
 // export const LOGIN_TAB_TEXT = 'Вход';
 // export const REGISTER_TAB_TEXT = 'Регистрация';
@@ -20,15 +20,15 @@ export const INVALID_LOGIN_ERR = 'Неверное имя пользовател
 // export const SIGNUP_BUTTON_TEXT = 'Зарегистрироваться';
 
 // Dashboard constants
-export const UNABLE_LOAD_FILE_ALERT = 'Не удалось загрузить файл';
-export const EMPTY_INGREDIENT_ALERT = 'Укажите ингредиент';
-export const CONFIRM_DELETE_ALERT = 'Вы уверены, что хотите удалить рецепт?';
-export const CONFIRM_MODIFY_ALERT = 'Вы уверены, что хотите изменить рецепт?';
-export const ADDED_RECIPE_ALERT = 'Рецепт сохранён!';
-export const DELETED_RECIPE_ALERT = 'Рецепт удалён!';
-export const MODIFIED_RECIPE_ALERT = 'Рецепт изменён!';
-export const ERROR_ALERT = 'Произошла ошибка!';
+export const UNABLE_LOAD_FILE_ALERT = "Не удалось загрузить файл";
+export const EMPTY_INGREDIENT_ALERT = "Укажите ингредиент";
+export const CONFIRM_DELETE_ALERT = "Вы уверены, что хотите удалить рецепт?";
+export const CONFIRM_MODIFY_ALERT = "Вы уверены, что хотите изменить рецепт?";
+export const ADDED_RECIPE_ALERT = "Рецепт сохранён!";
+export const DELETED_RECIPE_ALERT = "Рецепт удалён!";
+export const MODIFIED_RECIPE_ALERT = "Рецепт изменён!";
+export const ERROR_ALERT = "Произошла ошибка!";
 
 // A recipe constants
-export const INGREDIENTS_TITLE = 'Что понадобится:';
-export const STEPS_TITLE = 'Как готовить:';
+export const INGREDIENTS_TITLE = "Что понадобится:";
+export const STEPS_TITLE = "Как готовить:";

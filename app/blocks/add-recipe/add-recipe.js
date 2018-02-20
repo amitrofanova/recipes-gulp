@@ -1,39 +1,39 @@
-import $ from 'jquery';
+import $ from "jquery";
 // import Cropper from 'cropperjs';
 
 import {
 	// UNABLE_LOAD_FILE_ALERT,
 	EMPTY_INGREDIENT_ALERT,
 	ADDED_RECIPE_ALERT,
-	ERROR_ALERT}from '../../resources/strings/ru.js';
+	ERROR_ALERT}from "../../resources/strings/ru.js";
 
-import {showAlert}from '../modal-alert/modal-alert.js';
-import {authHeader}from '../auth-form/auth-form.js';
-import {createEditor, destroyEditor, resizeImage}from '../photo-editor/photo-editor.js';
+import {showAlert}from "../modal-alert/modal-alert.js";
+import {authHeader}from "../auth-form/auth-form.js";
+import {createEditor, destroyEditor, resizeImage}from "../photo-editor/photo-editor.js";
 
-const jsonPath = 'https://amitrofanova.pythonanywhere.com/api/recipes/';
+const jsonPath = "https://amitrofanova.pythonanywhere.com/api/recipes/";
 // const pathToNames = 'https://amitrofanova.pythonanywhere.com/api/groups/?short';
 
-const CLASS_PREFIX = '.add-recipe';
+const CLASS_PREFIX = ".add-recipe";
 const formCls = CLASS_PREFIX, // eslint-disable-line one-var
-	dishGroupInputCls = CLASS_PREFIX + '__dish-group',
-	titleInputCls = CLASS_PREFIX + '__title-input',
-	descriptionInputCls = CLASS_PREFIX + '__description-input',
-	imagePreviewCls = CLASS_PREFIX + '__image-preview',
-	imagePreviewMin = CLASS_PREFIX + '__image-preview-min',
-	imageResultCls = CLASS_PREFIX + '__image-result',
-	imagePreviewWrap = CLASS_PREFIX + '__image-preview-wrap',
-	imageResultWrap = CLASS_PREFIX + '__image-result-wrap',
-	ingredientsCls = CLASS_PREFIX + '__ingredients',
-	ingredientInputCls = CLASS_PREFIX + '__ingredient-input',
-	newIngredientBtnCls = CLASS_PREFIX + '__new-ingredient-btn',
-	stepsCls = CLASS_PREFIX + '__steps',
-	stepInputCls = CLASS_PREFIX + '__step-input',
-	newStepBtnCls = CLASS_PREFIX + '__new-step-btn',
-	newItemCls = CLASS_PREFIX + '__new-item',
-	deleteItemCls = CLASS_PREFIX + '__delete-item',
-	resetBtnCls = CLASS_PREFIX + '__reset-btn',
-	formInputs = CLASS_PREFIX + ' :input';
+	dishGroupInputCls = CLASS_PREFIX + "__dish-group",
+	titleInputCls = CLASS_PREFIX + "__title-input",
+	descriptionInputCls = CLASS_PREFIX + "__description-input",
+	imagePreviewCls = CLASS_PREFIX + "__image-preview",
+	imagePreviewMin = CLASS_PREFIX + "__image-preview-min",
+	imageResultCls = CLASS_PREFIX + "__image-result",
+	imagePreviewWrap = CLASS_PREFIX + "__image-preview-wrap",
+	imageResultWrap = CLASS_PREFIX + "__image-result-wrap",
+	ingredientsCls = CLASS_PREFIX + "__ingredients",
+	ingredientInputCls = CLASS_PREFIX + "__ingredient-input",
+	newIngredientBtnCls = CLASS_PREFIX + "__new-ingredient-btn",
+	stepsCls = CLASS_PREFIX + "__steps",
+	stepInputCls = CLASS_PREFIX + "__step-input",
+	newStepBtnCls = CLASS_PREFIX + "__new-step-btn",
+	newItemCls = CLASS_PREFIX + "__new-item",
+	deleteItemCls = CLASS_PREFIX + "__delete-item",
+	resetBtnCls = CLASS_PREFIX + "__reset-btn",
+	formInputs = CLASS_PREFIX + " :input";
 
 // https://www.w3schools.com/jsref/prop_node_nodetype.asp
 const TEXT_NODE_TYPE = 3;
@@ -44,16 +44,16 @@ function addIngredient() {
 	const newElCls = newItemCls.substr(1);
 	const deleteElCls = deleteItemCls.substr(1);
 
-	if ((ingredient !== '') && (ingredient !== EMPTY_INGREDIENT_ALERT)) {
-		const newEl = '<div class="' + newElCls + '">' + ingredient + '<div class="' + deleteElCls + '"></div></div>';
+	if ((ingredient !== "") && (ingredient !== EMPTY_INGREDIENT_ALERT)) {
+		const newEl = "<div class=\"" + newElCls + "\">" + ingredient + "<div class=\"" + deleteElCls + "\"></div></div>";
 
 		$(ingredientsCls).append(newEl);
-		$(ingredientInputCls).val('');
+		$(ingredientInputCls).val("");
 	}
 
 	else {
 		$(ingredientInputCls).val(EMPTY_INGREDIENT_ALERT);
-		$(ingredientInputCls).css('color', '#fff');
+		$(ingredientInputCls).css("color", "#fff");
 	}
 }
 
@@ -63,17 +63,17 @@ function addStep() {
 	const newElCls = newItemCls.substr(1);
 	const deleteElCls = deleteItemCls.substr(1);
 
-	if (step !== '') {
-		const newEl = '<div class=' + newElCls + '>' + step +	'<div class="' + deleteElCls + '"></div></div>';
+	if (step !== "") {
+		const newEl = "<div class=" + newElCls + ">" + step +	"<div class=\"" + deleteElCls + "\"></div></div>";
 		$(stepsCls).append(newEl);
-		$(stepInputCls).val('');
+		$(stepInputCls).val("");
 	}
 }
 
 
 function clearInput() {
-	$(ingredientInputCls).val('');
-	$(ingredientInputCls).css('color', '#000');
+	$(ingredientInputCls).val("");
+	$(ingredientInputCls).css("color", "#000");
 }
 
 
@@ -168,8 +168,8 @@ function deleteItem() {
 function createRecipe() {
 	const title = $(titleInputCls).val();
 	const description = $(descriptionInputCls).val();
-	const image_min = $(imagePreviewMin).attr('src');
-	const image = $(imagePreviewCls).attr('src');
+	const image_min = $(imagePreviewMin).attr("src");
+	const image = $(imagePreviewCls).attr("src");
 	const newRecipe = {
 		title,
 		description,
@@ -178,21 +178,21 @@ function createRecipe() {
 		components: getIngredients(),
 		steps: getSteps()
 	};
-	const newRecipeToJSON = JSON.stringify(newRecipe, null, '\t');
+	const newRecipeToJSON = JSON.stringify(newRecipe, null, "\t");
 	return newRecipeToJSON;
 }
 
 
 function saveRecipe(evt){
-	const selectedGroup = dishGroupInputCls + ' option:selected';
+	const selectedGroup = dishGroupInputCls + " option:selected";
 	const group = $(selectedGroup).text();
 	$.ajax({
-		type: 'POST',
-		url: jsonPath + '?group=' + encodeURIComponent(group),
+		type: "POST",
+		url: jsonPath + "?group=" + encodeURIComponent(group),
 		headers: {
 			Authorization: authHeader()
 		},
-		dataType: 'json',
+		dataType: "json",
 		data: createRecipe(),
 		success(){
 			showAlert(ADDED_RECIPE_ALERT);
@@ -213,53 +213,53 @@ export function resetForm() {
 	$(formCls)[0].reset();
 	$(newItemCls).remove();
 	$(deleteItemCls).remove();
-	$(imagePreviewCls).attr('src', '');
-	$(imageResultCls).attr('src', '');
+	$(imagePreviewCls).attr("src", "");
+	$(imageResultCls).attr("src", "");
 	$(imagePreviewWrap).show();
 	$(imageResultWrap).hide();
 	// $(imagePreviewCls).text('');
-	$('.cropper-container').remove();
+	$(".cropper-container").remove();
 }
 
 
 function getCroppedImg() {
-	const img = $('.photo-editor__image-crop').attr('src');
-	const imgMin = $('.photo-editor__image-crop-min').attr('src');
+	const img = $(".photo-editor__image-crop").attr("src");
+	const imgMin = $(".photo-editor__image-crop-min").attr("src");
 
-	const imageToResize = $('.photo-editor__image-crop-min')[0];
-	console.log('initial: ' + imgMin.length);
+	const imageToResize = $(".photo-editor__image-crop-min")[0];
+	console.log("initial: " + imgMin.length);
 	const resizedImgMin = resizeImage(imageToResize);
-	console.log('resized: ' + resizedImgMin.length);
-	
-	$('.add-recipe__image-preview-wrap').css('display', 'flex');
-	$('.add-recipe__image-preview').attr('src', img);
-	$('.add-recipe__image-preview-min').attr('src', resizedImgMin);
+	console.log("resized: " + resizedImgMin.length);
+
+	$(".add-recipe__image-preview-wrap").css("display", "flex");
+	$(".add-recipe__image-preview").attr("src", img);
+	$(".add-recipe__image-preview-min").attr("src", resizedImgMin);
 	destroyEditor();
 }
 
 
 $(document).ready(function () {
 
-	$(document).on('click', '.add-recipe__open-editor-btn', createEditor);
-	$(document).on('click', '.photo-editor__submit-btn', function () {
-		if ($(this).parents('.add-recipe').length) {
+	$(document).on("click", ".add-recipe__open-editor-btn", createEditor);
+	$(document).on("click", ".photo-editor__submit-btn", function () {
+		if ($(this).parents(".add-recipe").length) {
 			getCroppedImg();
 		}
 	});
-	$(document).on('click', newIngredientBtnCls, addIngredient);
-	$(document).on('click', newStepBtnCls, addStep);
-	$(document).on('focus', ingredientInputCls, clearInput);
-	$(document).on('click', deleteItemCls, deleteItem);
-	$(document).on('submit', formCls, saveRecipe);
-	$(document).on('click', resetBtnCls, resetForm);
+	$(document).on("click", newIngredientBtnCls, addIngredient);
+	$(document).on("click", newStepBtnCls, addStep);
+	$(document).on("focus", ingredientInputCls, clearInput);
+	$(document).on("click", deleteItemCls, deleteItem);
+	$(document).on("submit", formCls, saveRecipe);
+	$(document).on("click", resetBtnCls, resetForm);
 
 	$(formInputs).change(function () {
-		$(formCls).data('changed', true);
+		$(formCls).data("changed", true);
 	});
 
 	window.onbeforeunload = function () {
-		if ((window.location.pathname === '/dashboard.html') && ($(formCls).data('changed') === true)) {
-			return 'Are you sure you want to leave this page? You can lose changes you have made.';
+		if ((window.location.pathname === "/dashboard.html") && ($(formCls).data("changed") === true)) {
+			return "Are you sure you want to leave this page? You can lose changes you have made.";
 		}
 	};
 

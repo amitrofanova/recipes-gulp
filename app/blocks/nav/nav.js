@@ -1,4 +1,4 @@
-import $ from 'jquery';
+import $ from "jquery";
 // import {resetForm}from '../add-recipe/add-recipe.js';
 
 
@@ -7,29 +7,29 @@ const windowBreakpoint = 768;
 
 
 function showAllRecipes() {
-	if ($(this).hasClass('nav__all-recipes')) {
-		$('.all-recipes__breadcrumb').remove();
-		$('.dish-group_opened').remove();
-		$('.all-recipes__dish-group').show();
+	if ($(this).hasClass("nav__all-recipes")) {
+		$(".all-recipes__breadcrumb").remove();
+		$(".dish-group_opened").remove();
+		$(".all-recipes__dish-group").show();
 	}
 }
 
 
 function toggleNavButton() {
-	if ($('.nav__collapse').css('display') === 'none') {
-		$('.nav__button').addClass('nav__button_open');
-		$('.nav__button').removeClass('nav__button_close');
+	if ($(".nav__collapse").css("display") === "none") {
+		$(".nav__button").addClass("nav__button_open");
+		$(".nav__button").removeClass("nav__button_close");
 	}
-	else if ($('.nav__collapse').css('display') === 'block') {
-		$('.nav__button').addClass('nav__button_close');
-		$('.nav__button').removeClass('nav__button_open');
+	else if ($(".nav__collapse").css("display") === "block") {
+		$(".nav__button").addClass("nav__button_close");
+		$(".nav__button").removeClass("nav__button_open");
 	}
 }
 
 
 function toggleMobileNav() {
 	if (window.innerWidth < windowBreakpoint) {
-		$('.nav__collapse').toggle();
+		$(".nav__collapse").toggle();
 	}
 	toggleNavButton();
 }
@@ -38,28 +38,28 @@ function toggleMobileNav() {
 // Make nav to be visible after resizing to large screen
 function showLargeNav() {
 	if (window.innerWidth >= windowBreakpoint) {
-		$('.nav__collapse').show();
+		$(".nav__collapse").show();
 	}
 	else {
-		$('.nav__collapse').hide();
+		$(".nav__collapse").hide();
 	}
 }
 
 
 function logout() {
-	localStorage.removeItem('username');
-	localStorage.removeItem('password');
+	localStorage.removeItem("username");
+	localStorage.removeItem("password");
 }
 
 
 $(document).ready(function () {
 
 	toggleNavButton();
-	$('.nav__all-recipes').on('click', showAllRecipes);
-	$('.nav__button').on('click', toggleMobileNav);
-	$('.nav__item').on('click', toggleMobileNav);
-	$(window).on('resize', showLargeNav);
-	$(window).on('resize', toggleNavButton);
-	$('.nav__logout').on('click', logout);
+	$(".nav__all-recipes").on("click", showAllRecipes);
+	$(".nav__button").on("click", toggleMobileNav);
+	$(".nav__item").on("click", toggleMobileNav);
+	$(window).on("resize", showLargeNav);
+	$(window).on("resize", toggleNavButton);
+	$(".nav__logout").on("click", logout);
 
 });

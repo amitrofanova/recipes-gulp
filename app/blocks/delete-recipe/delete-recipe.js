@@ -1,25 +1,25 @@
-import $ from 'jquery';
-import {CONFIRM_DELETE_ALERT, DELETED_RECIPE_ALERT, ERROR_ALERT}from '../../resources/strings/ru.js';
-import {showAlert, hideAlert}from '../modal-alert/modal-alert.js';
-import {authHeader}from '../auth-form/auth-form.js';
+import $ from "jquery";
+import {CONFIRM_DELETE_ALERT, DELETED_RECIPE_ALERT, ERROR_ALERT}from "../../resources/strings/ru.js";
+import {showAlert, hideAlert}from "../modal-alert/modal-alert.js";
+import {authHeader}from "../auth-form/auth-form.js";
 
-const pathToRecipes = 'https://amitrofanova.pythonanywhere.com/api/recipes/';
-const pathToGroups = 'https://amitrofanova.pythonanywhere.com/api/groups/';
+const pathToRecipes = "https://amitrofanova.pythonanywhere.com/api/recipes/";
+const pathToGroups = "https://amitrofanova.pythonanywhere.com/api/groups/";
 
-const CLASS_PREFIX = '.delete-recipe';
-const groupsSelect = CLASS_PREFIX + '__dish-group', // eslint-disable-line one-var
-	recipesSelect = CLASS_PREFIX + '__recipe-to-delete',
-	deleteBtn = CLASS_PREFIX + '__delete-recipe',
-	confirmBtn = '.modal-alert__confirm-btn',
-	declineBtn = '.modal-alert__decline-btn',
-	refreshBtn = CLASS_PREFIX + '__refresh-btn';
+const CLASS_PREFIX = ".delete-recipe";
+const groupsSelect = CLASS_PREFIX + "__dish-group", // eslint-disable-line one-var
+	recipesSelect = CLASS_PREFIX + "__recipe-to-delete",
+	deleteBtn = CLASS_PREFIX + "__delete-recipe",
+	confirmBtn = ".modal-alert__confirm-btn",
+	declineBtn = ".modal-alert__decline-btn",
+	refreshBtn = CLASS_PREFIX + "__refresh-btn";
 
 
 function getList(callback, group) {
-	let url = pathToGroups + '?short';
+	let url = pathToGroups + "?short";
 
 	if (group) {
-		url = pathToGroups + encodeURIComponent(group) + '?short';
+		url = pathToGroups + encodeURIComponent(group) + "?short";
 	}
 
 	$.ajax({
@@ -27,7 +27,7 @@ function getList(callback, group) {
 		headers: {
 			Authorization: authHeader()
 		},
-		dataType: 'json',
+		dataType: "json",
 		success(data){
 			callback(data);
 		}
@@ -36,7 +36,7 @@ function getList(callback, group) {
 
 
 function clearRecipesSelect() {
-	$(recipesSelect).text('');
+	$(recipesSelect).text("");
 }
 
 
@@ -48,7 +48,7 @@ function createRecipesSelect() {
 	const callback = function (data) {
 		for (let i = 0; i < data.recipes.length; i++) {
 			$(recipesSelect).append(
-				'<option value="' + data.recipes[i] + '">' + data.recipes[i] + '</option>'
+				"<option value=\"" + data.recipes[i] + "\">" + data.recipes[i] + "</option>"
 			);
 		}
 	};
@@ -64,7 +64,7 @@ function createGroupsSelect() {
 
 		for (let i = 0; i < data.length; i++) {
 			$(groupsSelect).append(
-				'<option value="' + data[i].group + '">' + data[i].group + '</option>'
+				"<option value=\"" + data[i].group + "\">" + data[i].group + "</option>"
 			);
 		}
 		$(groupsSelect).val(data[0].group);
@@ -78,15 +78,15 @@ function createGroupsSelect() {
 function deleteRecipe() {
 	const group = $(groupsSelect).val();
 	const recipeToDelete = $(recipesSelect).val();
-	const url = pathToRecipes + encodeURIComponent(recipeToDelete) + '?group=' + encodeURIComponent(group);
+	const url = pathToRecipes + encodeURIComponent(recipeToDelete) + "?group=" + encodeURIComponent(group);
 
 	$.ajax({
-		type: 'DELETE',
+		type: "DELETE",
 		url,
 		headers: {
 			Authorization: authHeader()
 		},
-		dataType: 'json',
+		dataType: "json",
 		success(data){
 			showAlert(DELETED_RECIPE_ALERT);
 			createRecipesSelect();
@@ -102,23 +102,23 @@ function deleteRecipe() {
 
 $(document).ready(function (){
 
-	if (window.location.pathname === '/dashboard.html') {
+	if (window.location.pathname === "/dashboard.html") {
 		window.onload = createGroupsSelect();
 	}
 
-	$(document).on('change', groupsSelect, createRecipesSelect);
+	$(document).on("change", groupsSelect, createRecipesSelect);
 
-	$(document).on('click', refreshBtn, createRecipesSelect);
+	$(document).on("click", refreshBtn, createRecipesSelect);
 
-	$(document).on('click', deleteBtn, function () {
+	$(document).on("click", deleteBtn, function () {
 		showAlert(CONFIRM_DELETE_ALERT, true);
 
-		$(document).on('click', confirmBtn, function () {
+		$(document).on("click", confirmBtn, function () {
 			hideAlert();
 			deleteRecipe();
 		});
 
-		$(document).on('click', declineBtn, hideAlert);
+		$(document).on("click", declineBtn, hideAlert);
 	});
 
 });
