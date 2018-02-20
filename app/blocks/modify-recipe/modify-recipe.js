@@ -3,6 +3,7 @@ import {CONFIRM_MODIFY_ALERT, MODIFIED_RECIPE_ALERT, ERROR_ALERT, EMPTY_INGREDIE
 import {showAlert, hideAlert}from "../modal-alert/modal-alert.js";
 import {authHeader}from "../auth-form/auth-form.js";
 import {createEditor, destroyEditor, resizeImage}from "../photo-editor/photo-editor.js";
+import {createLoader, destroyLoader}from "../loader/loader.js";
 
 const pathToRecipes = "https://amitrofanova.pythonanywhere.com/api/recipes/";
 const pathToGroups = "https://amitrofanova.pythonanywhere.com/api/groups/";
@@ -35,7 +36,6 @@ function getList(callback, group) {
 		},
 		dataType: "json",
 		success(data){
-			console.log(data);
 			callback(data);
 		}
 	});
@@ -271,12 +271,17 @@ function saveRecipe() {
 		success(data){
 			showAlert(MODIFIED_RECIPE_ALERT);
 			resetForm();
-			console.log(data);
 		},
 		error(xhr) {
 			const err = ERROR_ALERT + xhr.responseText;
 			// showAlert(err);
 			console.log(err);
+		},
+		beforeSend: function() {
+			createLoader();
+		},
+		complete: function() {
+			destroyLoader();
 		}
 	});
 }
@@ -295,7 +300,6 @@ function deleteRecipe() {
 		},
 		dataType: "json",
 		success(data){
-			console.log(data);
 			saveRecipe();
 		},
 		error(xhr) {
@@ -312,9 +316,9 @@ function getCroppedImg() {
 	const imgMin = $(".photo-editor__image-crop-min").attr("src");
 
 	const imageToResize = $(".photo-editor__image-crop-min")[0];
-	console.log("initial: " + imgMin.length);
+	// console.log("initial: " + imgMin.length);
 	const resizedImgMin = resizeImage(imageToResize);
-	console.log("resized: " + resizedImgMin.length);
+	// console.log("resized: " + resizedImgMin.length);
 
 	$(".modify-recipe__image-preview").attr("src", img);
 	$(".modify-recipe__image-preview-min").attr("src", resizedImgMin);
@@ -332,17 +336,16 @@ $(document).ready(function (){
 	$(document).on("click", refreshBtn, createRecipesSelect);
 
 	$(document).on("click", modifyBtn, function () {
-		const recipe = $(recipesSelect).val();
-		console.log(recipe);
-		for (let i = 0; i < recipe.length; i++) {
-			if (recipe[i] === "\"") {console.log("quotes");}
-		}
-
-		getCurrentData(recipe);
+		const recipeToModify = $(recipesSelect).val();
+		getCurrentData(recipeToModify);
 	});
 
 	$(document).on("click", ".modify-recipe__open-editor-btn", createEditor);
-	$(document).on("click", ".photo-editor__submit-btn", getCroppedImg);
+	$(document).on("click", ".photo-editor__submit-btn", function() {
+		if ($(this).parents(".modify-recipe").length) {
+			getCroppedImg();
+		}
+	});
 
 	$(document).on("click", ".modify-recipe__new-ingredient-btn", addIngredient);
 	$(document).on("click", ".modify-recipe__new-step-btn", addStep);

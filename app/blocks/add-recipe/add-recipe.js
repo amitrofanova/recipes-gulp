@@ -1,18 +1,11 @@
 import $ from "jquery";
-// import Cropper from 'cropperjs';
-
-import {
-	// UNABLE_LOAD_FILE_ALERT,
-	EMPTY_INGREDIENT_ALERT,
-	ADDED_RECIPE_ALERT,
-	ERROR_ALERT}from "../../resources/strings/ru.js";
-
+import {EMPTY_INGREDIENT_ALERT,	ADDED_RECIPE_ALERT,	ERROR_ALERT}from "../../resources/strings/ru.js";
 import {showAlert}from "../modal-alert/modal-alert.js";
 import {authHeader}from "../auth-form/auth-form.js";
 import {createEditor, destroyEditor, resizeImage}from "../photo-editor/photo-editor.js";
+import {createLoader, destroyLoader}from "../loader/loader.js";
 
 const jsonPath = "https://amitrofanova.pythonanywhere.com/api/recipes/";
-// const pathToNames = 'https://amitrofanova.pythonanywhere.com/api/groups/?short';
 
 const CLASS_PREFIX = ".add-recipe";
 const formCls = CLASS_PREFIX, // eslint-disable-line one-var
@@ -150,21 +143,6 @@ function deleteItem() {
 }
 
 
-// function createLoader() {
-// 	const modal = '<div class="add-recipe__modal ajax-loader">' +
-// 		'<div class="add-recipe__modal-content">' +
-// 			'<div class="add-recipe__modal-text">Пожалуйста подождите, ваш запрос обрабатывается</div>' +
-// 		'</div>' +
-// 	'</div>';
-// 	$('body').append(modal);
-// }
-//
-//
-// function deleteLoader() {
-// 	$('.ajax-loader').remove();
-// }
-
-
 function createRecipe() {
 	const title = $(titleInputCls).val();
 	const description = $(descriptionInputCls).val();
@@ -201,6 +179,12 @@ function saveRecipe(evt){
 			const err = ERROR_ALERT + xhr.responseText;
 			showAlert(err);
 			// showAlert(form, err);
+		},
+		beforeSend: function() {
+			createLoader();
+		},
+		complete: function() {
+			destroyLoader();
 		}
 	});
 
@@ -217,7 +201,6 @@ export function resetForm() {
 	$(imageResultCls).attr("src", "");
 	$(imagePreviewWrap).show();
 	$(imageResultWrap).hide();
-	// $(imagePreviewCls).text('');
 	$(".cropper-container").remove();
 }
 
@@ -227,9 +210,9 @@ function getCroppedImg() {
 	const imgMin = $(".photo-editor__image-crop-min").attr("src");
 
 	const imageToResize = $(".photo-editor__image-crop-min")[0];
-	console.log("initial: " + imgMin.length);
+	// console.log("initial: " + imgMin.length);
 	const resizedImgMin = resizeImage(imageToResize);
-	console.log("resized: " + resizedImgMin.length);
+	// console.log("resized: " + resizedImgMin.length);
 
 	$(".add-recipe__image-preview-wrap").css("display", "flex");
 	$(".add-recipe__image-preview").attr("src", img);
@@ -262,13 +245,5 @@ $(document).ready(function () {
 			return "Are you sure you want to leave this page? You can lose changes you have made.";
 		}
 	};
-
-	// $( document ).ajaxStart(function () {
-	// 	createLoader();
-	// });
-	//
-	// $( document ).ajaxStop(function () {
-	// 	deleteLoader();
-	// });
 
 });
