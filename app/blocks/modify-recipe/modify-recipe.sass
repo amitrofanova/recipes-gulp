@@ -53,20 +53,23 @@
 .modify-recipe__modify-btn
 	margin-left: 1rem
 	display: inline-block
-	
+
 .modify-recipe__image-preview-wrap
 	margin-bottom: 1rem
 	display: flex
 	position: relative
 	justify-content: space-around
 	width: 100%
-	height: calc(100px + 10rem)
+	@media (max-width: 575px)
+		height: calc(60px + 10rem)
+	@media (min-width: 576px)
+		height: calc(100px + 10rem)
 	background-color: #eee
 	padding: 1rem
 
 .modify-recipe__image-preview, .modify-recipe__image-preview-min
-	max-height: calc(100px + 10rem)
-
+	height: 100%
+	width: auto
 
 .modify-recipe__input-wrapper
 	display: flex
