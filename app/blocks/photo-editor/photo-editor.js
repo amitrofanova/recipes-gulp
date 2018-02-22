@@ -6,6 +6,7 @@ export function createEditor() {
 	$(this).after(
 		"<div class=\"photo-editor\">" +
 			"<div class=\"photo-editor__inner\">" +
+
 				"<div class=\"photo-editor__tabs\">" +
 					"<div class=\"photo-editor__tab photo-editor__choose-file-tab photo-editor__tab-active\">1. Загрузить фото</div>" +
 					"<div class=\"photo-editor__tab photo-editor__crop-tab\">2. Обрезать фото</div>" +
@@ -24,7 +25,7 @@ export function createEditor() {
 						"</div>" +
 					"</div>" +
 					"<div class=\"photo-editor__controls\">" +
-						"<div class=\"photo-editor__to-crop-btn photo-editor__btn_right button\">Продолжить</div>" +
+						"<div class=\"photo-editor__to-crop-btn photo-editor__btn_right button button_disabled\">Продолжить</div>" +
 					"</div>" +
 				"</section>" +
 
@@ -63,6 +64,7 @@ export function createEditor() {
 					"</div>" +
 				"</section>" +
 
+				"<div class=\"photo-editor__close-btn\"></div>" +
 			"</div>" +
 		"</div>"
 	);
@@ -162,9 +164,25 @@ export function resizeImage(imageToResize) { // eslint-disable-line no-unused-va
 }
 
 
+function checkImgStatus() {
+	var stat;
+	if ($(".photo-editor__file-input").attr("src") !== "") {
+		stat = "imageLoaded";
+	}
+	return stat;
+}
+
+
 $(document).ready(function () {
 
 	$(document).on("change", ".photo-editor__file-input", uploadImage);
+
+	$(document).on("change", ".photo-editor__file-input", function() {
+		if (checkImgStatus() === "imageLoaded") {
+			$(".photo-editor__to-crop-btn").prop("disabled", false);
+			$(".photo-editor__to-crop-btn").removeClass("button_disabled");
+		}
+	});
 
 	$(document).on("click", ".photo-editor__to-crop-btn", function () {
 		$(".photo-editor__section").removeClass("photo-editor__section-active");
@@ -189,6 +207,10 @@ $(document).ready(function () {
 
 	$(document).on("click", ".photo-editor__submit-btn", function () {
 		$(".photo-editor").hide();
+	});
+
+	$(document).on("click", ".photo-editor__close-btn", function () {
+		destroyEditor();
 	});
 
 });
