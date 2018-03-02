@@ -268,7 +268,7 @@ function saveRecipe() {
 		},
 		dataType: "json",
 		data: getNewData(),
-		success(data){
+		success(){
 			showAlert(MODIFIED_RECIPE_ALERT);
 			resetForm();
 		},
@@ -277,10 +277,10 @@ function saveRecipe() {
 			// showAlert(err);
 			console.log(err);
 		},
-		beforeSend: function() {
+		beforeSend() {
 			createLoader();
 		},
-		complete: function() {
+		complete() {
 			destroyLoader();
 		}
 	});
@@ -299,7 +299,7 @@ function deleteRecipe() {
 			Authorization: authHeader()
 		},
 		dataType: "json",
-		success(data){
+		success(){
 			saveRecipe();
 		},
 		error(xhr) {
@@ -313,7 +313,7 @@ function deleteRecipe() {
 
 function getCroppedImg() {
 	const img = $(".photo-editor__image-crop").attr("src");
-	const imgMin = $(".photo-editor__image-crop-min").attr("src");
+	// const imgMin = $(".photo-editor__image-crop-min").attr("src");
 
 	const imageToResize = $(".photo-editor__image-crop-min")[0];
 	// console.log("initial: " + imgMin.length);
@@ -341,7 +341,7 @@ $(document).ready(function (){
 	});
 
 	$(document).on("click", ".modify-recipe__open-editor-btn", createEditor);
-	$(document).on("click", ".photo-editor__submit-btn", function() {
+	$(document).on("click", ".photo-editor__submit-btn", function () {
 		if ($(this).parents(".modify-recipe").length) {
 			getCroppedImg();
 		}

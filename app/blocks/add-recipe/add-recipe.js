@@ -180,10 +180,10 @@ function saveRecipe(evt){
 			showAlert(err);
 			// showAlert(form, err);
 		},
-		beforeSend: function() {
+		beforeSend() {
 			createLoader();
 		},
-		complete: function() {
+		complete() {
 			destroyLoader();
 		}
 	});
@@ -207,7 +207,7 @@ export function resetForm() {
 
 function getCroppedImg() {
 	const img = $(".photo-editor__image-crop").attr("src");
-	const imgMin = $(".photo-editor__image-crop-min").attr("src");
+	// const imgMin = $(".photo-editor__image-crop-min").attr("src");
 
 	const imageToResize = $(".photo-editor__image-crop-min")[0];
 	// console.log("initial: " + imgMin.length);
