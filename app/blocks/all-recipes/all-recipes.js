@@ -1,5 +1,5 @@
 import $ from "jquery";
-import {INGREDIENTS_TITLE, STEPS_TITLE, ERROR_ALERT}from "../../resources/strings/ru.js";
+import {INGREDIENTS_TITLE, STEPS_TITLE, ERROR_ALERT, EMPTY_GROUP_ALERT}from "../../resources/strings/ru.js";
 import {authHeader}from "../auth-form/auth-form.js";
 import {showAlert}from "../modal-alert/modal-alert.js";
 
@@ -70,9 +70,14 @@ function openDishGroup() {
 	$(".all-recipes").append("<div class=\"dish-group_opened\"></div>");
 
 	const callback = function (dishGroup) {
-		for (let i = 0; i < dishGroup.recipes.length; i++) {
-			const recipe = dishGroup.recipes[i];
-			appendRecipePreview(recipe);
+		if (!dishGroup.recipes.length) {
+			$(".dish-group_opened").append("<span class=\"dish-group__alert\">" + EMPTY_GROUP_ALERT + dishGroup.group + ". Вы можете добавить рецепты в <a href=\"/dashboard.html\">панели управления</a></span>");
+		}
+		else {
+			for (let i = 0; i < dishGroup.recipes.length; i++) {
+				const recipe = dishGroup.recipes[i];
+				appendRecipePreview(recipe);
+			}
 		}
 	};
 

@@ -29,6 +29,9 @@ export const DELETED_RECIPE_ALERT = "Рецепт удалён!";
 export const MODIFIED_RECIPE_ALERT = "Рецепт изменён!";
 export const ERROR_ALERT = "Произошла ошибка!";
 
+// Empty group
+export const EMPTY_GROUP_ALERT = "У вас пока нет ни одного рецепта группе ";
+
 // A recipe constants
 export const INGREDIENTS_TITLE = "Что понадобится:";
 export const STEPS_TITLE = "Как готовить:";
