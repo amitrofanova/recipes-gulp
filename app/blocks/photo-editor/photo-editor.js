@@ -79,7 +79,7 @@ export function destroyEditor() {
 function cropImage() {
 	const image = $(".photo-editor__image-crop")[0];
 	const cropper = new Cropper(image, {
-		aspectRatio: 16 / 9,
+		aspectRatio: 3 / 2,
 		rotatable: false,
 		zoomable: false,
 		minContainerWidth: 320,
@@ -87,7 +87,7 @@ function cropImage() {
 	});
 
 	$(document).on("click", ".photo-editor__crop-btn", function () {
-		const res = cropper.getCroppedCanvas({maxWidth: 1600, maxHeight: 900}).toDataURL();
+		const res = cropper.getCroppedCanvas({maxWidth: 4500, maxHeight: 3000}).toDataURL();
 		cropper.destroy();
 		$(".photo-editor__image-crop").attr("src", res);
 	});
@@ -105,7 +105,7 @@ function cropImageMin() {
 	});
 
 	$(document).on("click", ".photo-editor__crop-min-btn", function () {
-		const res = cropper.getCroppedCanvas({maxWidth: 1600, maxHeight: 900}).toDataURL();
+		const res = cropper.getCroppedCanvas({maxWidth: 4000, maxHeight: 4000}).toDataURL();
 		cropper.destroy();
 		$(".photo-editor__image-crop-min").attr("src", res);
 	});
