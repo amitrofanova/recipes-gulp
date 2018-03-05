@@ -165,7 +165,7 @@ export function resizeImage(imageToResize) { // eslint-disable-line no-unused-va
 
 
 function checkImgStatus() {
-	var stat;
+	let stat;
 	if ($(".photo-editor__file-input").attr("src") !== "") {
 		stat = "imageLoaded";
 	}
@@ -177,7 +177,7 @@ $(document).ready(function () {
 
 	$(document).on("change", ".photo-editor__file-input", uploadImage);
 
-	$(document).on("change", ".photo-editor__file-input", function() {
+	$(document).on("change", ".photo-editor__file-input", function () {
 		if (checkImgStatus() === "imageLoaded") {
 			$(".photo-editor__to-crop-btn").prop("disabled", false);
 			$(".photo-editor__to-crop-btn").removeClass("button_disabled");
