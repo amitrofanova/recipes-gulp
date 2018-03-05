@@ -4,9 +4,7 @@ import {authHeader}from "../auth-form/auth-form.js";
 import {showAlert}from "../modal-alert/modal-alert.js";
 
 
-const pathToJson = "https://amitrofanova.pythonanywhere.com/api/users/";
-const pathToGroups = "https://amitrofanova.pythonanywhere.com/api/groups/";
-const pathToRecipes = "https://amitrofanova.pythonanywhere.com/api/recipes/";
+const pathToJson = "https://amitrofanova.pythonanywhere.com/api/";
 
 
 function appendBreadcrumb(dishGroup) {
@@ -24,7 +22,7 @@ function appendRecipePreview(recipe) {
 	$(".dish-group_opened").append(
 		"<div class=\"recipe-preview\">" +
 			"<div class=\"recipe-preview__image\">" +
-				"<img src=\"" + recipe.image_min + "\">" +
+				"<img src=\"" + pathToJson + "image/" + recipe.image_min_hash + "\">" +
 			"</div>" +
 			"<div class=\"recipe-preview__content\">" +
 				"<div class=\"recipe-preview__title\">"	+	recipe.title + "</div>" +
@@ -40,10 +38,10 @@ function getContent(callback, group, recipe){
 	let url = pathToJson;
 
 	if (recipe) {
-		url = pathToRecipes + encodeURIComponent(recipe);
+		url += "recipes/" + encodeURIComponent(recipe);
 	}
 	else if (group) {
-		url = pathToGroups + encodeURIComponent(group);
+		url += "groups/" + encodeURIComponent(group);
 	}
 
 	$.ajax({
@@ -83,12 +81,13 @@ function openDishGroup() {
 
 // TODO: move to recipe block
 function appendRecipe(recipe) {
+	const imgSrc = pathToJson + "image/" + recipe.image_hash;
 	$("<div class=\"recipe\"></div>")
 		.insertAfter($(".recipe-preview")[0])
 		.append(
 			"<div class=\"recipe__title\">"	+ recipe.title + "</div>" +
 			"<obj class=\"recipe__image\"	type=\"image/png\">" +
-				"<img src=\"" + recipe.image + "\"/>" +
+				"<img src=\"" + imgSrc + "\"/>" +
 			"</obj>" +
 			"<div class=\"recipe__ingredients-title\">" + INGREDIENTS_TITLE + "</div>"	+
 			"<ul class=\"recipe__ingredients\"></ul>" +

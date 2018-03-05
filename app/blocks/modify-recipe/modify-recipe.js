@@ -5,6 +5,7 @@ import {authHeader}from "../auth-form/auth-form.js";
 import {createEditor, destroyEditor, resizeImage}from "../photo-editor/photo-editor.js";
 import {createLoader, destroyLoader}from "../loader/loader.js";
 
+const pathToJson = "https://amitrofanova.pythonanywhere.com/api/";
 const pathToRecipes = "https://amitrofanova.pythonanywhere.com/api/recipes/";
 const pathToGroups = "https://amitrofanova.pythonanywhere.com/api/groups/";
 
@@ -133,13 +134,15 @@ function appendStep(step) {
 function getCurrentData(recipeToModify) {
 	const result = null;
 	const url = pathToRecipes + encodeURIComponent(recipeToModify);
+	const imgSrc = pathToJson + "image/";
+	const imgMinSrc = pathToJson + "image/";
 
 	const callback = function (recipe) {
 
 		$(".modify-recipe__title-input").val(recipe.title);
 		$(".modify-recipe__description-input").val(recipe.description);
-		$(".modify-recipe__image-preview").attr("src", recipe.image);
-		$(".modify-recipe__image-preview-min").attr("src", recipe.image_min);
+		$(".modify-recipe__image-preview").attr("src", imgSrc + recipe.image_hash);
+		$(".modify-recipe__image-preview-min").attr("src", imgMinSrc + recipe.image_min_hash);
 
 		for (let i = 0; i < recipe.components.length; i++) {
 			const ingredient = recipe.components[i];
