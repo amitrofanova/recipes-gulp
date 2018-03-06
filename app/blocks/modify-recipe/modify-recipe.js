@@ -4,6 +4,7 @@ import {showAlert, hideAlert}from "../modal-alert/modal-alert.js";
 import {authHeader}from "../auth-form/auth-form.js";
 import {createEditor, destroyEditor, resizeImage}from "../photo-editor/photo-editor.js";
 import {createLoader, destroyLoader}from "../loader/loader.js";
+import {createGroupsSelect, createRecipesSelect}from "../delete-recipe/delete-recipe.js"
 
 const pathToJson = "https://amitrofanova.pythonanywhere.com/api/";
 const pathToRecipes = "https://amitrofanova.pythonanywhere.com/api/recipes/";
@@ -16,71 +17,11 @@ const groupsSelect = CLASS_PREFIX + "__dish-group", // eslint-disable-line one-v
 	submitBtn = CLASS_PREFIX + "__submit-btn",
 	confirmBtn = ".modal-alert__confirm-btn",
 	declineBtn = ".modal-alert__decline-btn",
-	refreshBtn = CLASS_PREFIX + "__refresh-btn",
+	// refreshBtn = CLASS_PREFIX + "__refresh-btn",
 	newItem = CLASS_PREFIX + "__new-item";
 
 // https://www.w3schools.com/jsref/prop_node_nodetype.asp
 const TEXT_NODE_TYPE = 3;
-
-
-function getList(callback, group) {
-	let url = pathToGroups + "?short";
-
-	if (group) {
-		url = pathToGroups + encodeURIComponent(group) + "?short";
-	}
-
-	$.ajax({
-		url,
-		headers: {
-			Authorization: authHeader()
-		},
-		dataType: "json",
-		success(data){
-			callback(data);
-		}
-	});
-}
-
-
-function clearRecipesSelect() {
-	$(recipesSelect).text("");
-}
-
-
-function createRecipesSelect() {
-	clearRecipesSelect();
-
-	const group = $(groupsSelect).val();
-
-	const callback = function (data) {
-		for (let i = 0; i < data.recipes.length; i++) {
-			$(recipesSelect).append(
-				"<option value='" + data.recipes[i] + "'>" + data.recipes[i] + "</option>"
-			);
-		}
-	};
-
-	getList(callback, group);
-}
-
-
-function createGroupsSelect() {
-	const callback = function (data) {
-
-		if (!data.length){return;}
-
-		for (let i = 0; i < data.length; i++) {
-			$(groupsSelect).append(
-				"<option value=\"" + data[i].group + "\">" + data[i].group + "</option>"
-			);
-		}
-		$(groupsSelect).val(data[0].group);
-		createRecipesSelect();
-	};
-
-	getList(callback);
-}
 
 
 function getIngredients() {
@@ -290,9 +231,7 @@ function saveRecipe() {
 }
 
 
-function deleteRecipe() {
-	const group = $(".modify-recipe__dish-group").val();
-	const recipeToDelete = $(".modify-recipe__recipe-to-modify").val();
+function deleteRecipe(group, recipeToDelete) {
 	const url = pathToRecipes + encodeURIComponent(recipeToDelete) + "?group=" + encodeURIComponent(group);
 
 	$.ajax({
@@ -307,7 +246,6 @@ function deleteRecipe() {
 		},
 		error(xhr) {
 			const err = ERROR_ALERT + xhr.responseText;
-			// showAlert(err);
 			console.log(err);
 		}
 	});
@@ -332,11 +270,17 @@ function getCroppedImg() {
 $(document).ready(function (){
 
 	if (window.location.pathname === "/dashboard.html") {
-		window.onload = createGroupsSelect();
+		window.onload = createGroupsSelect(groupsSelect);
 	}
 
-	$(document).on("change", groupsSelect, createRecipesSelect);
-	$(document).on("click", refreshBtn, createRecipesSelect);
+	$(document).on("change", groupsSelect, function () {
+		const titleOption = groupsSelect + " option[value=\"title\"]";
+		$(titleOption).remove();
+		const currentGroup = $(groupsSelect).val();
+		createRecipesSelect(currentGroup, recipesSelect);
+	});
+
+	// $(document).on("click", refreshBtn, createRecipesSelect);
 
 	$(document).on("click", modifyBtn, function () {
 		const recipeToModify = $(recipesSelect).val();
@@ -358,8 +302,10 @@ $(document).ready(function (){
 		showAlert(CONFIRM_MODIFY_ALERT, true);
 
 		$(document).on("click", confirmBtn, function () {
+			const group = $(".modify-recipe__dish-group").val();
+			const recipeToModify = $(".modify-recipe__recipe-to-modify").val();
+			deleteRecipe(group, recipeToModify);
 			hideAlert();
-			deleteRecipe();
 		});
 
 		$(document).on("click", declineBtn, hideAlert);
