@@ -34,19 +34,12 @@ function getList(callback, group) {
 }
 
 
-function clearRecipesSelect() {
-	$(recipesSelect).text("");
-}
-
-
-function createRecipesSelect() {
-	clearRecipesSelect();
-
-	const group = $(groupsSelect).val();
+function createRecipesSelect(group, recipesList) {
+	$(recipesList).text("");
 
 	const callback = function (data) {
 		for (let i = 0; i < data.recipes.length; i++) {
-			$(recipesSelect).append(
+			$(recipesList).append(
 				"<option value=\"" + data.recipes[i] + "\">" + data.recipes[i] + "</option>"
 			);
 		}
@@ -56,27 +49,25 @@ function createRecipesSelect() {
 }
 
 
-function createGroupsSelect() {
+function createGroupsSelect(groupsList) {
+	$(groupsList).append(
+		"<option value=\"title\">title</option>"
+	);
+
 	const callback = function (data) {
-
 		if (!data.length){return;}
-
 		for (let i = 0; i < data.length; i++) {
-			$(groupsSelect).append(
+			$(groupsList).append(
 				"<option value=\"" + data[i].group + "\">" + data[i].group + "</option>"
 			);
 		}
-		$(groupsSelect).val(data[0].group);
-		createRecipesSelect();
 	};
 
 	getList(callback);
 }
 
 
-function deleteRecipe() {
-	const group = $(groupsSelect).val();
-	const recipeToDelete = $(recipesSelect).val();
+function deleteRecipe(group, recipeToDelete) {
 	const url = pathToJson + "recipes/" + encodeURIComponent(recipeToDelete) + "?group=" + encodeURIComponent(group);
 
 	$.ajax({
@@ -88,7 +79,7 @@ function deleteRecipe() {
 		dataType: "json",
 		success(data){
 			showAlert(DELETED_RECIPE_ALERT);
-			createRecipesSelect();
+			createRecipesSelect(group, recipesSelect);
 			console.log(data);
 		},
 		error(xhr) {
@@ -102,19 +93,29 @@ function deleteRecipe() {
 $(document).ready(function (){
 
 	if (window.location.pathname === "/dashboard.html") {
-		window.onload = createGroupsSelect();
+		window.onload = createGroupsSelect(groupsSelect);
 	}
 
-	$(document).on("change", groupsSelect, createRecipesSelect);
+	$(document).on("change", groupsSelect, function () {
+		const titleOption = groupsSelect + " option[value=\"title\"]";
+		$(titleOption).remove();
+		const currentGroup = $(groupsSelect).val();
+		createRecipesSelect(currentGroup, recipesSelect);
+	});
 
-	$(document).on("click", refreshBtn, createRecipesSelect);
+	$(document).on("click", refreshBtn, function () {
+		const currentGroup = $(groupsSelect).val();
+		createRecipesSelect(currentGroup, recipesSelect);
+	});
 
 	$(document).on("click", deleteBtn, function () {
 		showAlert(CONFIRM_DELETE_ALERT, true);
 
 		$(document).on("click", confirmBtn, function () {
+			const group = $(groupsSelect).val();
+			const recipeToDelete = $(recipesSelect).val();
+			deleteRecipe(group, recipeToDelete);
 			hideAlert();
-			deleteRecipe();
 		});
 
 		$(document).on("click", declineBtn, hideAlert);
