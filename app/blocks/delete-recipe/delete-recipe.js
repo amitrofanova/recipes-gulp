@@ -9,9 +9,7 @@ const CLASS_PREFIX = ".delete-recipe";
 const groupsSelect = CLASS_PREFIX + "__dish-group", // eslint-disable-line one-var
 	recipesSelect = CLASS_PREFIX + "__recipe-to-delete",
 	deleteBtn = CLASS_PREFIX + "__delete-recipe",
-	confirmBtn = ".modal-alert__confirm-btn",
-	declineBtn = ".modal-alert__decline-btn",
-	refreshBtn = CLASS_PREFIX + "__refresh-btn";
+	confirmBtn = ".modal-alert__confirm-btn";
 
 
 function getList(callback, group) {
@@ -34,7 +32,7 @@ function getList(callback, group) {
 }
 
 
-function createRecipesSelect(group, recipesList) {
+export function createRecipesSelect(group, recipesList) {
 	$(recipesList).text("");
 
 	const callback = function (data) {
@@ -49,7 +47,7 @@ function createRecipesSelect(group, recipesList) {
 }
 
 
-function createGroupsSelect(groupsList) {
+export function createGroupsSelect(groupsList) {
 	$(groupsList).append(
 		"<option value=\"title\">title</option>"
 	);
@@ -103,11 +101,6 @@ $(document).ready(function (){
 		createRecipesSelect(currentGroup, recipesSelect);
 	});
 
-	$(document).on("click", refreshBtn, function () {
-		const currentGroup = $(groupsSelect).val();
-		createRecipesSelect(currentGroup, recipesSelect);
-	});
-
 	$(document).on("click", deleteBtn, function () {
 		showAlert(CONFIRM_DELETE_ALERT, true);
 
@@ -117,8 +110,6 @@ $(document).ready(function (){
 			deleteRecipe(group, recipeToDelete);
 			hideAlert();
 		});
-
-		$(document).on("click", declineBtn, hideAlert);
 	});
 
 });
