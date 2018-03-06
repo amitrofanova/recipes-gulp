@@ -205,34 +205,37 @@ export function resetForm() {
 }
 
 
-function getCroppedImg() {
+export function getCroppedImg(wrapper, preview, previewMin) {
 	const img = $(".photo-editor__image-crop").attr("src");
-	// const imgMin = $(".photo-editor__image-crop-min").attr("src");
+	const imgMin = $(".photo-editor__image-crop-min")[0];
+	const resizedImgMin = resizeImage(imgMin);
 
-	const imageToResize = $(".photo-editor__image-crop-min")[0];
-	// console.log("initial: " + imgMin.length);
-	const resizedImgMin = resizeImage(imageToResize);
-	// console.log("resized: " + resizedImgMin.length);
-
-	$(".add-recipe__image-preview-wrap").css("display", "flex");
-	$(".add-recipe__image-preview").attr("src", img);
-	$(".add-recipe__image-preview-min").attr("src", resizedImgMin);
+	if (wrapper !== null) {
+		$(wrapper).css("display", "flex");
+	}
+	$(preview).attr("src", img);
+	$(previewMin).attr("src", resizedImgMin);
 	destroyEditor();
 }
 
 
 $(document).ready(function () {
 
-	$(document).on("change", dishGroupInputCls, function() {
+	$(document).on("change", dishGroupInputCls, function () {
 		const titleOption = dishGroupInputCls + " option[value=\"title\"]";
 		$(titleOption).remove();
 	});
+
 	$(document).on("click", ".add-recipe__open-editor-btn", createEditor);
 	$(document).on("click", ".photo-editor__submit-btn", function () {
+		const wrapper = ".add-recipe__image-preview-wrap";
+		const preview = ".add-recipe__image-preview";
+		const previewMin = ".add-recipe__image-preview-min";
 		if ($(this).parents(".add-recipe").length) {
-			getCroppedImg();
+			getCroppedImg(wrapper, preview, previewMin);
 		}
 	});
+
 	$(document).on("click", newIngredientBtnCls, addIngredient);
 	$(document).on("click", newStepBtnCls, addStep);
 	$(document).on("focus", ingredientInputCls, clearInput);

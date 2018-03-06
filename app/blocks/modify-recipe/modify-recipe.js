@@ -4,11 +4,11 @@ import {showAlert, hideAlert}from "../modal-alert/modal-alert.js";
 import {authHeader}from "../auth-form/auth-form.js";
 import {createEditor, destroyEditor, resizeImage}from "../photo-editor/photo-editor.js";
 import {createLoader, destroyLoader}from "../loader/loader.js";
-import {createGroupsSelect, createRecipesSelect}from "../delete-recipe/delete-recipe.js"
+import {createGroupsSelect, createRecipesSelect}from "../delete-recipe/delete-recipe.js";
+import {getCroppedImg}from "../add-recipe/add-recipe.js";
 
 const pathToJson = "https://amitrofanova.pythonanywhere.com/api/";
 const pathToRecipes = "https://amitrofanova.pythonanywhere.com/api/recipes/";
-const pathToGroups = "https://amitrofanova.pythonanywhere.com/api/groups/";
 
 const CLASS_PREFIX = ".modify-recipe";
 const groupsSelect = CLASS_PREFIX + "__dish-group", // eslint-disable-line one-var
@@ -241,7 +241,9 @@ function deleteRecipe(group, recipeToDelete) {
 			Authorization: authHeader()
 		},
 		dataType: "json",
-		success(){
+		success(data){
+			console.log(data);
+			createRecipesSelect(group, recipesSelect);
 			saveRecipe();
 		},
 		error(xhr) {
@@ -249,21 +251,6 @@ function deleteRecipe(group, recipeToDelete) {
 			console.log(err);
 		}
 	});
-}
-
-
-function getCroppedImg() {
-	const img = $(".photo-editor__image-crop").attr("src");
-	// const imgMin = $(".photo-editor__image-crop-min").attr("src");
-
-	const imageToResize = $(".photo-editor__image-crop-min")[0];
-	// console.log("initial: " + imgMin.length);
-	const resizedImgMin = resizeImage(imageToResize);
-	// console.log("resized: " + resizedImgMin.length);
-
-	$(".modify-recipe__image-preview").attr("src", img);
-	$(".modify-recipe__image-preview-min").attr("src", resizedImgMin);
-	destroyEditor();
 }
 
 
@@ -280,8 +267,6 @@ $(document).ready(function (){
 		createRecipesSelect(currentGroup, recipesSelect);
 	});
 
-	// $(document).on("click", refreshBtn, createRecipesSelect);
-
 	$(document).on("click", modifyBtn, function () {
 		const recipeToModify = $(recipesSelect).val();
 		getCurrentData(recipeToModify);
@@ -289,8 +274,10 @@ $(document).ready(function (){
 
 	$(document).on("click", ".modify-recipe__open-editor-btn", createEditor);
 	$(document).on("click", ".photo-editor__submit-btn", function () {
+		const preview = ".modify-recipe__image-preview";
+		const previewMin = ".modify-recipe__image-preview-min";
 		if ($(this).parents(".modify-recipe").length) {
-			getCroppedImg();
+			getCroppedImg(null, preview, previewMin);
 		}
 	});
 
