@@ -36,4 +36,5 @@ export function hideAlert() {
 
 $(document).ready(function () {
 	$(document).on("click", ".modal-alert__close-btn", hideAlert);
+	$(document).on("click", ".modal-alert__decline-btn", hideAlert);
 });
