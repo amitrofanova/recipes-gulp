@@ -3,8 +3,7 @@ import {CONFIRM_DELETE_ALERT, DELETED_RECIPE_ALERT, ERROR_ALERT}from "../../reso
 import {showAlert, hideAlert}from "../modal-alert/modal-alert.js";
 import {authHeader}from "../auth-form/auth-form.js";
 
-const pathToRecipes = "https://amitrofanova.pythonanywhere.com/api/recipes/";
-const pathToGroups = "https://amitrofanova.pythonanywhere.com/api/groups/";
+const pathToJson = "https://amitrofanova.pythonanywhere.com/api/";
 
 const CLASS_PREFIX = ".delete-recipe";
 const groupsSelect = CLASS_PREFIX + "__dish-group", // eslint-disable-line one-var
@@ -16,10 +15,10 @@ const groupsSelect = CLASS_PREFIX + "__dish-group", // eslint-disable-line one-v
 
 
 function getList(callback, group) {
-	let url = pathToGroups + "?short";
+	let url = pathToJson + "groups/" + "?short";
 
 	if (group) {
-		url = pathToGroups + encodeURIComponent(group) + "?short";
+		url = pathToJson + "groups/" + encodeURIComponent(group) + "?short";
 	}
 
 	$.ajax({
@@ -78,7 +77,7 @@ function createGroupsSelect() {
 function deleteRecipe() {
 	const group = $(groupsSelect).val();
 	const recipeToDelete = $(recipesSelect).val();
-	const url = pathToRecipes + encodeURIComponent(recipeToDelete) + "?group=" + encodeURIComponent(group);
+	const url = pathToJson + "recipes/" + encodeURIComponent(recipeToDelete) + "?group=" + encodeURIComponent(group);
 
 	$.ajax({
 		type: "DELETE",
