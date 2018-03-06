@@ -3,8 +3,9 @@ mixin add-recipe
 
 		//- TODO: add fieldsets
 		section.add-recipe__section
-			.add-recipe__section-title Группа
+			//- .add-recipe__section-title Группа
 			select(name="select").add-recipe__dish-group.add-recipe__select-input
+				option(hidden value="title") Выбрать группу
 				option(value="deserts") Десерты
 				option(value="bread") Хлеб
 				option(value="meat") Блюда из мяса

@@ -223,6 +223,10 @@ function getCroppedImg() {
 
 $(document).ready(function () {
 
+	$(document).on("change", dishGroupInputCls, function() {
+		const titleOption = dishGroupInputCls + " option[value=\"title\"]";
+		$(titleOption).remove();
+	});
 	$(document).on("click", ".add-recipe__open-editor-btn", createEditor);
 	$(document).on("click", ".photo-editor__submit-btn", function () {
 		if ($(this).parents(".add-recipe").length) {
