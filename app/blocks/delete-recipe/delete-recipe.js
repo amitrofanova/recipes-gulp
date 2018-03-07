@@ -52,7 +52,7 @@ export function createGroupsSelect(groupsList1, groupsList2) {
 	const callback = function (data) {
 		if (!data.length){return;}
 
-		var optionsString = "";
+		let optionsString = "";
 		for (let i = 0; i < data.length; i++) {
 			optionsString += "<option value=\"" + data[i].group + "\">" + data[i].group + "</option>";
 		}
