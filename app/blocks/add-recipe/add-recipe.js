@@ -219,12 +219,24 @@ export function getCroppedImg(wrapper, preview, previewMin) {
 }
 
 
+function clearTextInput() {
+	if (($(this).val() === "Название блюда") || ($(this).val() === "Описание") || ($(this).val() === "Добавить ингредиент") || ($(this).val() === "Добавить этап приготовления")) {
+		$(this).val("");
+	}
+}
+
+
 $(document).ready(function () {
 
 	$(document).on("change", dishGroupInputCls, function () {
 		const titleOption = dishGroupInputCls + " option[value=\"title\"]";
 		$(titleOption).remove();
 	});
+
+	$(document).on("click", titleInputCls, clearTextInput);
+	$(document).on("click", descriptionInputCls, clearTextInput);
+	$(document).on("click", ingredientInputCls, clearTextInput);
+	$(document).on("click", stepInputCls, clearTextInput);
 
 	$(document).on("click", ".add-recipe__open-editor-btn", createEditor);
 	$(document).on("click", ".photo-editor__submit-btn", function () {
