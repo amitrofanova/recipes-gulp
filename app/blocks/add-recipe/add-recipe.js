@@ -233,10 +233,7 @@ $(document).ready(function () {
 		$(titleOption).remove();
 	});
 
-	$(document).on("click", titleInputCls, clearTextInput);
-	$(document).on("click", descriptionInputCls, clearTextInput);
-	$(document).on("click", ingredientInputCls, clearTextInput);
-	$(document).on("click", stepInputCls, clearTextInput);
+	$(".add-recipe__title-input, .add-recipe__description-input, .add-recipe__ingredient-input, .add-recipe__step-input").on("click", clearTextInput);
 
 	$(document).on("click", ".add-recipe__open-editor-btn", createEditor);
 	$(document).on("click", ".photo-editor__submit-btn", function () {
