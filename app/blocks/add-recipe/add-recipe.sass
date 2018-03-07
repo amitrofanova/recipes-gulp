@@ -1,16 +1,15 @@
-// .add-recipe option
-// 	padding-top: 1rem
-// 	line-height: 1.5
-
 .add-recipe__text-input, .add-recipe__select-input
 	height: calc(16px + 2rem)
 	border: none
 	background-color: #eee
 	font-size: calc(8px + .5rem)
 	font-weight: 700
-	color: #afafaf
+	color: #000
 	outline: none
 
+.add-recipe__select-input
+	color: #757575
+	
 .add-recipe__section
 	position: relative
 	display: flex
@@ -38,15 +37,6 @@
 	display: inline-block
 	font-size: calc(8px + .5rem)
 	font-weight: 700
-
-// .add-recipe__image-input
-// 	position: absolute
-// 	top: 0
-// 	left: 0
-// 	width: 100%
-// 	height: 100%
-// 	opacity: 0
-// 	cursor: pointer
 
 .add-recipe__image-preview-wrap
 	display: none
@@ -81,7 +71,7 @@
 	border-bottom-right-radius: 0
 	border-right: none
 	padding-left: 1rem
-	transition: color 3s
+	transition: color 2s
 	user-select: none
 
 .add-recipe__ingredients, .add-recipe__steps

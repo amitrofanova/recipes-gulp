@@ -15,10 +15,10 @@ mixin add-recipe
 				option(value="drinks") Напитки
 			
 		section.add-recipe__section
-			input(type="text" name="title" value="Название блюда" required).add-recipe__title-input.add-recipe__text-input
+			input(type="text" name="title" placeholder="Название блюда" required).add-recipe__title-input.add-recipe__text-input
 			
 		section.add-recipe__section
-			input(type="text" name="description" value="Описание").add-recipe__description-input.add-recipe__text-input
+			input(type="text" name="description" placeholder="Описание").add-recipe__description-input.add-recipe__text-input
 	  
 		section.add-recipe__section
 			.add-recipe__open-editor-btn.button Добавить изображение
@@ -28,13 +28,13 @@ mixin add-recipe
 			
 		section.add-recipe__section
 			.add-recipe__input-wrapper
-				input(type="text" name="ingredient" value="Добавить ингредиент").add-recipe__ingredient-input.add-recipe__text-input
+				input(type="text" name="ingredient" placeholder="Добавить ингредиент").add-recipe__ingredient-input.add-recipe__text-input
 				.add-recipe__new-ingredient-btn
 			.add-recipe__ingredients
 	  
 		section.add-recipe__section
 			.add-recipe__input-wrapper
-				input(type="text" name="step" value="Добавить этап приготовления").add-recipe__step-input.add-recipe__text-input
+				input(type="text" name="step" placeholder="Добавить этап приготовления").add-recipe__step-input.add-recipe__text-input
 				.add-recipe__new-step-btn
 			.add-recipe__steps
 		

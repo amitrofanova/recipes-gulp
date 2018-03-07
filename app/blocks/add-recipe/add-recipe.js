@@ -32,6 +32,12 @@ const formCls = CLASS_PREFIX, // eslint-disable-line one-var
 const TEXT_NODE_TYPE = 3;
 
 
+function clearInput(input) {
+	$(input).val("");
+	$(input).css("color", "#000");
+}
+
+
 function addIngredient() {
 	const ingredient = $(ingredientInputCls).val();
 	const newElCls = newItemCls.substr(1);
@@ -45,8 +51,9 @@ function addIngredient() {
 	}
 
 	else {
+		setTimeout(clearInput, 2000, ingredientInputCls);
 		$(ingredientInputCls).val(EMPTY_INGREDIENT_ALERT);
-		$(ingredientInputCls).css("color", "#fff");
+		$(ingredientInputCls).css("color", "#eee");
 	}
 }
 
@@ -61,12 +68,6 @@ function addStep() {
 		$(stepsCls).append(newEl);
 		$(stepInputCls).val("");
 	}
-}
-
-
-function clearInput() {
-	$(ingredientInputCls).val("");
-	$(ingredientInputCls).css("color", "#000");
 }
 
 
@@ -219,13 +220,10 @@ export function getCroppedImg(wrapper, preview, previewMin) {
 }
 
 
-function clearTextInput() {
-	if (($(this).val() === "Название блюда") || ($(this).val() === "Описание") || ($(this).val() === "Добавить ингредиент") || ($(this).val() === "Добавить этап приготовления")) {
-		$(this).val("");
-		$(this).css("color", "#000");
-		$(this).css("font-weight", "400");
-	}
-}
+// function resetInitialInputValue() {
+// 	$(this).css("color", "#000");
+// 	$(this).css("font-weight", "400");
+// }
 
 
 $(document).ready(function () {
@@ -233,9 +231,10 @@ $(document).ready(function () {
 	$(document).on("change", dishGroupInputCls, function () {
 		const titleOption = dishGroupInputCls + " option[value=\"title\"]";
 		$(titleOption).remove();
+		$(dishGroupInputCls).css("color", "#000");
 	});
 
-	$(".add-recipe__title-input, .add-recipe__description-input, .add-recipe__ingredient-input, .add-recipe__step-input").on("click", clearTextInput);
+	// $(".add-recipe__title-input, .add-recipe__description-input, .add-recipe__ingredient-input, .add-recipe__step-input").on("focus", resetInitialInputValue);
 
 	$(document).on("click", ".add-recipe__open-editor-btn", createEditor);
 	$(document).on("click", ".photo-editor__submit-btn", function () {
@@ -249,7 +248,6 @@ $(document).ready(function () {
 
 	$(document).on("click", newIngredientBtnCls, addIngredient);
 	$(document).on("click", newStepBtnCls, addStep);
-	$(document).on("focus", ingredientInputCls, clearInput);
 	$(document).on("click", deleteItemCls, deleteItem);
 	$(document).on("submit", formCls, saveRecipe);
 	$(document).on("click", resetBtnCls, resetForm);
