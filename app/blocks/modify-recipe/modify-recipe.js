@@ -2,13 +2,12 @@ import $ from "jquery";
 import {CONFIRM_MODIFY_ALERT, MODIFIED_RECIPE_ALERT, ERROR_ALERT, EMPTY_INGREDIENT_ALERT}from "../../resources/strings/ru.js";
 import {showAlert, hideAlert}from "../modal-alert/modal-alert.js";
 import {authHeader}from "../auth-form/auth-form.js";
-import {createEditor, destroyEditor, resizeImage}from "../photo-editor/photo-editor.js";
+import {createEditor}from "../photo-editor/photo-editor.js";
 import {createLoader, destroyLoader}from "../loader/loader.js";
-import {createGroupsSelect, createRecipesSelect}from "../delete-recipe/delete-recipe.js";
+import {createRecipesSelect}from "../delete-recipe/delete-recipe.js";
 import {getCroppedImg}from "../add-recipe/add-recipe.js";
 
 const pathToJson = "https://amitrofanova.pythonanywhere.com/api/";
-const pathToRecipes = "https://amitrofanova.pythonanywhere.com/api/recipes/";
 
 const CLASS_PREFIX = ".modify-recipe";
 const groupsSelect = CLASS_PREFIX + "__dish-group", // eslint-disable-line one-var
@@ -16,8 +15,6 @@ const groupsSelect = CLASS_PREFIX + "__dish-group", // eslint-disable-line one-v
 	modifyBtn = CLASS_PREFIX + "__modify-btn",
 	submitBtn = CLASS_PREFIX + "__submit-btn",
 	confirmBtn = ".modal-alert__confirm-btn",
-	declineBtn = ".modal-alert__decline-btn",
-	// refreshBtn = CLASS_PREFIX + "__refresh-btn",
 	newItem = CLASS_PREFIX + "__new-item";
 
 // https://www.w3schools.com/jsref/prop_node_nodetype.asp
@@ -74,7 +71,7 @@ function appendStep(step) {
 
 function getCurrentData(recipeToModify) {
 	const result = null;
-	const url = pathToRecipes + encodeURIComponent(recipeToModify);
+	const url = pathToJson + "recipes/" + encodeURIComponent(recipeToModify);
 	const imgSrc = pathToJson + "image/";
 	const imgMinSrc = pathToJson + "image/";
 
@@ -168,7 +165,6 @@ function deleteItem() {
 		steps.splice(itemToDelete, 1);
 	}
 
-	// Delete element from DOM
 	$(this).parent().remove();
 }
 
@@ -202,7 +198,7 @@ function resetForm() {
 
 function saveRecipe() {
 	const group = $(".modify-recipe__dish-group").val();
-	const url = pathToRecipes + "?group=" + encodeURIComponent(group);
+	const url = pathToJson + "recipes/" + "?group=" + encodeURIComponent(group);
 
 	$.ajax({
 		type: "POST",
@@ -218,7 +214,6 @@ function saveRecipe() {
 		},
 		error(xhr) {
 			const err = ERROR_ALERT + xhr.responseText;
-			// showAlert(err);
 			console.log(err);
 		},
 		beforeSend() {
@@ -232,7 +227,7 @@ function saveRecipe() {
 
 
 function deleteRecipe(group, recipeToDelete) {
-	const url = pathToRecipes + encodeURIComponent(recipeToDelete) + "?group=" + encodeURIComponent(group);
+	const url = pathToJson + "recipes/" + encodeURIComponent(recipeToDelete) + "?group=" + encodeURIComponent(group);
 
 	$.ajax({
 		type: "DELETE",
@@ -255,10 +250,6 @@ function deleteRecipe(group, recipeToDelete) {
 
 
 $(document).ready(function (){
-
-	if (window.location.pathname === "/dashboard.html") {
-		window.onload = createGroupsSelect(groupsSelect);
-	}
 
 	$(document).on("change", groupsSelect, function () {
 		const titleOption = groupsSelect + " option[value=\"title\"]";
@@ -294,8 +285,6 @@ $(document).ready(function (){
 			deleteRecipe(group, recipeToModify);
 			hideAlert();
 		});
-
-		$(document).on("click", declineBtn, hideAlert);
 	});
 
 });
