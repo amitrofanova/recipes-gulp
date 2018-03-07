@@ -47,18 +47,19 @@ export function createRecipesSelect(group, recipesList) {
 }
 
 
-export function createGroupsSelect(groupsList) {
-	$(groupsList).append(
-		"<option value=\"title\">title</option>"
-	);
-
+// TODO: create custom method
+export function createGroupsSelect(groupsList1, groupsList2) {
 	const callback = function (data) {
 		if (!data.length){return;}
+
+		var optionsString = "";
 		for (let i = 0; i < data.length; i++) {
-			$(groupsList).append(
-				"<option value=\"" + data[i].group + "\">" + data[i].group + "</option>"
-			);
+			optionsString += "<option value=\"" + data[i].group + "\">" + data[i].group + "</option>";
 		}
+
+		const selectString = "<option value=\"title\">title</option>" + optionsString;
+		$(groupsList1).append(selectString);
+		$(groupsList2).append(selectString);
 	};
 
 	getList(callback);
@@ -91,7 +92,7 @@ function deleteRecipe(group, recipeToDelete) {
 $(document).ready(function (){
 
 	if (window.location.pathname === "/dashboard.html") {
-		window.onload = createGroupsSelect(groupsSelect);
+		window.onload = createGroupsSelect(".delete-recipe__dish-group", ".modify-recipe__dish-group");
 	}
 
 	$(document).on("change", groupsSelect, function () {
