@@ -222,6 +222,8 @@ export function getCroppedImg(wrapper, preview, previewMin) {
 function clearTextInput() {
 	if (($(this).val() === "Название блюда") || ($(this).val() === "Описание") || ($(this).val() === "Добавить ингредиент") || ($(this).val() === "Добавить этап приготовления")) {
 		$(this).val("");
+		$(this).css("color", "#000");
+		$(this).css("font-weight", "400");
 	}
 }
 

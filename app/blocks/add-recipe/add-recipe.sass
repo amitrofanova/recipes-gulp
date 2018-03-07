@@ -1,11 +1,14 @@
+// .add-recipe option
+// 	padding-top: 1rem
+// 	line-height: 1.5
+
 .add-recipe__text-input, .add-recipe__select-input
-	height: calc(16px + 1.5rem)
-	border-top: 1px solid $secondary-bg-color
-	border-right: 1px solid $secondary-bg-color
-	border-bottom: 1px solid $secondary-bg-color
-	border-left: 1px solid $secondary-bg-color
-	box-shadow: inset 0 1px 1px $secondary-bg-color
-	font-size: calc(8px + .4rem)
+	height: calc(16px + 2rem)
+	border: none
+	background-color: #eee
+	font-size: calc(8px + .5rem)
+	font-weight: 700
+	color: #afafaf
 	outline: none
 
 .add-recipe__section
@@ -13,12 +16,7 @@
 	display: flex
 	flex-wrap: wrap
 	align-items: center
-	padding: calc(12px + .5rem) calc(8px + 1rem)
-
-.add-recipe__section-title
-	margin-right: 2rem
-	display: inline-block
-	font-size: calc(8px + .5rem)
+	padding: calc(8px + .5rem) calc(8px + 1rem)
 
 .add-recipe__dish-group
 	padding-left: .5rem
@@ -38,19 +36,17 @@
 .add-recipe__open-editor-btn
 	position: relative
 	display: inline-block
-	margin: 1rem
-
-.add-recipe__image-input
-	position: absolute
-	top: 0
-	left: 0
-	width: 100%
-	height: 100%
-	opacity: 0
-	cursor: pointer
-
-.add-recipe__image-label
 	font-size: calc(8px + .5rem)
+	font-weight: 700
+
+// .add-recipe__image-input
+// 	position: absolute
+// 	top: 0
+// 	left: 0
+// 	width: 100%
+// 	height: 100%
+// 	opacity: 0
+// 	cursor: pointer
 
 .add-recipe__image-preview-wrap
 	display: none
@@ -72,14 +68,15 @@
 .add-recipe__image-preview, .add-recipe__image-preview-min
 	max-height: 100%
 
-
 .add-recipe__input-wrapper
-	flex: 2
+	width: 100%
+	position: relative
 	display: flex
 	flex-wrap: nowrap
 	align-items: stretch
 
 .add-recipe__ingredient-input, .add-recipe__step-input
+	flex: 2
 	border-top-right-radius: 0
 	border-bottom-right-radius: 0
 	border-right: none
@@ -87,22 +84,15 @@
 	transition: color 3s
 	user-select: none
 
-.add-recipe__ingredient-input
-	flex-basis: 40%
-
-.add-recipe__step-input
-	flex-basis: 80%
-
 .add-recipe__ingredients, .add-recipe__steps
 	flex-basis: 100%
-	margin-top: 1.5rem
 
 .add-recipe__new-ingredient-btn, .add-recipe__new-step-btn
-	width: calc(16px + 1.5rem)
-	height: calc(16px + 1.5rem)
-	position: relative
-	// border: 1px solid $secondary-text-color
-	// border-left: none
+	width: calc(16px + 2rem)
+	height: calc(16px + 2rem)
+	position: absolute
+	right: 0
+	top: 0
 	background-color: $secondary-bg-color
 	cursor: pointer
 	&::before
@@ -120,7 +110,7 @@
 
 .add-recipe__new-item
 	display: inline-block
-	margin: 1rem calc(16px + 3rem) 1rem 0
+	margin: 1rem calc(16px + 3rem) 0 0
 	position: relative
 	padding: .5rem
 	background-color: $tertiary-bg-color
@@ -154,14 +144,6 @@
 .add-recipe__result-title
 	padding-top: calc(10px + 1rem)
 	padding-left: calc(10px + 1rem)
-
-.add-recipe__result-json
-	margin: 1rem calc(10px + 1rem) 3rem
-	overflow-x: scroll
-	padding: 2rem
-	background-color: $secondary-bg-color
-	font-size: calc(6px + .5rem)
-	color: $primary-text-color
 
 .add-recipe__modal
 	position: fixed
