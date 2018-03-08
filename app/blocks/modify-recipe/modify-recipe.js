@@ -5,7 +5,7 @@ import {authHeader}from "../auth-form/auth-form.js";
 import {createEditor}from "../photo-editor/photo-editor.js";
 import {createLoader, destroyLoader}from "../loader/loader.js";
 import {createRecipesSelect}from "../delete-recipe/delete-recipe.js";
-import {getCroppedImg}from "../add-recipe/add-recipe.js";
+import {resetInput, appendItem, getCroppedImg}from "../add-recipe/add-recipe.js";
 
 const pathToJson = "https://amitrofanova.pythonanywhere.com/api/";
 
@@ -21,7 +21,50 @@ const groupsSelect = CLASS_PREFIX + "__dish-group", // eslint-disable-line one-v
 const TEXT_NODE_TYPE = 3;
 
 
-function getIngredients() {
+function getCurrentData(recipeToModify) {
+	const result = null;
+	const url = pathToJson + "recipes/" + encodeURIComponent(recipeToModify);
+	const imgSrc = pathToJson + "image/";
+	const imgMinSrc = pathToJson + "image/";
+
+	const showCurrentData = function (recipe) {
+
+		$(".modify-recipe__title-input").val(recipe.title);
+		$(".modify-recipe__description-input").val(recipe.description);
+		$(".modify-recipe__image-preview").attr("src", imgSrc + recipe.image_hash);
+		$(".modify-recipe__image-preview-min").attr("src", imgMinSrc + recipe.image_min_hash);
+
+		for (let i = 0; i < recipe.components.length; i++) {
+			const ingredient = recipe.components[i];
+			appendItem(ingredient, ".modify-recipe__new-item", ".modify-recipe__delete-item", ".modify-recipe__ingredients");
+		}
+
+		for (let i = 0; i < recipe.steps.length; i++) {
+			const step = recipe.steps[i];
+			appendItem(step, ".modify-recipe__new-item", ".modify-recipe__delete-item", ".modify-recipe__steps");
+		}
+
+	};
+
+	$.ajax({
+		url,
+		headers: {
+			Authorization: authHeader()
+		},
+		dataType: "json",
+		success(data){
+			showCurrentData(data);
+		},
+		error(xhr) {
+			const err = ERROR_ALERT + xhr.responseText;
+			showAlert(err);
+		}
+	});
+	return result;
+}
+
+
+function getIngredientsFromPage() {
 	const ingredients = [];
 	let newIngredient;
 
@@ -38,7 +81,7 @@ function getIngredients() {
 }
 
 
-function getSteps() {
+function getStepsFromPage() {
 	const steps = [];
 	let newStep;
 
@@ -57,66 +100,12 @@ function getSteps() {
 }
 
 
-function appendIngredient(ingredient) {
-	const newEl = "<div class=\"modify-recipe__new-item\">" + ingredient + "<div class=\"modify-recipe__delete-item\"></div></div>";
-	$(".modify-recipe__ingredients").append(newEl);
-}
-
-
-function appendStep(step) {
-	const newEl = "<div class=\"modify-recipe__new-item\">" + step + "<div class=\"modify-recipe__delete-item\"></div></div>";
-	$(".modify-recipe__steps").append(newEl);
-}
-
-
-function getCurrentData(recipeToModify) {
-	const result = null;
-	const url = pathToJson + "recipes/" + encodeURIComponent(recipeToModify);
-	const imgSrc = pathToJson + "image/";
-	const imgMinSrc = pathToJson + "image/";
-
-	const callback = function (recipe) {
-
-		$(".modify-recipe__title-input").val(recipe.title);
-		$(".modify-recipe__description-input").val(recipe.description);
-		$(".modify-recipe__image-preview").attr("src", imgSrc + recipe.image_hash);
-		$(".modify-recipe__image-preview-min").attr("src", imgMinSrc + recipe.image_min_hash);
-
-		for (let i = 0; i < recipe.components.length; i++) {
-			const ingredient = recipe.components[i];
-			appendIngredient(ingredient);
-		}
-
-		for (let i = 0; i < recipe.steps.length; i++) {
-			const step = recipe.steps[i];
-			appendStep(step);
-		}
-
-	};
-
-	$.ajax({
-		url,
-		headers: {
-			Authorization: authHeader()
-		},
-		dataType: "json",
-		success(data){
-			callback(data);
-		},
-		error(xhr) {
-			const err = ERROR_ALERT + xhr.responseText;
-			showAlert(err);
-		}
-	});
-	return result;
-}
-
-
 function addIngredient() {
 	const ingredient = $(".modify-recipe__ingredient-input").val();
 
 	if ((ingredient !== "") && (ingredient !== EMPTY_INGREDIENT_ALERT)) {
-		appendIngredient(ingredient);
+		appendItem(ingredient, ".modify-recipe__new-item", ".modify-recipe__delete-item", ".modify-recipe__ingredients");
+		$(".modify-recipe__ingredient-input").val("");
 	}
 
 	else {
@@ -130,14 +119,15 @@ function addStep() {
 	const step = $(".modify-recipe__step-input").val();
 
 	if (step !== "") {
-		appendStep(step);
+		appendItem(step, ".modify-recipe__new-item", ".modify-recipe__delete-item", ".modify-recipe__steps");
+		$(".modify-recipe__step-input").val("");
 	}
 }
 
 
 function deleteItem() {
-	const ingredients = getIngredients();
-	const steps = getSteps();
+	const ingredients = getIngredientsFromPage();
+	const steps = getStepsFromPage();
 	let itemToDelete;
 
 	// Define if current section related to ingredients or steps
@@ -179,8 +169,8 @@ function getNewData() {
 		description,
 		image_min,
 		image,
-		components: getIngredients(),
-		steps: getSteps()
+		components: getIngredientsFromPage(),
+		steps: getStepsFromPage()
 	};
 	const newRecipeToJSON = JSON.stringify(newRecipe, null, "\t");
 	return newRecipeToJSON;

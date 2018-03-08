@@ -30,21 +30,27 @@ const formCls = CLASS_PREFIX, // eslint-disable-line one-var
 const TEXT_NODE_TYPE = 3;
 
 
-function resetInput(input) {
+export function resetInput(input) {
 	$(input).val("");
 	$(input).css("color", "#000");
 }
 
 
+export function appendItem(ingredient, newItemCls, deleteItemCls, wrapperCls) {
+	const newEl =
+		"<div class=\"" + newItemCls.substr(1) + "\">" + ingredient +
+			"<div class=\"" + deleteItemCls.substr(1) +"\"></div>" +
+		"</div>";
+	console.log(wrapperCls);
+	$(wrapperCls).append(newEl);
+}
+
+
 function addIngredient() {
 	const ingredient = $(ingredientInputCls).val();
-	const newElCls = newItemCls.substr(1);
-	const deleteElCls = deleteItemCls.substr(1);
 
 	if ((ingredient !== "") && (ingredient !== EMPTY_INGREDIENT_ALERT)) {
-		const newEl = "<div class=\"" + newElCls + "\">" + ingredient + "<div class=\"" + deleteElCls + "\"></div></div>";
-
-		$(ingredientsCls).append(newEl);
+		appendItem(ingredient, newItemCls, deleteItemCls, ingredientsCls);
 		$(ingredientInputCls).val("");
 	}
 
@@ -69,7 +75,7 @@ function addStep() {
 }
 
 
-function getIngredients() {
+function getIngredientsFromPage() {
 	const ingredients = [];
 	let newIngredient;
 
@@ -88,7 +94,7 @@ function getIngredients() {
 }
 
 
-function getSteps() {
+function getStepsFromPage() {
 	const steps = [];
 	let newStep;
 
@@ -108,8 +114,8 @@ function getSteps() {
 
 
 function deleteItem() {
-	const ingredients = getIngredients();
-	const steps = getSteps();
+	const ingredients = getIngredientsFromPage();
+	const steps = getStepsFromPage();
 	let itemToDelete;
 
 	// Define if current section related to ingredients or steps
@@ -152,8 +158,8 @@ function createRecipe() {
 		description,
 		image_min,
 		image,
-		components: getIngredients(),
-		steps: getSteps()
+		components: getIngredientsFromPage(),
+		steps: getStepsFromPage()
 	};
 	const newRecipeToJSON = JSON.stringify(newRecipe, null, "\t");
 	return newRecipeToJSON;

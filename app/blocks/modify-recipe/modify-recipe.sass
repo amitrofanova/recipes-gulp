@@ -1,129 +1,35 @@
-.modify-recipe__section
-	padding: calc(12px + .5rem) calc(8px + 1rem)
-
 .modify-recipe__section-title
 	margin-bottom: .5rem
 	font-size: calc(8px + .5rem)
 
-.modify-recipe__text-input, .modify-recipe__select-input
-	height: calc(16px + 1.5rem)
-	border: 1px solid $secondary-bg-color
-	box-shadow: inset 0 1px 1px $secondary-bg-color
-	font-size: calc(8px + .5rem)
-	outline: none
-
-.modify-recipe__title-input, .modify-recipe__description-input
-	width: 100%
-	padding-left: .5rem
-
-.modify-recipe__input-label
-	padding-right: 2rem
-	font-size: calc(8px + .5rem)
-
-.modify-recipe__dish-group
-	padding-left: .5rem
-
-.modify-recipe__recipe-to-modify
-	padding-left: .5rem
-
-.modify-recipe__refresh-btn
-	margin-left: 1rem
-	display: inline-block
-	position: relative
-	height: calc(16px + 1rem)
-	width: calc(16px + 1rem)
-	background: url('../images/refresh.png') no-repeat 0 0
-	background-size: contain
-	vertical-align: middle
-	cursor: pointer
-	&:hover
-		.modify-recipe__hint
-			visibility: visible
-
-.modify-recipe__hint
-	visibility: hidden
-	position: absolute
-	width: max-content
-	padding: .5rem
-	top: 80%
-	left: 80%
-	border-radius: 3px
-	background-color: #eee
-
-.modify-recipe__modify-btn
-	margin-left: 1rem
-	display: inline-block
-
 .modify-recipe__image-preview-wrap
+	@extend .add-recipe__image-preview-wrap
 	margin-bottom: 1rem
 	display: flex
-	position: relative
-	justify-content: space-around
-	width: 100%
 	@media (max-width: 575px)
 		height: calc(60px + 10rem)
 	@media (min-width: 576px)
 		height: calc(100px + 10rem)
-	background-color: #eee
-	padding: 1rem
 
 .modify-recipe__image-preview, .modify-recipe__image-preview-min
 	height: 100%
 	width: auto
 
+.modify-recipe__ingredients, .modify-recipe__steps
+	margin-bottom: 1rem
+
 .modify-recipe__input-wrapper
-	display: flex
-	flex-wrap: nowrap
-	align-items: stretch
+	@extend .add-recipe__input-wrapper
 
 .modify-recipe__new-ingredient-btn, .modify-recipe__new-step-btn
-	width: calc(16px + 1.5rem)
-	height: calc(16px + 1.5rem)
-	position: relative
-	// border: 1px solid $secondary-text-color
-	// border-left: none
-	background-color: $secondary-bg-color
-	cursor: pointer
-	&::before
-		width: calc(10px + .7rem)
-		height: calc(10px + .7rem)
-		position: absolute
-		top: 50%
-		left: 50%
-		transform: translate(-50%, -50%)
-		background-image: url('../images/add-recipe__new-item-btn.svg')
-		background-size: contain
-		content: ''
-	&:hover
-		background-color: #eee
-
+	@extend .add-recipe__new-ingredient-btn
 
 .modify-recipe__new-item
-	display: inline-block
-	margin: 1rem calc(16px + 3rem) 1rem 0
-	position: relative
-	padding: .5rem
-	background-color: $tertiary-bg-color
-	font-size: calc(8px + .5rem)
-	color: #fff
+	@extend .add-recipe__new-item
 
 .modify-recipe__delete-item
-	position: absolute
-	top: 0
-	left: 100%
-	background-color: $secondary-bg-color
-	width: calc(16px + 1rem)
-	height: 100%
-	cursor: pointer
-	&::after
-		width: calc(6px + .5rem)
-		height: calc(6px + .5rem)
-		position: absolute
-		top: 50%
-		left: 50%
-		transform: translate(-50%, -50%)
-		content: ''
-		background-image: url('../images/nav__close-button.svg')
-		background-size: cover
-	&:hover
-		background-color: #eee
+	@extend .add-recipe__delete-item
+
+.modify-recipe__modify-btn
+	margin-left: 1rem
+	display: inline-block

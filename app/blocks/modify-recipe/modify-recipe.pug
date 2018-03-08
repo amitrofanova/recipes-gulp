@@ -1,46 +1,40 @@
 mixin modify-recipe
 	form(action="#" method="post" class="modify-recipe")&attributes(attributes)
 
-		section.modify-recipe__section
-			label(for="modify-recipe__dish-group").modify-recipe__input-label Укажите группу
-			select(name="groups").modify-recipe__dish-group.modify-recipe__select-input
+		section.form__section
+			select(name="groups" required).modify-recipe__dish-group.form__select-input
+				option(hidden value="") Выбрать группу
 			
-		section.modify-recipe__section
-			label(for="modify-recipe__recipe-to-modify").modify-recipe__input-label Укажите название рецепта
-			select(name="recipes").modify-recipe__recipe-to-modify.modify-recipe__select-input
-			.modify-recipe__refresh-btn
-				.modify-recipe__hint Обновить список
-			.modify-recipe__modify-btn.button Начать
+		section.form__section
+			select(name="recipes").modify-recipe__recipe-to-modify.form__select-input
+			input(type="button" value="Выбрать" class="modify-recipe__modify-btn form__btn")
 		
-		section.modify-recipe__section
-			.modify-recipe__section-title Название блюда
-			input(type="text" name="title" required).modify-recipe__title-input.modify-recipe__text-input
+		section.form__section
+			input(type="text" name="title" placeholder="Название блюда" required).modify-recipe__title-input.form__text-input
 			
-		section.modify-recipe__section
-			.modify-recipe__section-title Описание
-			input(type="text" name="description").modify-recipe__description-input.modify-recipe__text-input
+		section.form__section
+			input(type="text" name="description" placeholder="Описание").modify-recipe__description-input.form__text-input
 			
-		section.modify-recipe__section
+		section.form__section
 			.modify-recipe__section-title Фотографии
 			.modify-recipe__image-preview-wrap
 				img(class="modify-recipe__image-preview")
 				img(class="modify-recipe__image-preview-min")
-			.modify-recipe__open-editor-btn.button Изменить фото
-			//- include ../photo-editor/photo-editor
+			input(type="button" value="Изменить фото" class="modify-recipe__open-editor-btn form__btn")
 			
-		section.modify-recipe__section
+		section.form__section
 			.modify-recipe__section-title Ингредиенты
 			.modify-recipe__ingredients
 			.modify-recipe__input-wrapper
-				input(type="text" name="ingredient").modify-recipe__ingredient-input.modify-recipe__text-input
+				input(type="text" name="ingredient" placeholder="Добавить ингредиент").modify-recipe__ingredient-input.form__text-input
 				.modify-recipe__new-ingredient-btn
 	  
-		section.modify-recipe__section
+		section.form__section
 			.modify-recipe__section-title Этапы приготовления
 			.modify-recipe__steps
 			.modify-recipe__input-wrapper
-				input(type="text" name="step").modify-recipe__step-input.modify-recipe__text-input
+				input(type="text" name="step" placeholder="Добавить этап приготовления").modify-recipe__step-input.form__text-input
 				.modify-recipe__new-step-btn
 								
-		section.modify-recipe__section
-			input(type="button" value="Сохранить изменения" class="modify-recipe__submit-btn button")
+		section.form__section
+			input(type="button" value="Сохранить изменения" class="modify-recipe__submit-btn form__btn")
