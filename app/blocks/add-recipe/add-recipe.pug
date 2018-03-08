@@ -2,9 +2,9 @@ mixin add-recipe
 	form(action="#" method="post").add-recipe&attributes(attributes)
 
 		//- TODO: add fieldsets
-		section.add-recipe__section
-			select(name="select").add-recipe__dish-group.add-recipe__select-input
-				option(hidden value="title") Выбрать группу
+		section.form__section
+			select(name="select" required).add-recipe__dish-group.form__select-input
+				option(hidden value="") Выбрать группу
 				option(value="deserts") Десерты
 				option(value="bread") Хлеб
 				option(value="meat") Блюда из мяса
@@ -14,30 +14,30 @@ mixin add-recipe
 				option(value="canape") Фуршетный стол
 				option(value="drinks") Напитки
 			
-		section.add-recipe__section
-			input(type="text" name="title" placeholder="Название блюда" required).add-recipe__title-input.add-recipe__text-input
+		section.form__section
+			input(type="text" name="title" placeholder="Название блюда" required).add-recipe__title-input.form__text-input
 			
-		section.add-recipe__section
-			input(type="text" name="description" placeholder="Описание").add-recipe__description-input.add-recipe__text-input
+		section.form__section
+			input(type="text" name="description" placeholder="Описание").add-recipe__description-input.form__text-input
 	  
-		section.add-recipe__section
-			.add-recipe__open-editor-btn.button Добавить изображение
+		section.form__section
+			input(type="button" value="Добавить изображение" class="add-recipe__open-editor-btn form__btn")
 			.add-recipe__image-preview-wrap
 				img(class="add-recipe__image-preview")
 				img(class="add-recipe__image-preview-min")
 			
-		section.add-recipe__section
+		section.form__section
 			.add-recipe__input-wrapper
-				input(type="text" name="ingredient" placeholder="Добавить ингредиент").add-recipe__ingredient-input.add-recipe__text-input
+				input(type="text" name="ingredient" placeholder="Добавить ингредиент").add-recipe__ingredient-input.form__text-input
 				.add-recipe__new-ingredient-btn
 			.add-recipe__ingredients
 	  
-		section.add-recipe__section
+		section.form__section
 			.add-recipe__input-wrapper
-				input(type="text" name="step" placeholder="Добавить этап приготовления").add-recipe__step-input.add-recipe__text-input
+				input(type="text" name="step" placeholder="Добавить этап приготовления").add-recipe__step-input.form__text-input
 				.add-recipe__new-step-btn
 			.add-recipe__steps
 		
-		section.add-recipe__section
-			input(type="submit" value="Сохранить" class="add-recipe__save-btn button")
-			input(type="reset" value="Очистить форму" class="add-recipe__reset-btn button")
+		section.form__section.add-recipe__controls
+			input(type="submit" value="Сохранить" class="add-recipe__save-btn form__btn button")
+			input(type="reset" value="Очистить форму" class="add-recipe__reset-btn form__btn button")

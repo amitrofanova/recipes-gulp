@@ -14,9 +14,7 @@ const formCls = CLASS_PREFIX, // eslint-disable-line one-var
 	descriptionInputCls = CLASS_PREFIX + "__description-input",
 	imagePreviewCls = CLASS_PREFIX + "__image-preview",
 	imagePreviewMin = CLASS_PREFIX + "__image-preview-min",
-	imageResultCls = CLASS_PREFIX + "__image-result",
 	imagePreviewWrap = CLASS_PREFIX + "__image-preview-wrap",
-	imageResultWrap = CLASS_PREFIX + "__image-result-wrap",
 	ingredientsCls = CLASS_PREFIX + "__ingredients",
 	ingredientInputCls = CLASS_PREFIX + "__ingredient-input",
 	newIngredientBtnCls = CLASS_PREFIX + "__new-ingredient-btn",
@@ -32,7 +30,7 @@ const formCls = CLASS_PREFIX, // eslint-disable-line one-var
 const TEXT_NODE_TYPE = 3;
 
 
-function clearInput(input) {
+function resetInput(input) {
 	$(input).val("");
 	$(input).css("color", "#000");
 }
@@ -51,9 +49,9 @@ function addIngredient() {
 	}
 
 	else {
-		setTimeout(clearInput, 2000, ingredientInputCls);
-		$(ingredientInputCls).val(EMPTY_INGREDIENT_ALERT);
 		$(ingredientInputCls).css("color", "#eee");
+		$(ingredientInputCls).val(EMPTY_INGREDIENT_ALERT);
+		setTimeout(resetInput, 1000, ingredientInputCls);
 	}
 }
 
@@ -196,12 +194,12 @@ function saveRecipe(evt){
 
 export function resetForm() {
 	$(formCls)[0].reset();
+	$(dishGroupInputCls).css("color", "#757575");
 	$(newItemCls).remove();
 	$(deleteItemCls).remove();
 	$(imagePreviewCls).attr("src", "");
-	$(imageResultCls).attr("src", "");
-	$(imagePreviewWrap).show();
-	$(imageResultWrap).hide();
+	$(imagePreviewMin).attr("src", "");
+	$(imagePreviewWrap).hide();
 	$(".cropper-container").remove();
 }
 
@@ -220,21 +218,13 @@ export function getCroppedImg(wrapper, preview, previewMin) {
 }
 
 
-// function resetInitialInputValue() {
-// 	$(this).css("color", "#000");
-// 	$(this).css("font-weight", "400");
-// }
-
-
 $(document).ready(function () {
 
 	$(document).on("change", dishGroupInputCls, function () {
-		const titleOption = dishGroupInputCls + " option[value=\"title\"]";
-		$(titleOption).remove();
+		// const titleOption = dishGroupInputCls + " option[value=\"title\"]";
+		// $(titleOption).remove();
 		$(dishGroupInputCls).css("color", "#000");
 	});
-
-	// $(".add-recipe__title-input, .add-recipe__description-input, .add-recipe__ingredient-input, .add-recipe__step-input").on("focus", resetInitialInputValue);
 
 	$(document).on("click", ".add-recipe__open-editor-btn", createEditor);
 	$(document).on("click", ".photo-editor__submit-btn", function () {
