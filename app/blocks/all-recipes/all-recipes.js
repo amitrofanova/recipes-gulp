@@ -19,10 +19,16 @@ function appendBreadcrumb(dishGroup) {
 
 
 function appendRecipePreview(recipe) {
+	let imgSrc = "";
+	if (!recipe.image_min_hash) {
+		imgSrc = "assets/images/empty-image.jpg";
+	}
+	else imgSrc = pathToJson + "image/" + recipe.image_min_hash;
+
 	$(".dish-group_opened").append(
 		"<div class=\"recipe-preview\">" +
 			"<div class=\"recipe-preview__image\">" +
-				"<img src=\"" + pathToJson + "image/" + recipe.image_min_hash + "\">" +
+				"<img src=\"" + imgSrc + "\">" +
 			"</div>" +
 			"<div class=\"recipe-preview__content\">" +
 				"<div class=\"recipe-preview__title\">"	+	recipe.title + "</div>" +
@@ -86,14 +92,16 @@ function openDishGroup() {
 
 // TODO: move to recipe block
 function appendRecipe(recipe) {
-	const imgSrc = pathToJson + "image/" + recipe.image_hash;
+	let img = "";
+	if (recipe.image_hash) {
+		img = "<obj class=\"recipe__image\"	type=\"image/png\">" +
+			"<img src=\"" + pathToJson + "image/" + recipe.image_hash + "\"/></obj>";
+	}
 	$("<div class=\"recipe\"></div>")
 		.insertAfter($(".recipe-preview")[0])
 		.append(
 			"<div class=\"recipe__title\">"	+ recipe.title + "</div>" +
-			"<obj class=\"recipe__image\"	type=\"image/png\">" +
-				"<img src=\"" + imgSrc + "\"/>" +
-			"</obj>" +
+			img +
 			"<div class=\"recipe__ingredients-title\">" + INGREDIENTS_TITLE + "</div>"	+
 			"<ul class=\"recipe__ingredients\"></ul>" +
 			"<div class=\"recipe__steps\">" +
