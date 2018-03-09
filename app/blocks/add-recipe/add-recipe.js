@@ -7,6 +7,7 @@ import {createLoader, destroyLoader}from "../loader/loader.js";
 
 const jsonPath = "https://amitrofanova.pythonanywhere.com/api/recipes/";
 
+const NAMESPACE = "add-recipe";
 const CLASS_PREFIX = ".add-recipe";
 const formCls = CLASS_PREFIX, // eslint-disable-line one-var
 	dishGroupInputCls = CLASS_PREFIX + "__dish-group",
@@ -36,43 +37,41 @@ export function resetInput(input) {
 }
 
 
-export function appendItem(ingredient, newItemCls, deleteItemCls, wrapperCls) {
+export function appendItem(item, wrapper, nameSpace) {
+	const newItemClass = nameSpace + "__new-item";
+	const deleteItemClass = nameSpace + "__delete-item";
 	const newEl =
-		"<div class=\"" + newItemCls.substr(1) + "\">" + ingredient +
-			"<div class=\"" + deleteItemCls.substr(1) +"\"></div>" +
+		"<div class=\"" + newItemClass + "\">" + item +
+			"<div class=\"" + deleteItemClass + "\"></div>" +
 		"</div>";
-	console.log(wrapperCls);
-	$(wrapperCls).append(newEl);
+	$(wrapper).append(newEl);
 }
 
 
-function addIngredient() {
-	const ingredient = $(ingredientInputCls).val();
+function addItem(inputName, wrapperCls) {
+	const newItem = $(inputName).val();
 
-	if ((ingredient !== "") && (ingredient !== EMPTY_INGREDIENT_ALERT)) {
-		appendItem(ingredient, newItemCls, deleteItemCls, ingredientsCls);
-		$(ingredientInputCls).val("");
+	if ((newItem !== "") && (newItem !== EMPTY_INGREDIENT_ALERT)) {
+		appendItem(newItem, wrapperCls, NAMESPACE);
+		$(inputName).val("");
 	}
 
 	else {
-		$(ingredientInputCls).css("color", "#eee");
-		$(ingredientInputCls).val(EMPTY_INGREDIENT_ALERT);
-		setTimeout(resetInput, 1000, ingredientInputCls);
+		$(inputName).css("color", "#eee");
+		$(inputName).val(EMPTY_INGREDIENT_ALERT);
+		setTimeout(resetInput, 1000, inputName);
 	}
 }
 
 
-function addStep() {
-	const step = $(stepInputCls).val();
-	const newElCls = newItemCls.substr(1);
-	const deleteElCls = deleteItemCls.substr(1);
-
-	if (step !== "") {
-		const newEl = "<div class=" + newElCls + ">" + step +	"<div class=\"" + deleteElCls + "\"></div></div>";
-		$(stepsCls).append(newEl);
-		$(stepInputCls).val("");
-	}
-}
+// function addStep() {
+// 	const step = $(stepInputCls).val();
+//
+// 	if (step !== "") {
+// 		appendItem(step, stepsCls, NAMESPACE);
+// 		$(stepInputCls).val("");
+// 	}
+// }
 
 
 function getIngredientsFromPage() {
@@ -242,8 +241,12 @@ $(document).ready(function () {
 		}
 	});
 
-	$(document).on("click", newIngredientBtnCls, addIngredient);
-	$(document).on("click", newStepBtnCls, addStep);
+	$(document).on("click", newIngredientBtnCls, function() {
+		addItem(ingredientInputCls, ingredientsCls);
+	});
+	$(document).on("click", newStepBtnCls, function() {
+		addItem(stepInputCls, stepsCls);
+	});
 	$(document).on("click", deleteItemCls, deleteItem);
 	$(document).on("submit", formCls, saveRecipe);
 	$(document).on("click", resetBtnCls, resetForm);

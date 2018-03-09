@@ -5,10 +5,11 @@ import {authHeader}from "../auth-form/auth-form.js";
 import {createEditor}from "../photo-editor/photo-editor.js";
 import {createLoader, destroyLoader}from "../loader/loader.js";
 import {createRecipesSelect}from "../delete-recipe/delete-recipe.js";
-import {resetInput, appendItem, getCroppedImg}from "../add-recipe/add-recipe.js";
+import {appendItem, getCroppedImg}from "../add-recipe/add-recipe.js";
 
 const pathToJson = "https://amitrofanova.pythonanywhere.com/api/";
 
+const NAMESPACE = "modify-recipe";
 const CLASS_PREFIX = ".modify-recipe";
 const groupsSelect = CLASS_PREFIX + "__dish-group", // eslint-disable-line one-var
 	recipesSelect = CLASS_PREFIX + "__recipe-to-modify",
@@ -36,12 +37,12 @@ function getCurrentData(recipeToModify) {
 
 		for (let i = 0; i < recipe.components.length; i++) {
 			const ingredient = recipe.components[i];
-			appendItem(ingredient, ".modify-recipe__new-item", ".modify-recipe__delete-item", ".modify-recipe__ingredients");
+			appendItem(ingredient, ".modify-recipe__ingredients", NAMESPACE);
 		}
 
 		for (let i = 0; i < recipe.steps.length; i++) {
 			const step = recipe.steps[i];
-			appendItem(step, ".modify-recipe__new-item", ".modify-recipe__delete-item", ".modify-recipe__steps");
+			appendItem(step, ".modify-recipe__steps", NAMESPACE);
 		}
 
 	};
@@ -104,7 +105,7 @@ function addIngredient() {
 	const ingredient = $(".modify-recipe__ingredient-input").val();
 
 	if ((ingredient !== "") && (ingredient !== EMPTY_INGREDIENT_ALERT)) {
-		appendItem(ingredient, ".modify-recipe__new-item", ".modify-recipe__delete-item", ".modify-recipe__ingredients");
+		appendItem(ingredient, ".modify-recipe__ingredients", NAMESPACE);
 		$(".modify-recipe__ingredient-input").val("");
 	}
 
@@ -119,7 +120,7 @@ function addStep() {
 	const step = $(".modify-recipe__step-input").val();
 
 	if (step !== "") {
-		appendItem(step, ".modify-recipe__new-item", ".modify-recipe__delete-item", ".modify-recipe__steps");
+		appendItem(step, ".modify-recipe__steps", NAMESPACE);
 		$(".modify-recipe__step-input").val("");
 	}
 }
