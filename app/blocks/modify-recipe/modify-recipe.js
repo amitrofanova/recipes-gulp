@@ -1,11 +1,11 @@
 import $ from "jquery";
-import {CONFIRM_MODIFY_ALERT, MODIFIED_RECIPE_ALERT, ERROR_ALERT, EMPTY_INGREDIENT_ALERT}from "../../resources/strings/ru.js";
+import {CONFIRM_MODIFY_ALERT, MODIFIED_RECIPE_ALERT, ERROR_ALERT}from "../../resources/strings/ru.js";
 import {showAlert, hideAlert}from "../modal-alert/modal-alert.js";
 import {authHeader}from "../auth-form/auth-form.js";
 import {createEditor}from "../photo-editor/photo-editor.js";
 import {createLoader, destroyLoader}from "../loader/loader.js";
 import {createRecipesSelect}from "../delete-recipe/delete-recipe.js";
-import {appendItem, getCroppedImg}from "../add-recipe/add-recipe.js";
+import {appendItem, addItem, deleteItem, getIngredientsFromPage, getStepsFromPage, getCroppedImg}from "../add-recipe/add-recipe.js";
 
 const pathToJson = "https://amitrofanova.pythonanywhere.com/api/";
 
@@ -13,13 +13,18 @@ const NAMESPACE = "modify-recipe";
 const CLASS_PREFIX = ".modify-recipe";
 const groupsSelect = CLASS_PREFIX + "__dish-group", // eslint-disable-line one-var
 	recipesSelect = CLASS_PREFIX + "__recipe-to-modify",
+	// ingredientsCls = CLASS_PREFIX + "__ingredients",
+	// ingredientInputCls = CLASS_PREFIX + "__ingredient-input",
+	// stepsCls = CLASS_PREFIX + "__steps",
+	// stepInputCls = CLASS_PREFIX + "__step-input",
+	newIngredientBtnCls = CLASS_PREFIX + "__new-ingredient-btn",
+	newStepBtnCls = CLASS_PREFIX + "__new-step-btn",
 	modifyBtn = CLASS_PREFIX + "__modify-btn",
 	submitBtn = CLASS_PREFIX + "__submit-btn",
-	confirmBtn = ".modal-alert__confirm-btn",
-	newItem = CLASS_PREFIX + "__new-item";
+	confirmBtn = ".modal-alert__confirm-btn";
 
 // https://www.w3schools.com/jsref/prop_node_nodetype.asp
-const TEXT_NODE_TYPE = 3;
+// const TEXT_NODE_TYPE = 3;
 
 
 function getCurrentData(recipeToModify) {
@@ -37,12 +42,12 @@ function getCurrentData(recipeToModify) {
 
 		for (let i = 0; i < recipe.components.length; i++) {
 			const ingredient = recipe.components[i];
-			appendItem(ingredient, ".modify-recipe__ingredients", NAMESPACE);
+			appendItem(ingredient, ".modify-recipe__ingredients", "modify-recipe");
 		}
 
 		for (let i = 0; i < recipe.steps.length; i++) {
 			const step = recipe.steps[i];
-			appendItem(step, ".modify-recipe__steps", NAMESPACE);
+			appendItem(step, ".modify-recipe__steps", "modify-recipe");
 		}
 
 	};
@@ -65,102 +70,8 @@ function getCurrentData(recipeToModify) {
 }
 
 
-function getIngredientsFromPage() {
-	const ingredients = [];
-	let newIngredient;
-
-	$(newItem).each(function () {
-		if ($(this).parents(".modify-recipe__ingredients").length) {
-
-			newIngredient = $(this).contents().filter(function () {
-				return this.nodeType === TEXT_NODE_TYPE;
-			}).text();
-			ingredients.push(newIngredient);
-		}
-	});
-	return ingredients;
-}
-
-
-function getStepsFromPage() {
-	const steps = [];
-	let newStep;
-
-	$(newItem).each(function () {
-		if ($(this).parents(".modify-recipe__steps").length) {
-
-			newStep = $(this).contents().filter(function () {
-				return this.nodeType === TEXT_NODE_TYPE;
-			}).text();
-
-			steps.push(newStep);
-		}
-	});
-
-	return steps;
-}
-
-
-function addIngredient() {
-	const ingredient = $(".modify-recipe__ingredient-input").val();
-
-	if ((ingredient !== "") && (ingredient !== EMPTY_INGREDIENT_ALERT)) {
-		appendItem(ingredient, ".modify-recipe__ingredients", NAMESPACE);
-		$(".modify-recipe__ingredient-input").val("");
-	}
-
-	else {
-		$(".modify-recipe__ingredient-input").val(EMPTY_INGREDIENT_ALERT);
-		$(".modify-recipe__ingredient-input").css("color", "#fff");
-	}
-}
-
-
-function addStep() {
-	const step = $(".modify-recipe__step-input").val();
-
-	if (step !== "") {
-		appendItem(step, ".modify-recipe__steps", NAMESPACE);
-		$(".modify-recipe__step-input").val("");
-	}
-}
-
-
-function deleteItem() {
-	const ingredients = getIngredientsFromPage();
-	const steps = getStepsFromPage();
-	let itemToDelete;
-
-	// Define if current section related to ingredients or steps
-	if ($(this).parents(".modify-recipe__ingredients").length) {
-
-		itemToDelete = ingredients
-			.indexOf($(this)
-				.parent()
-				.contents().not($(newItem).children())
-				.text()
-			);
-
-		ingredients.splice(itemToDelete, 1);
-	}
-
-	else if ($(this).parents(".modify-recipe__steps").length) {
-
-		itemToDelete = steps
-			.indexOf($(this)
-				.parent()
-				.contents().not($(newItem).children())
-				.text()
-			);
-
-		steps.splice(itemToDelete, 1);
-	}
-
-	$(this).parent().remove();
-}
-
-
 function getNewData() {
+	const nameSpace = NAMESPACE;
 	const title = $(".modify-recipe__title-input").val();
 	const description = $(".modify-recipe__description-input").val();
 	const image_min = $(".modify-recipe__image-preview-min").attr("src");
@@ -170,8 +81,8 @@ function getNewData() {
 		description,
 		image_min,
 		image,
-		components: getIngredientsFromPage(),
-		steps: getStepsFromPage()
+		components: getIngredientsFromPage(nameSpace),
+		steps: getStepsFromPage(nameSpace)
 	};
 	const newRecipeToJSON = JSON.stringify(newRecipe, null, "\t");
 	return newRecipeToJSON;
@@ -263,8 +174,14 @@ $(document).ready(function (){
 		}
 	});
 
-	$(document).on("click", ".modify-recipe__new-ingredient-btn", addIngredient);
-	$(document).on("click", ".modify-recipe__new-step-btn", addStep);
+	$(document).on("click", newIngredientBtnCls, function () {
+		addItem(".modify-recipe__ingredient-input", ".modify-recipe__ingredients", "modify-recipe");
+	});
+
+	$(document).on("click", newStepBtnCls, function () {
+		addItem(".modify-recipe__step-input", ".modify-recipe__steps", "modify-recipe");
+	});
+
 	$(document).on("click", ".modify-recipe__delete-item", deleteItem);
 
 	$(document).on("click", submitBtn, function () {

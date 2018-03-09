@@ -48,11 +48,11 @@ export function appendItem(item, wrapper, nameSpace) {
 }
 
 
-function addItem(inputName, wrapperCls) {
+export function addItem(inputName, wrapper, nameSpace) {
 	const newItem = $(inputName).val();
 
 	if ((newItem !== "") && (newItem !== EMPTY_INGREDIENT_ALERT)) {
-		appendItem(newItem, wrapperCls, NAMESPACE);
+		appendItem(newItem, wrapper, nameSpace);
 		$(inputName).val("");
 	}
 
@@ -64,22 +64,14 @@ function addItem(inputName, wrapperCls) {
 }
 
 
-// function addStep() {
-// 	const step = $(stepInputCls).val();
-//
-// 	if (step !== "") {
-// 		appendItem(step, stepsCls, NAMESPACE);
-// 		$(stepInputCls).val("");
-// 	}
-// }
-
-
-function getIngredientsFromPage() {
+export function getIngredientsFromPage(nameSpace) {
 	const ingredients = [];
+	const ingredientsWrapper = "." + nameSpace + "__ingredients";
+	const newItem = "." + nameSpace + "__new-item";
 	let newIngredient;
 
-	$(newItemCls).each(function () {
-		if ($(this).parents(ingredientsCls).length) {
+	$(newItem).each(function () {
+		if ($(this).parents(ingredientsWrapper).length) {
 
 			newIngredient = $(this).contents().filter(function () {
 				return this.nodeType === TEXT_NODE_TYPE;
@@ -93,12 +85,14 @@ function getIngredientsFromPage() {
 }
 
 
-function getStepsFromPage() {
+export function getStepsFromPage(nameSpace) {
 	const steps = [];
+	const stepsWrapper = "." + nameSpace + "__steps";
+	const newItem = "." + nameSpace + "__new-item";
 	let newStep;
 
-	$(newItemCls).each(function () {
-		if ($(this).parents(stepsCls).length) {
+	$(newItem).each(function () {
+		if ($(this).parents(stepsWrapper).length) {
 
 			newStep = $(this).contents().filter(function () {
 				return this.nodeType === TEXT_NODE_TYPE;
@@ -112,42 +106,41 @@ function getStepsFromPage() {
 }
 
 
-function deleteItem() {
-	const ingredients = getIngredientsFromPage();
-	const steps = getStepsFromPage();
-	let itemToDelete;
-
-	// Define if current section related to ingredients or steps
-	if ($(this).parents(ingredientsCls).length) {
-
-		itemToDelete = ingredients
-			.indexOf($(this)
-				.parent()
-				.contents().not($(newItemCls).children())
-				.text()
-			);
-
-		ingredients.splice(itemToDelete, 1);
+export function deleteItem() {
+	let nameSpace = $(this).attr("class");
+	if (nameSpace.indexOf("modify-recipe") > -1) {
+		nameSpace = "modify-recipe";
+	}
+	else if (nameSpace.indexOf("add-recipe") > -1) {
+		nameSpace = "add-recipe";
 	}
 
-	else if ($(this).parents(stepsCls).length) {
+	const wrapper = $(this).parents().eq(1).attr("class");
+	const newItem = "." + nameSpace + "__new-item";
+	let items;
 
-		itemToDelete = steps
-			.indexOf($(this)
-				.parent()
-				.contents().not($(newItemCls).children())
-				.text()
-			);
-
-		steps.splice(itemToDelete, 1);
+	if (wrapper.indexOf("ingredients")) {
+		items = getIngredientsFromPage(nameSpace);
+	}
+	else if (wrapper.indexOf("steps")) {
+		items = getStepsFromPage(nameSpace);
 	}
 
-	// Delete element from DOM
+	const itemToDelete = items
+		.indexOf($(this)
+			.parent()
+			.contents().not($(newItem).children())
+			.text()
+		);
+
+	items.splice(itemToDelete, 1);
+
 	$(this).parent().remove();
 }
 
 
 function createRecipe() {
+	const nameSpace = NAMESPACE;
 	const title = $(titleInputCls).val();
 	const description = $(descriptionInputCls).val();
 	const image_min = $(imagePreviewMin).attr("src");
@@ -157,8 +150,8 @@ function createRecipe() {
 		description,
 		image_min,
 		image,
-		components: getIngredientsFromPage(),
-		steps: getStepsFromPage()
+		components: getIngredientsFromPage(nameSpace),
+		steps: getStepsFromPage(nameSpace)
 	};
 	const newRecipeToJSON = JSON.stringify(newRecipe, null, "\t");
 	return newRecipeToJSON;
@@ -241,12 +234,14 @@ $(document).ready(function () {
 		}
 	});
 
-	$(document).on("click", newIngredientBtnCls, function() {
-		addItem(ingredientInputCls, ingredientsCls);
+	$(document).on("click", newIngredientBtnCls, function () {
+		addItem(ingredientInputCls, ingredientsCls, NAMESPACE);
 	});
-	$(document).on("click", newStepBtnCls, function() {
-		addItem(stepInputCls, stepsCls);
+
+	$(document).on("click", newStepBtnCls, function () {
+		addItem(stepInputCls, stepsCls, NAMESPACE);
 	});
+
 	$(document).on("click", deleteItemCls, deleteItem);
 	$(document).on("submit", formCls, saveRecipe);
 	$(document).on("click", resetBtnCls, resetForm);
