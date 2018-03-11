@@ -96,8 +96,8 @@ $(document).ready(function (){
 
 	$(document).on("change", groupsSelect, function () {
 		const currentGroup = $(groupsSelect).val();
-		$(recipesSelect).removeClass("form__select-input_disabled");
 		$(recipesSelect).prop("disabled", false);
+		$(deleteBtn).prop("disabled", false);
 		createRecipesSelect(currentGroup, recipesSelect);
 	});
 

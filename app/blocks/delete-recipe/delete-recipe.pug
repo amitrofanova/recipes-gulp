@@ -1,14 +1,12 @@
 mixin delete-recipe
 	form(action="#" method="post" class="delete-recipe")&attributes(attributes)
 
-		section.delete-recipe__section
-			label(for="delete-recipe__dish-group").delete-recipe__input-label Укажите группу
-			select(name="groups").delete-recipe__dish-group.delete-recipe__select-input
+		section.form__section
 			
-		section.delete-recipe__section
-			label(for="delete-recipe__recipe-to-delete").delete-recipe__input-label Укажите название рецепта
-			select(name="recipes").delete-recipe__recipe-to-delete.delete-recipe__select-input
+			select(name="groups" required).delete-recipe__dish-group.form__select-input
+				option(hidden value="") Выбрать группу
+
+			select(name="recipes" disabled).delete-recipe__recipe-to-delete.form__select-input
 				option(hidden value="") Выбрать рецепт
-		
-		section.delete-recipe__section
-			input(type="button" value="Удалить" class="delete-recipe__delete-recipe button")
+	
+			input(type="button" value="Удалить" class="delete-recipe__delete-recipe form__btn" disabled)
