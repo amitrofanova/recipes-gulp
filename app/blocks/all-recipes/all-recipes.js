@@ -23,7 +23,7 @@ function appendRecipePreview(recipe) {
 	if (!recipe.image_min_hash) {
 		imgSrc = "assets/images/empty-image.jpg";
 	}
-	else imgSrc = pathToJson + "image/" + recipe.image_min_hash;
+	else {imgSrc = pathToJson + "image/" + recipe.image_min_hash;}
 
 	$(".dish-group_opened").append(
 		"<div class=\"recipe-preview\">" +

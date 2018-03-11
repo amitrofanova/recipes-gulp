@@ -23,9 +23,6 @@ const groupsSelect = CLASS_PREFIX + "__dish-group", // eslint-disable-line one-v
 	submitBtn = CLASS_PREFIX + "__submit-btn",
 	confirmBtn = ".modal-alert__confirm-btn";
 
-// https://www.w3schools.com/jsref/prop_node_nodetype.asp
-// const TEXT_NODE_TYPE = 3;
-
 
 function getCurrentData(recipeToModify) {
 	const result = null;
@@ -89,15 +86,6 @@ function getNewData() {
 }
 
 
-function resetForm() {
-	$(".modify-recipe")[0].reset();
-	$(".modify-recipe__new-item").remove();
-	$(".modify-recipe__delete-item").remove();
-	$(".modify-recipe__image-preview").attr("src", "");
-	$(".modify-recipe__image-preview-min").attr("src", "");
-}
-
-
 function saveRecipe() {
 	const group = $(".modify-recipe__dish-group").val();
 	const url = pathToJson + "recipes/" + "?group=" + encodeURIComponent(group);
@@ -112,7 +100,6 @@ function saveRecipe() {
 		data: getNewData(),
 		success(){
 			showAlert(MODIFIED_RECIPE_ALERT);
-			resetForm();
 		},
 		error(xhr) {
 			const err = ERROR_ALERT + xhr.responseText;
@@ -140,7 +127,6 @@ function deleteRecipe(group, recipeToDelete) {
 		dataType: "json",
 		success(data){
 			console.log(data);
-			createRecipesSelect(group, recipesSelect);
 			saveRecipe();
 		},
 		error(xhr) {
@@ -161,7 +147,7 @@ $(document).ready(function (){
 	});
 
 	$(document).on("click", modifyBtn, function () {
-		$(".modify-recipe__modify-area").css("display", "block");
+		$(".modify-recipe__modify-area").show();
 		const recipeToModify = $(recipesSelect).val();
 		getCurrentData(recipeToModify);
 	});

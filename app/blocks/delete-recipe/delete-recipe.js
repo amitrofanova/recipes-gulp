@@ -77,7 +77,6 @@ function deleteRecipe(group, recipeToDelete) {
 		dataType: "json",
 		success(data){
 			showAlert(DELETED_RECIPE_ALERT);
-			createRecipesSelect(group, recipesSelect);
 			console.log(data);
 		},
 		error(xhr) {
