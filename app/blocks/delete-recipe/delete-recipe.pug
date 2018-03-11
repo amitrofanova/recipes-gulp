@@ -8,8 +8,7 @@ mixin delete-recipe
 		section.delete-recipe__section
 			label(for="delete-recipe__recipe-to-delete").delete-recipe__input-label Укажите название рецепта
 			select(name="recipes").delete-recipe__recipe-to-delete.delete-recipe__select-input
-			.delete-recipe__refresh-btn
-				.delete-recipe__hint Обновить список
+				option(hidden value="") Выбрать рецепт
 		
 		section.delete-recipe__section
 			input(type="button" value="Удалить" class="delete-recipe__delete-recipe button")
