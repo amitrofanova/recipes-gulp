@@ -154,13 +154,14 @@ function deleteRecipe(group, recipeToDelete) {
 $(document).ready(function (){
 
 	$(document).on("change", groupsSelect, function () {
-		const titleOption = groupsSelect + " option[value=\"title\"]";
-		$(titleOption).remove();
 		const currentGroup = $(groupsSelect).val();
+		$(recipesSelect).prop("disabled", false);
+		$(modifyBtn).prop("disabled", false);
 		createRecipesSelect(currentGroup, recipesSelect);
 	});
 
 	$(document).on("click", modifyBtn, function () {
+		$(".modify-recipe__modify-area").css("display", "block");
 		const recipeToModify = $(recipesSelect).val();
 		getCurrentData(recipeToModify);
 	});

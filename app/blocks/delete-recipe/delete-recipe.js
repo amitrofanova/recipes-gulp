@@ -57,9 +57,8 @@ export function createGroupsSelect(groupsList1, groupsList2) {
 			optionsString += "<option value=\"" + data[i].group + "\">" + data[i].group + "</option>";
 		}
 
-		const selectString = "<option value=\"title\">title</option>" + optionsString;
-		$(groupsList1).append(selectString);
-		$(groupsList2).append(selectString);
+		$(groupsList1).append(optionsString);
+		$(groupsList2).append(optionsString);
 	};
 
 	getList(callback);
@@ -96,9 +95,9 @@ $(document).ready(function (){
 	}
 
 	$(document).on("change", groupsSelect, function () {
-		const titleOption = groupsSelect + " option[value=\"title\"]";
-		$(titleOption).remove();
 		const currentGroup = $(groupsSelect).val();
+		$(recipesSelect).removeClass("form__select-input_disabled");
+		$(recipesSelect).prop("disabled", false);
 		createRecipesSelect(currentGroup, recipesSelect);
 	});
 
