@@ -4,7 +4,7 @@ import {showAlert, hideAlert}from "../modal-alert/modal-alert.js";
 import {authHeader}from "../auth-form/auth-form.js";
 import {createEditor}from "../photo-editor/photo-editor.js";
 import {createLoader, destroyLoader}from "../loader/loader.js";
-import {createRecipesSelect}from "../delete-recipe/delete-recipe.js";
+import {createRecipesSelect}from "../dashboard/dashboard.js";
 import {appendItem, addItem, deleteItem, getIngredientsFromPage, getStepsFromPage, getCroppedImg}from "../add-recipe/add-recipe.js";
 
 const pathToJson = "https://amitrofanova.pythonanywhere.com/api/";
