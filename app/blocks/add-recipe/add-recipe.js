@@ -1,5 +1,5 @@
 import $ from "jquery";
-import {EMPTY_INGREDIENT_ALERT,	ADDED_RECIPE_ALERT,	ERROR_ALERT}from "../../resources/strings/ru.js";
+import {EMPTY_FIELD_ALERT, ADDED_RECIPE_ALERT,	ERROR_ALERT}from "../../resources/strings/ru.js";
 import {showAlert}from "../modal-alert/modal-alert.js";
 import {authHeader}from "../auth-form/auth-form.js";
 import {createEditor, destroyEditor, resizeImage}from "../photo-editor/photo-editor.js";
@@ -51,14 +51,14 @@ export function appendItem(item, wrapper, nameSpace) {
 export function addItem(inputName, wrapper, nameSpace) {
 	const newItem = $(inputName).val();
 
-	if ((newItem !== "") && (newItem !== EMPTY_INGREDIENT_ALERT)) {
+	if ((newItem !== "") && (newItem !== EMPTY_FIELD_ALERT)) {
 		appendItem(newItem, wrapper, nameSpace);
 		$(inputName).val("");
 	}
 
 	else {
 		$(inputName).css("color", "#eee");
-		$(inputName).val(EMPTY_INGREDIENT_ALERT);
+		$(inputName).val(EMPTY_FIELD_ALERT);
 		setTimeout(resetInput, 1000, inputName);
 	}
 }
