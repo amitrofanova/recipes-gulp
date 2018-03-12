@@ -25,7 +25,7 @@ export function createEditor() {
 						"</div>" +
 					"</div>" +
 					"<div class=\"photo-editor__controls\">" +
-						"<input type=\"button\" value=\"Продолжить\" class=\"photo-editor__to-crop-btn photo-editor__btn_right form__btn\">" +
+						"<input type=\"button\" value=\"Продолжить\" class=\"photo-editor__to-crop-btn photo-editor__btn_right form__btn\" disabled>" +
 					"</div>" +
 				"</section>" +
 
@@ -82,8 +82,8 @@ function cropImage() {
 		aspectRatio: 3 / 2,
 		rotatable: false,
 		zoomable: false,
-		minContainerWidth: 150,
-		minContainerHeight: 100
+		minContainerWidth: 300,
+		minContainerHeight: 200
 	});
 
 	$(document).on("click", ".photo-editor__crop-btn", function () {
@@ -100,8 +100,8 @@ function cropImageMin() {
 		aspectRatio: 1 / 1,
 		rotatable: false,
 		zoomable: false,
-		minContainerWidth: 150,
-		minContainerHeight: 100
+		minContainerWidth: 300,
+		minContainerHeight: 200
 	});
 
 	$(document).on("click", ".photo-editor__crop-min-btn", function () {
@@ -159,7 +159,6 @@ export function resizeImage(imageToResize) { // eslint-disable-line no-unused-va
 	const context = canvas.getContext("2d");
 	context.drawImage(imageToResize, 0, 0, width, height);
 	const res = canvas.toDataURL();
-	// $(imageResizedCls).attr('src', canvas.toDataURL());
 	return res;
 }
 
@@ -180,7 +179,6 @@ $(document).ready(function () {
 	$(document).on("change", ".photo-editor__file-input", function () {
 		if (checkImgStatus() === "imageLoaded") {
 			$(".photo-editor__to-crop-btn").prop("disabled", false);
-			// $(".photo-editor__to-crop-btn").removeClass("form__btn_disabled");
 		}
 	});
 
