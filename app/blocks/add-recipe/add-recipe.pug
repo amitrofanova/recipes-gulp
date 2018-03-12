@@ -23,8 +23,10 @@ mixin add-recipe
 		section.form__section
 			input(type="button" value="Добавить изображение" class="add-recipe__open-editor-btn form__btn")
 			.add-recipe__image-preview-wrap
-				img(class="add-recipe__image-preview")
-				img(class="add-recipe__image-preview-min")
+				.add-recipe__img-wrap
+					img(class="add-recipe__image-preview")
+				.add-recipe__img-wrap
+					img(class="add-recipe__image-preview-min")
 			
 		section.form__section
 			.add-recipe__input-wrapper
