@@ -19,7 +19,7 @@ const groupsSelect = CLASS_PREFIX + "__dish-group", // eslint-disable-line one-v
 	// stepInputCls = CLASS_PREFIX + "__step-input",
 	newIngredientBtnCls = CLASS_PREFIX + "__new-ingredient-btn",
 	newStepBtnCls = CLASS_PREFIX + "__new-step-btn",
-	modifyBtn = CLASS_PREFIX + "__modify-btn",
+	startModifyBtn = CLASS_PREFIX + "__modify-btn",
 	submitBtn = CLASS_PREFIX + "__submit-btn",
 	confirmBtn = ".modal-alert__confirm-btn";
 
@@ -86,7 +86,7 @@ function getNewData() {
 }
 
 
-function saveRecipe() {
+function saveChanges() {
 	const group = $(".modify-recipe__dish-group").val();
 	const url = pathToJson + "recipes/" + "?group=" + encodeURIComponent(group);
 
@@ -115,8 +115,8 @@ function saveRecipe() {
 }
 
 
-function deleteRecipe(group, recipeToDelete) {
-	const url = pathToJson + "recipes/" + encodeURIComponent(recipeToDelete) + "?group=" + encodeURIComponent(group);
+function deleteCurrentRecipe(group, recipeToModify) {
+	const url = pathToJson + "recipes/" + encodeURIComponent(recipeToModify) + "?group=" + encodeURIComponent(group);
 
 	$.ajax({
 		type: "DELETE",
@@ -127,7 +127,7 @@ function deleteRecipe(group, recipeToDelete) {
 		dataType: "json",
 		success(data){
 			console.log(data);
-			saveRecipe();
+			saveChanges();
 		},
 		error(xhr) {
 			const err = ERROR_ALERT + xhr.responseText;
@@ -137,22 +137,33 @@ function deleteRecipe(group, recipeToDelete) {
 }
 
 
+function resetForm() {
+	$(".modify-recipe__new-item").remove();
+	$(".modify-recipe__delete-item").remove();
+	$(".modify-recipe__image-preview").attr("src", "");
+	$(".modify-recipe__image-preview-min").attr("src", "");
+	$(".cropper-container").remove();
+}
+
+
 $(document).ready(function (){
 
 	$(document).on("change", groupsSelect, function () {
 		const currentGroup = $(groupsSelect).val();
 		$(recipesSelect).prop("disabled", false);
-		$(modifyBtn).prop("disabled", false);
+		$(startModifyBtn).prop("disabled", false);
 		createRecipesSelect(currentGroup, recipesSelect);
 	});
 
-	$(document).on("click", modifyBtn, function () {
+	$(document).on("click", startModifyBtn, function () {
 		$(".modify-recipe__modify-area").show();
 		const recipeToModify = $(recipesSelect).val();
+		resetForm();
 		getCurrentData(recipeToModify);
 	});
 
 	$(document).on("click", ".modify-recipe__open-editor-btn", createEditor);
+
 	$(document).on("click", ".photo-editor__submit-btn", function () {
 		const preview = ".modify-recipe__image-preview";
 		const previewMin = ".modify-recipe__image-preview-min";
@@ -173,13 +184,13 @@ $(document).ready(function (){
 
 	$(document).on("click", submitBtn, function () {
 		showAlert(CONFIRM_MODIFY_ALERT, true);
+	});
 
-		$(document).on("click", confirmBtn, function () {
-			const group = $(".modify-recipe__dish-group").val();
-			const recipeToModify = $(".modify-recipe__recipe-to-modify").val();
-			deleteRecipe(group, recipeToModify);
-			hideAlert();
-		});
+	$(document).on("click", confirmBtn, function () {
+		const group = $(".modify-recipe__dish-group").val();
+		const recipeToModify = $(".modify-recipe__recipe-to-modify").val();
+		deleteCurrentRecipe(group, recipeToModify);
+		hideAlert();
 	});
 
 });
