@@ -35,3 +35,6 @@ export const EMPTY_GROUP_ALERT = "У вас пока нет ни одного р
 // A recipe constants
 export const INGREDIENTS_TITLE = "Что понадобится:";
 export const STEPS_TITLE = "Как готовить:";
+
+// Loader constants
+export const LOADER_TEXT = "Пожалуйста подождите, ваш запрос обрабатывается";
