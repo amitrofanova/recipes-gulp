@@ -192,7 +192,6 @@ function saveRecipe(evt){
 
 export function resetForm() {
 	$(formCls)[0].reset();
-	$(dishGroupInputCls).css("color", "#757575");
 	$(newItemCls).remove();
 	$(deleteItemCls).remove();
 	$(imagePreviewCls).attr("src", "");
