@@ -1,5 +1,6 @@
 import $ from "jquery";
 import {authHeader}from "../auth-form/auth-form.js";
+import {createLoader, destroyLoader}from "../loader/loader.js";
 
 
 const pathToJson = "https://amitrofanova.pythonanywhere.com/api/";
@@ -45,6 +46,12 @@ function getList(callback, group) {
 		dataType: "json",
 		success(data){
 			callback(data);
+		},
+		beforeSend() {
+			if (!group) {createLoader();}
+		},
+		complete() {
+			destroyLoader();
 		}
 	});
 }
