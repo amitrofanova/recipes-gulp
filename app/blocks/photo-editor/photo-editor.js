@@ -20,12 +20,12 @@ export function createEditor() {
 						"<div class=\"photo-editor__image-load-wrap\">" +
 							"<img class=\"photo-editor__image-load\">" +
 						"</div>" +
-						"<div class=\"photo-editor__choose-file-btn button\">Выбрать изображение" +
+						"<div class=\"photo-editor__choose-file-btn form__btn\">Выбрать изображение" +
 							"<input type=\"file\" name=\"newfile\" class=\"photo-editor__file-input\">" +
 						"</div>" +
 					"</div>" +
 					"<div class=\"photo-editor__controls\">" +
-						"<div class=\"photo-editor__to-crop-btn photo-editor__btn_right button button_disabled\">Продолжить</div>" +
+						"<input type=\"button\" value=\"Продолжить\" class=\"photo-editor__to-crop-btn photo-editor__btn_right form__btn\">" +
 					"</div>" +
 				"</section>" +
 
@@ -39,11 +39,11 @@ export function createEditor() {
 						"<div class=\"photo-editor__image-crop-wrap\">" +
 							"<img class=\"photo-editor__image-crop\">" +
 						"</div>" +
-						"<div class=\"photo-editor__crop-btn button\">Обрезать</div>" +
+						"<input type=\"button\" value=\"Обрезать\" class=\"photo-editor__crop-btn form__btn\">" +
 					"</div>" +
 					"<div class=\"photo-editor__controls\">" +
-						"<div class=\"photo-editor__to-choose-file-btn photo-editor__btn_left button\">Вернуться</div>" +
-						"<div class=\"photo-editor__to-crop-min-btn photo-editor__btn_right button\">Продолжить</div>" +
+						"<input type=\"button\" value=\"Вернуться\" class=\"photo-editor__to-choose-file-btn form__btn\">" +
+						"<input type=\"button\" value=\"Продолжить\" class=\"photo-editor__to-crop-min-btn photo-editor__btn_right form__btn\">" +
 					"</div>" +
 				"</section>" +
 
@@ -56,11 +56,11 @@ export function createEditor() {
 						"<div class=\"photo-editor__crop-min-wrap\">" +
 							"<img class=\"photo-editor__image-crop-min\">" +
 						"</div>" +
-						"<div class=\"photo-editor__crop-min-btn button\">Обрезать</div>" +
+						"<input type=\"button\" value=\"Обрезать\" class=\"photo-editor__crop-min-btn form__btn\">" +
 					"</div>" +
 					"<div class=\"photo-editor__controls\">" +
-						"<div class=\"photo-editor__to-crop-btn photo-editor__btn_left button\">Вернуться</div>" +
-						"<div class=\"photo-editor__submit-btn photo-editor__btn_right button\">Готово</div>" +
+						"<input type=\"button\" value=\"Вернуться\" class=\"photo-editor__to-crop-btn form__btn\">" +
+						"<input type=\"button\" value=\"Готово\" class=\"photo-editor__submit-btn photo-editor__btn_right form__btn\">" +
 					"</div>" +
 				"</section>" +
 
@@ -82,8 +82,8 @@ function cropImage() {
 		aspectRatio: 3 / 2,
 		rotatable: false,
 		zoomable: false,
-		minContainerWidth: 320,
-		minContainerHeight: 180
+		minContainerWidth: 150,
+		minContainerHeight: 100
 	});
 
 	$(document).on("click", ".photo-editor__crop-btn", function () {
@@ -100,8 +100,8 @@ function cropImageMin() {
 		aspectRatio: 1 / 1,
 		rotatable: false,
 		zoomable: false,
-		minContainerWidth: 320,
-		minContainerHeight: 180
+		minContainerWidth: 150,
+		minContainerHeight: 100
 	});
 
 	$(document).on("click", ".photo-editor__crop-min-btn", function () {
@@ -180,7 +180,7 @@ $(document).ready(function () {
 	$(document).on("change", ".photo-editor__file-input", function () {
 		if (checkImgStatus() === "imageLoaded") {
 			$(".photo-editor__to-crop-btn").prop("disabled", false);
-			$(".photo-editor__to-crop-btn").removeClass("button_disabled");
+			// $(".photo-editor__to-crop-btn").removeClass("form__btn_disabled");
 		}
 	});
 

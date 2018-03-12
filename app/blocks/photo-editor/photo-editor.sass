@@ -48,6 +48,11 @@
 	position: relative
 	margin: 2rem auto
 
+.photo-editor__choose-file-btn
+	display: flex
+	align-items: center
+	width: max-content
+
 .photo-editor__file-input
 	position: absolute
 	top: 0
@@ -71,17 +76,12 @@
 .photo-editor__controls
 	position: relative
 	width: 100%
-	height: 8rem
-
-.photo-editor__btn_left
-	position: absolute
-	left: 2rem
-	bottom: 2rem
+	display: flex
+	justify-content: space-between
+	padding: calc(8px + 1rem)
 
 .photo-editor__btn_right
-	position: absolute
-	right: 2rem
-	bottom: 2rem
+	margin-left: auto
 
 .photo-editor__close-btn
 	display: block
