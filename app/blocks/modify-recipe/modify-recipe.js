@@ -23,6 +23,8 @@ const groupsSelect = CLASS_PREFIX + "__dish-group", // eslint-disable-line one-v
 	submitBtn = CLASS_PREFIX + "__submit-btn",
 	confirmBtn = ".modal-alert__confirm-btn";
 
+const alertName = "confirmation-before-modify";
+
 
 function getCurrentData(recipeToModify) {
 	const result = null;
@@ -183,10 +185,12 @@ $(document).ready(function (){
 	$(document).on("click", ".modify-recipe__delete-item", deleteItem);
 
 	$(document).on("click", submitBtn, function () {
-		showAlert(CONFIRM_MODIFY_ALERT, true);
+		showAlert(CONFIRM_MODIFY_ALERT, true, alertName);
 	});
 
 	$(document).on("click", confirmBtn, function () {
+		const alertClsName = "." + alertName;
+		if (!($(confirmBtn).parents(alertClsName).length)) {return;}
 		const group = $(".modify-recipe__dish-group").val();
 		const recipeToModify = $(".modify-recipe__recipe-to-modify").val();
 		deleteCurrentRecipe(group, recipeToModify);

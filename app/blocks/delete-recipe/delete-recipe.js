@@ -2,7 +2,7 @@ import $ from "jquery";
 import {CONFIRM_DELETE_ALERT, DELETED_RECIPE_ALERT, ERROR_ALERT}from "../../resources/strings/ru.js";
 import {showAlert, hideAlert}from "../modal-alert/modal-alert.js";
 import {authHeader}from "../auth-form/auth-form.js";
-import {createRecipesSelect} from "../dashboard/dashboard.js";
+import {createRecipesSelect}from "../dashboard/dashboard.js";
 
 const pathToJson = "https://amitrofanova.pythonanywhere.com/api/";
 
@@ -11,6 +11,7 @@ const groupsSelect = CLASS_PREFIX + "__dish-group", // eslint-disable-line one-v
 	recipesSelect = CLASS_PREFIX + "__recipe-to-delete",
 	deleteBtn = CLASS_PREFIX + "__delete-recipe",
 	confirmBtn = ".modal-alert__confirm-btn";
+const alertName = "confirmation-before-delete";
 
 
 function deleteRecipe(group, recipeToDelete) {
@@ -45,14 +46,16 @@ $(document).ready(function (){
 	});
 
 	$(document).on("click", deleteBtn, function () {
-		showAlert(CONFIRM_DELETE_ALERT, true);
+		showAlert(CONFIRM_DELETE_ALERT, true, alertName);
+	});
 
-		$(document).on("click", confirmBtn, function () {
-			const group = $(groupsSelect).val();
-			const recipeToDelete = $(recipesSelect).val();
-			deleteRecipe(group, recipeToDelete);
-			hideAlert();
-		});
+	$(document).on("click", confirmBtn, function () {
+		const alertClsName = "." + alertName;
+		if (!($(confirmBtn).parents(alertClsName).length)) {return;}
+		const group = $(groupsSelect).val();
+		const recipeToDelete = $(recipesSelect).val();
+		deleteRecipe(group, recipeToDelete);
+		hideAlert();
 	});
 
 });
