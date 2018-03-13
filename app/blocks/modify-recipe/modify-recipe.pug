@@ -18,8 +18,10 @@ mixin modify-recipe
 			section.form__section
 				.modify-recipe__section-title Фотографии
 				.modify-recipe__image-preview-wrap
-					img(class="modify-recipe__image-preview")
-					img(class="modify-recipe__image-preview-min")
+					.modify-recipe__img-wrap
+						img(class="modify-recipe__image-preview")
+					.modify-recipe__img-wrap
+						img(class="modify-recipe__image-preview-min")
 				input(type="button" value="Изменить фото" class="modify-recipe__open-editor-btn form__btn")
 				
 			section.form__section

@@ -9,14 +9,13 @@
 	@extend .add-recipe__image-preview-wrap
 	margin-bottom: 1rem
 	display: flex
-	@media (max-width: 575px)
-		height: calc(60px + 10rem)
-	@media (min-width: 576px)
-		height: calc(100px + 10rem)
+	// @media (max-width: 575px)
+	// 	height: calc(60px + 10rem)
+	// @media (min-width: 576px)
+	// 	height: calc(100px + 10rem)
 
-.modify-recipe__image-preview, .modify-recipe__image-preview-min
-	height: 100%
-	width: auto
+.modify-recipe__img-wrap
+	@extend .add-recipe__img-wrap
 
 .modify-recipe__ingredients, .modify-recipe__steps
 	margin-bottom: 1rem
