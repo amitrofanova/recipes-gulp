@@ -178,7 +178,7 @@ function saveRecipe(evt){
 			// showAlert(form, err);
 		},
 		beforeSend() {
-			createLoader();
+			createLoader("Пожалуйста подождите, рецепт сохраняется");
 		},
 		complete() {
 			destroyLoader();

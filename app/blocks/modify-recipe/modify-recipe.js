@@ -108,7 +108,7 @@ function saveChanges() {
 			console.log(err);
 		},
 		beforeSend() {
-			createLoader();
+			createLoader("Пожалуйста подождите, изменения сохраняются");
 		},
 		complete() {
 			destroyLoader();

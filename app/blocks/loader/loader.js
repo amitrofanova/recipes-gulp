@@ -1,13 +1,19 @@
 import $ from "jquery";
-import {LOADER_TEXT}from "../../resources/strings/ru.js";
 
-export function createLoader() {
+export function createLoader(loaderText) {
+	let contentString = "";
+
+	if (loaderText) {
+		contentString = "<div class=\"loader__text\">" + loaderText + "</div>";
+	}
+
 	const modal = "<div class=\"loader\">" +
 		"<div class=\"loader__content\">" +
-			"<div class=\"loader__text\">" + LOADER_TEXT + "</div>" +
+			contentString +
 			"<img src=\"assets/images/loader.gif\"/>" +
 		"</div>" +
 	"</div>";
+
 	$("body").append(modal);
 }
 
