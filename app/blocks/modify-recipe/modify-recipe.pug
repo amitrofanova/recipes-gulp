@@ -1,3 +1,4 @@
+//- TODO: rename form
 mixin modify-recipe
 	form(action="#" method="post" class="modify-recipe")&attributes(attributes)
 
@@ -6,8 +7,9 @@ mixin modify-recipe
 				option(hidden value="") Выбрать группу
 			select(name="recipes" disabled).modify-recipe__recipe-to-modify.form__select-input
 				option(hidden value="") Выбрать рецепт
-			input(type="button" value="Выбрать" class="modify-recipe__modify-btn form__btn" disabled)
-		
+			//- TODO: rename modify-btn
+			input(type="button" value="Начать" class="modify-recipe__modify-btn form__btn" disabled)
+		s
 		section.modify-recipe__modify-area
 			section.form__section
 				input(type="text" name="title" placeholder="Название блюда" required).modify-recipe__title-input.form__text-input
