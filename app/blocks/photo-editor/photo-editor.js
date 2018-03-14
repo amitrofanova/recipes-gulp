@@ -175,6 +175,13 @@ function checkImgStatus() {
 }
 
 
+function switchFormTab(newTab, newSection) {
+	$(".photo-editor__tab").removeClass("photo-editor__tab-active");
+	$(".photo-editor__section").removeClass("photo-editor__section-active");
+	$(newTab).addClass("photo-editor__tab-active");
+	$(newSection).addClass("photo-editor__section-active");
+}
+
 $(document).ready(function () {
 
 	$(document).on("change", ".photo-editor__file-input", uploadImage);
@@ -186,18 +193,12 @@ $(document).ready(function () {
 	});
 
 	$(document).on("click", ".photo-editor__to-crop-btn", function () {
-		$(".photo-editor__section").removeClass("photo-editor__section-active");
-		$(".photo-editor__crop-section").addClass("photo-editor__section-active");
-		$(".photo-editor__tab").removeClass("photo-editor__tab-active");
-		$(".photo-editor__crop-tab").addClass("photo-editor__tab-active");
+		switchFormTab(".photo-editor__crop-tab", ".photo-editor__crop-section");
 		cropImage();
 	});
 
 	$(document).on("click", ".photo-editor__to-crop-min-btn", function () {
-		$(".photo-editor__section").removeClass("photo-editor__section-active");
-		$(".photo-editor__crop-min-section").addClass("photo-editor__section-active");
-		$(".photo-editor__tab").removeClass("photo-editor__tab-active");
-		$(".photo-editor__crop-min-tab").addClass("photo-editor__tab-active");
+		switchFormTab(".photo-editor__crop-min-tab", ".photo-editor__crop-min-section");
 		cropImageMin();
 	});
 
