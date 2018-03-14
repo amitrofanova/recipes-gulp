@@ -77,37 +77,43 @@ export function destroyEditor() {
 
 
 function cropImage() {
+	const initialImage = $(".photo-editor__image-load")[0];
 	const image = $(".photo-editor__image-crop")[0];
-	const cropper = new Cropper(image, {
+	const options = {
 		aspectRatio: 3 / 2,
 		rotatable: false,
 		zoomable: false,
 		minContainerWidth: 300,
 		minContainerHeight: 200
-	});
+	};
+	let cropper = new Cropper(image, options);
 
 	$(document).on("click", ".photo-editor__crop-btn", function () {
 		const res = cropper.getCroppedCanvas({maxWidth: 4500, maxHeight: 3000}).toDataURL();
 		cropper.destroy();
 		$(".photo-editor__image-crop").attr("src", res);
+		cropper = new Cropper(initialImage, options);
 	});
 }
 
 
 function cropImageMin() {
-	const image = $(".photo-editor__image-crop-min")[0];
-	const cropper = new Cropper(image, {
+	const initialImage = $(".photo-editor__image-crop")[0];
+	const imageMin = $(".photo-editor__image-crop-min")[0];
+	const optionsMin = {
 		aspectRatio: 1 / 1,
 		rotatable: false,
 		zoomable: false,
 		minContainerWidth: 300,
 		minContainerHeight: 200
-	});
+	};
+	let cropperMin = new Cropper(imageMin, optionsMin);
 
 	$(document).on("click", ".photo-editor__crop-min-btn", function () {
-		const res = cropper.getCroppedCanvas({maxWidth: 4000, maxHeight: 4000}).toDataURL();
-		cropper.destroy();
+		const res = cropperMin.getCroppedCanvas({maxWidth: 4000, maxHeight: 4000}).toDataURL();
+		cropperMin.destroy();
 		$(".photo-editor__image-crop-min").attr("src", res);
+		cropperMin = new Cropper(initialImage, optionsMin);
 	});
 }
 
@@ -126,9 +132,6 @@ function uploadImage(evt) {
 			$(".photo-editor__image-load").attr("src", res);
 			$(".photo-editor__image-crop").attr("src", res);
 			$(".photo-editor__image-crop-min").attr("src", res);
-
-			cropImage();
-			cropImageMin();
 
 			return res;
 		};
@@ -187,13 +190,7 @@ $(document).ready(function () {
 		$(".photo-editor__crop-section").addClass("photo-editor__section-active");
 		$(".photo-editor__tab").removeClass("photo-editor__tab-active");
 		$(".photo-editor__crop-tab").addClass("photo-editor__tab-active");
-	});
-
-	$(document).on("click", ".photo-editor__to-choose-file-btn", function () {
-		$(".photo-editor__section").removeClass("photo-editor__section-active");
-		$(".photo-editor__choose-file-section").addClass("photo-editor__section-active");
-		$(".photo-editor__tab").removeClass("photo-editor__tab-active");
-		$(".photo-editor__choose-file-tab").addClass("photo-editor__tab-active");
+		cropImage();
 	});
 
 	$(document).on("click", ".photo-editor__to-crop-min-btn", function () {
@@ -201,6 +198,7 @@ $(document).ready(function () {
 		$(".photo-editor__crop-min-section").addClass("photo-editor__section-active");
 		$(".photo-editor__tab").removeClass("photo-editor__tab-active");
 		$(".photo-editor__crop-min-tab").addClass("photo-editor__tab-active");
+		cropImageMin();
 	});
 
 	$(document).on("click", ".photo-editor__submit-btn", function () {
