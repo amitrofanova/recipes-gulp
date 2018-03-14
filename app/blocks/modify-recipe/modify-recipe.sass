@@ -2,23 +2,18 @@
 	display: none
 
 .modify-recipe__section-title
-	margin-bottom: .5rem
-	font-size: calc(8px + .5rem)
+	font-size: $input-font-size
 
 .modify-recipe__image-preview-wrap
 	@extend .add-recipe__image-preview-wrap
-	margin-bottom: 1rem
+	margin-bottom: $input-margin
 	display: flex
-	// @media (max-width: 575px)
-	// 	height: calc(60px + 10rem)
-	// @media (min-width: 576px)
-	// 	height: calc(100px + 10rem)
 
 .modify-recipe__img-wrap
 	@extend .add-recipe__img-wrap
 
 .modify-recipe__ingredients, .modify-recipe__steps
-	margin-bottom: 1rem
+	margin-bottom: $input-margin
 
 .modify-recipe__input-wrapper
 	@extend .add-recipe__input-wrapper
@@ -31,7 +26,3 @@
 
 .modify-recipe__delete-item
 	@extend .add-recipe__delete-item
-
-.modify-recipe__modify-btn
-	margin-left: 1rem
-	display: inline-block

@@ -1,18 +1,12 @@
-$input-height: calc(20px + 2rem)
-$input-aside-padding: calc(8px + .5rem)
-$input-font-size: calc(8px + .5rem)
-$input-font-weight: 700
-$input-font-color: #000
-$input-bg: #eee
-
 .form__section
-	padding: calc(8px + .5rem) calc(8px + 1rem)
+	margin-top: $input-margin
 
 %form__input
+	margin-bottom: $input-margin
 	height: $input-height
 	border: none
-	padding-left: $input-aside-padding
-	padding-right: $input-aside-padding
+	padding-left: $input-padding
+	padding-right: $input-padding
 	background-color: $input-bg
 	font-size: $input-font-size
 	font-weight: $input-font-weight
@@ -28,7 +22,7 @@ $input-bg: #eee
 
 .form__select-input
 	@extend %form__input
-	margin-right: 1rem
+	margin-right: $input-margin
 	cursor: pointer
 
 .form__btn
@@ -39,3 +33,8 @@ $input-bg: #eee
 		background-color: darken($input-bg, 10%)
 		color: $input-font-color
 		cursor: pointer
+
+.form__controls
+	margin-top: $input-margin
+	display: flex
+	justify-content: space-between

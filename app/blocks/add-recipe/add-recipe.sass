@@ -1,13 +1,13 @@
 .add-recipe__image-preview-wrap
 	display: none
-	margin-top: calc(8px + .5rem)
+	margin-top: $input-margin
 	position: relative
 	width: 100%
-	background-color: #eee
+	background-color: $input-bg
 
 .add-recipe__img-wrap
 	flex-shrink: 1
-	padding: 1rem
+	padding: $input-padding
 	img
 		width: 100%
 
@@ -18,16 +18,13 @@
 
 .add-recipe__ingredient-input, .add-recipe__step-input
 	flex: 2
-	border-top-right-radius: 0
-	border-bottom-right-radius: 0
-	border-right: none
-	padding-left: 1rem
+	padding-left: $input-padding
 	transition: color 1500ms
 	user-select: none
 
 .add-recipe__new-ingredient-btn, .add-recipe__new-step-btn
-	width: calc(20px + 2rem)
-	height: calc(20px + 2rem)
+	width: $input-height
+	height: $input-height
 	position: relative
 	background-color: $secondary-bg-color
 	cursor: pointer
@@ -42,15 +39,16 @@
 		background-size: contain
 		content: ''
 	&:hover
-		background-color: #eee
+		background-color: $input-bg
 
 .add-recipe__new-item
 	display: inline-block
-	margin: 1rem calc(16px + 3rem) 0 0
+	margin-top: $input-margin
+	margin-right: calc(20px + 2rem)
 	position: relative
-	padding: .5rem
+	padding: $input-padding
 	background-color: $tertiary-bg-color
-	font-size: calc(8px + .5rem)
+	font-size: $input-font-size
 	color: #fff
 
 .add-recipe__delete-item
@@ -72,9 +70,4 @@
 		background-image: url('../images/nav__close-button.svg')
 		background-size: cover
 	&:hover
-		background-color: #eee
-
-.add-recipe__controls
-	margin-top: calc(8px + 1rem)
-	display: flex
-	justify-content: space-between
+		background-color: $input-bg
