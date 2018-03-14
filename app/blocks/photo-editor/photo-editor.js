@@ -25,6 +25,7 @@ export function createEditor() {
 						"</div>" +
 					"</div>" +
 					"<div class=\"photo-editor__controls\">" +
+						"<input type=\"button\" value=\"Закрыть\" class=\"photo-editor__close-btn form__btn\">" +
 						"<input type=\"button\" value=\"Продолжить\" class=\"photo-editor__to-crop-btn photo-editor__btn_right form__btn\" disabled>" +
 					"</div>" +
 				"</section>" +
@@ -42,7 +43,7 @@ export function createEditor() {
 						"<input type=\"button\" value=\"Обрезать\" class=\"photo-editor__crop-btn form__btn\">" +
 					"</div>" +
 					"<div class=\"photo-editor__controls\">" +
-						"<input type=\"button\" value=\"Вернуться\" class=\"photo-editor__to-choose-file-btn form__btn\">" +
+						"<input type=\"button\" value=\"Закрыть\" class=\"photo-editor__close-btn form__btn\">" +
 						"<input type=\"button\" value=\"Продолжить\" class=\"photo-editor__to-crop-min-btn photo-editor__btn_right form__btn\">" +
 					"</div>" +
 				"</section>" +
@@ -59,12 +60,11 @@ export function createEditor() {
 						"<input type=\"button\" value=\"Обрезать\" class=\"photo-editor__crop-min-btn form__btn\">" +
 					"</div>" +
 					"<div class=\"photo-editor__controls\">" +
-						"<input type=\"button\" value=\"Вернуться\" class=\"photo-editor__to-crop-btn form__btn\">" +
+						"<input type=\"button\" value=\"Закрыть\" class=\"photo-editor__close-btn form__btn\">" +
 						"<input type=\"button\" value=\"Готово\" class=\"photo-editor__submit-btn photo-editor__btn_right form__btn\">" +
 					"</div>" +
 				"</section>" +
 
-				"<div class=\"photo-editor__close-btn\"></div>" +
 			"</div>" +
 		"</div>"
 	);
