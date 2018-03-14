@@ -190,7 +190,7 @@ function saveRecipe(evt){
 }
 
 
-export function resetForm() {
+function resetForm() {
 	$(formCls)[0].reset();
 	$(newItemCls).remove();
 	$(deleteItemCls).remove();
