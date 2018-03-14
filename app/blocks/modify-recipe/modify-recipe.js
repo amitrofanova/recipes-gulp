@@ -185,7 +185,7 @@ $(document).ready(function (){
 
 	$(document).on("click", ".modify-recipe__delete-item", deleteItem);
 
-	$(document).on("click", resetBtn, function() {
+	$(document).on("click", resetBtn, function () {
 		const recipeToModify = $(recipesSelect).val();
 		resetForm();
 		getCurrentData(recipeToModify);
