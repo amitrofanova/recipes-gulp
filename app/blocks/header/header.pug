@@ -1,6 +1,7 @@
 include ../nav/nav
 
 header.header
-	img(class='header__logo', src='assets/images/logo.png', alt='Recipe Book')
-	.header__brand Recipe book
-	+nav()(class='header__nav')
+	a(href="home.html")
+		img(class="header__logo", src="assets/images/logo.png", alt="Recipe Book")
+	a(href="home.html" class="header__brand") Recipe book
+	+nav()(class="header__nav")
