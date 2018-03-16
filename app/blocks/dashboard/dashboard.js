@@ -32,7 +32,7 @@ function deleteRoundCorners() {
 
 
 function getList(callback, group) {
-	let url = pathToJson + "groups/" + "?short";
+	let url = pathToJson + "groups/?short";
 
 	if (group) {
 		url = pathToJson + "groups/" + encodeURIComponent(group) + "?short";
@@ -63,7 +63,7 @@ export function createRecipesSelect(group, recipesList) {
 	const callback = function (data) {
 		for (let i = 0; i < data.recipes.length; i++) {
 			$(recipesList).append(
-				"<option value=\"" + data.recipes[i] + "\">" + data.recipes[i] + "</option>"
+				"<option value=\"" + data.recipes[i].id + "\">" + data.recipes[i].title + "</option>"
 			);
 		}
 	};
@@ -81,6 +81,7 @@ function createGroupsSelect(groupsList1, groupsList2) {
 		for (let i = 0; i < data.length; i++) {
 			optionsString += "<option value=\"" + data[i].group + "\">" + data[i].group + "</option>";
 		}
+		
 
 		$(groupsList1).append(optionsString);
 		$(groupsList2).append(optionsString);
