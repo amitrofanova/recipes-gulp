@@ -77,7 +77,7 @@ export function destroyEditor() {
 
 
 function cropImage() {
-	const initialImage = $(".photo-editor__image-load")[0];
+	const initialImage = $(".photo-editor__image-load")[0]; // TODO: fix ugly code
 	const image = $(".photo-editor__image-crop")[0];
 	const options = {
 		aspectRatio: 3 / 2,
@@ -98,7 +98,7 @@ function cropImage() {
 
 
 function cropImageMin() {
-	const initialImage = $(".photo-editor__image-crop")[0];
+	const initialImage = $(".photo-editor__image-crop")[0]; // TODO: fix ugly code
 	const imageMin = $(".photo-editor__image-crop-min")[0];
 	const optionsMin = {
 		aspectRatio: 1 / 1,
