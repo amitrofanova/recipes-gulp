@@ -40,6 +40,7 @@ $(document).ready(function (){
 
 	$(document).on("change", groupsSelect, function () {
 		const currentGroup = $(groupsSelect).val();
+		$(this).find(".titleOption").remove();
 		$(recipesSelect).prop("disabled", false);
 		$(deleteBtn).prop("disabled", false);
 		createRecipesSelect(currentGroup, recipesSelect);

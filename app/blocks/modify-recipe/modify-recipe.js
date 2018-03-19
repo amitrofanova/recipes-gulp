@@ -153,10 +153,13 @@ $(document).ready(function (){
 
 	$(document).on("change", groupsSelect, function () {
 		const currentGroup = $(groupsSelect).val();
+		$(this).find(".titleOption").remove();
 		$(recipesSelect).prop("disabled", false);
 		$(startModifyBtn).prop("disabled", false);
 		createRecipesSelect(currentGroup, recipesSelect);
 	});
+
+
 
 	$(document).on("click", startModifyBtn, function () {
 		$(".modify-recipe__modify-area").show();

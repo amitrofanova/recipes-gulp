@@ -218,8 +218,7 @@ export function getCroppedImg(wrapper, preview, previewMin) {
 $(document).ready(function () {
 
 	$(document).on("change", dishGroupInputCls, function () {
-		// const titleOption = dishGroupInputCls + " option[value=\"title\"]";
-		// $(titleOption).remove();
+		$(this).find(".titleOption").remove();
 		$(dishGroupInputCls).css("color", "#000");
 	});
 

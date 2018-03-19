@@ -21,18 +21,79 @@
 	width: 100%
 
 .form__select-input
-	@extend %form__input
 	margin-right: $input-margin
+	margin-bottom: $input-margin
+	position: relative
+	display: inline-block
+	height: $input-height
+	&::before
+		width: $input-height
+		position: absolute
+		top: 0
+		right: 0
+		bottom: 0
+		border-radius: 0 4px 4px 0
+		content: ''
+		pointer-events: none
+	&::after
+		margin-top: -.5em
+		height: 1em
+		position: absolute
+		top: 50%
+		right: 1.4em
+		content: '\25BC'
+		line-height: 1
+		font-size: calc(6px + .5rem)
+		pointer-events: none
+
+.form__select-input select
+	margin: 0
+	height: $input-height
+	border: none
+	border-radius: 4px
+	text-indent: 0.01px
+	text-overflow: ''
+	padding-left: $input-padding
+	padding-right: $input-height
+	background-color: $input-bg
+	color: $input-font-color
+	font-size: $input-font-size
+	font-weight: $input-font-weight
+	appearance: none
+	&::-ms-expand
+		display: none
+	user-select: none
+	-ms-user-select: none
+
+select:focus::-ms-value
+	background-color: $input-bg
+	color: $input-font-color
+
+option:checked
+	background-color: $input-bg
+	color: $input-font-color
+
+option:selected
+	background-color: transparent
+	color: $input-font-color
+
+option:hover
+	background-color: darken($input-bg, 10%)
+	color: darken($input-bg, 50%)
 	cursor: pointer
+
+.form__select-input select[disabled]
+	opacity: .2
+	cursor: default
 
 .form__btn
 	@extend %form__input
 	border-radius: 4px
 	transition: 1s
 	&:hover:enabled
+		cursor: pointer
 		background-color: darken($input-bg, 10%)
 		color: $input-font-color
-		cursor: pointer
 
 .form__controls
 	margin-top: $input-margin

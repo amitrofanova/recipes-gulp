@@ -3,16 +3,17 @@ mixin add-recipe
 
 		//- TODO: add fieldsets
 		section.form__section
-			select(name="select" required).add-recipe__dish-group.form__select-input
-				option(hidden value="") Выбрать группу
-				option(value="deserts") Десерты
-				option(value="bread") Хлеб
-				option(value="meat") Блюда из мяса
-				option(value="soups") Супы
-				option(value="salads") Салаты
-				option(value="fish") Блюда из рыбы
-				option(value="canape") Фуршетный стол
-				option(value="drinks") Напитки
+			span.form__select-input
+				select(name="select" required).add-recipe__dish-group
+					option(class="titleOption" hidden value="") Выбрать группу
+					option(value="deserts") Десерты
+					option(value="bread") Хлеб
+					option(value="meat") Блюда из мяса
+					option(value="soups") Супы
+					option(value="salads") Салаты
+					option(value="fish") Блюда из рыбы
+					option(value="canape") Фуршетный стол
+					option(value="drinks") Напитки
 			
 		section.form__section
 			input(type="text" name="title" placeholder="Название блюда" required).add-recipe__title-input.form__text-input
