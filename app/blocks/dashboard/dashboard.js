@@ -6,17 +6,17 @@ import {authHeader}from "../auth-form/auth-form.js";
 const pathToJson = "https://amitrofanova.pythonanywhere.com/api/";
 
 
-function showAddForm() {
+function toggleAddForm() {
 	$(".add-recipe").toggle();
 }
 
 
-function showModifyForm() {
+function toggleModifyForm() {
 	$(".modify-recipe").toggle();
 }
 
 
-function showDeleteForm() {
+function toggleDeleteForm() {
 	$(".delete-recipe").toggle();
 }
 
@@ -81,7 +81,7 @@ function createGroupsSelect(groupsList1, groupsList2) {
 		for (let i = 0; i < data.length; i++) {
 			optionsString += "<option value=\"" + data[i].group + "\">" + data[i].group + "</option>";
 		}
-		
+
 
 		$(groupsList1).append(optionsString);
 		$(groupsList2).append(optionsString);
@@ -95,9 +95,9 @@ $(document).ready(function () {
 	if (window.location.pathname === "/dashboard.html") {
 		window.onload = createGroupsSelect(".delete-recipe__dish-group", ".modify-recipe__dish-group");
 	}
-	$(document).on("click", ".dashboard__add-recipe", showAddForm);
-	$(document).on("click", ".dashboard__delete-recipe", showDeleteForm);
-	$(document).on("click", ".dashboard__modify-recipe", showModifyForm);
+	$(document).on("click", ".dashboard__add-recipe", toggleAddForm);
+	$(document).on("click", ".dashboard__delete-recipe", toggleDeleteForm);
+	$(document).on("click", ".dashboard__modify-recipe", toggleModifyForm);
 	$(document).on("click", ".dashboard__section", rotateToggler);
 	$(document).on("click", ".dashboard__section", deleteRoundCorners);
 });
