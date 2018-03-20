@@ -118,6 +118,36 @@ function saveChanges() {
 }
 
 
+function modifyRecipeById() {
+	const groupName = $(groupsSelect).val();
+	const recipeId = $(recipesSelect).val();
+	const url = pathToJson + "recipes/"  + recipeId + "?group=" + encodeURIComponent(groupName);
+
+	$.ajax({
+		type: "PUT",
+		url,
+		headers: {
+			Authorization: authHeader()
+		},
+		dataType: "json",
+		data: getNewData(),
+		success(){
+			showAlert(MODIFIED_RECIPE_ALERT);
+		},
+		error(xhr) {
+			const err = ERROR_ALERT + xhr.responseText;
+			console.log(err);
+		},
+		beforeSend() {
+			createLoader("Пожалуйста подождите, изменения сохраняются");
+		},
+		complete() {
+			destroyLoader();
+		}
+	});
+}
+
+
 function deleteCurrentRecipe(group, recipeToModify) {
 	const url = pathToJson + "recipes/" + encodeURIComponent(recipeToModify) + "?group=" + encodeURIComponent(group);
 
