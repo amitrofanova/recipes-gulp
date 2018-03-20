@@ -7,15 +7,15 @@ import {createRecipesSelect}from "../dashboard/dashboard.js";
 const pathToJson = "https://amitrofanova.pythonanywhere.com/api/";
 
 const CLASS_PREFIX = ".delete-recipe";
-const groupsSelect = CLASS_PREFIX + "__dish-group", // eslint-disable-line one-var
-	recipesSelect = CLASS_PREFIX + "__recipe-to-delete",
-	deleteBtn = CLASS_PREFIX + "__delete-recipe",
-	confirmBtn = ".modal-alert__confirm-btn";
+const groupsSelect = CLASS_PREFIX + "__dish-group";
+const	recipesSelect = CLASS_PREFIX + "__recipe-to-delete";
+const	deleteBtn = CLASS_PREFIX + "__delete-recipe";
+const	confirmBtn = ".modal-alert__confirm-btn";
 const alertName = "confirmation-before-delete";
 
 
-function deleteRecipe(group, recipeToDelete) {
-	const url = pathToJson + "recipes/" + encodeURIComponent(recipeToDelete) + "?group=" + encodeURIComponent(group);
+function deleteRecipe(groupName, recipeId) {
+	const url = pathToJson + "recipes/" + recipeId + "?group=" + encodeURIComponent(groupName);
 
 	$.ajax({
 		type: "DELETE",
@@ -53,9 +53,9 @@ $(document).ready(function (){
 	$(document).on("click", confirmBtn, function () {
 		const alertClsName = "." + alertName;
 		if (!($(confirmBtn).parents(alertClsName).length)) {return;}
-		const group = $(groupsSelect).val();
-		const recipeToDelete = $(recipesSelect).val();
-		deleteRecipe(group, recipeToDelete);
+		const groupName = $(groupsSelect).val();
+		const recipeId = $(recipesSelect).val();
+		deleteRecipe(groupName, recipeId);
 		hideAlert();
 	});
 
