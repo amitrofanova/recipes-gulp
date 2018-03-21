@@ -28,6 +28,7 @@ export const ADDED_RECIPE_ALERT = "Рецепт сохранён!";
 export const DELETED_RECIPE_ALERT = "Рецепт удалён!";
 export const MODIFIED_RECIPE_ALERT = "Изменения успешно сохранены!";
 export const ERROR_ALERT = "Произошла ошибка!";
+export const UNIQUE_CONSTRAINT_FAILED_ERROR = "Рецепт с таким именем уже существует!";
 
 // Empty group
 export const EMPTY_GROUP_ALERT = "У вас пока нет ни одного рецепта группе ";
