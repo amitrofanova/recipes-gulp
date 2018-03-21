@@ -14,8 +14,8 @@ const	confirmBtn = ".modal-alert__confirm-btn";
 const alertName = "confirmation-before-delete";
 
 
-function deleteRecipe(groupName, recipeId) {
-	const url = jsonPath + "/api/recipes/" + recipeId + "?group=" + encodeURIComponent(groupName);
+function deleteRecipe(recipeId) {
+	const url = jsonPath + "/api/recipes/" + recipeId;
 
 	$.ajax({
 		type: "DELETE",
@@ -53,9 +53,10 @@ $(document).ready(function (){
 	$(document).on("click", confirmBtn, function () {
 		const alertClsName = "." + alertName;
 		if (!($(confirmBtn).parents(alertClsName).length)) {return;}
-		const groupName = $(groupsSelect).val();
+
 		const recipeId = $(recipesSelect).val();
-		deleteRecipe(groupName, recipeId);
+		deleteRecipe(recipeId);
+		
 		hideAlert();
 	});
 

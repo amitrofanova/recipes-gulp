@@ -1,12 +1,22 @@
 import $ from "jquery";
-import {CONFIRM_MODIFY_ALERT, MODIFIED_RECIPE_ALERT, ERROR_ALERT}from "../../resources/strings/ru.js";
+import {jsonPath}from "../../resources/paths/paths.js";
+import {
+	CONFIRM_MODIFY_ALERT,
+	MODIFIED_RECIPE_ALERT,
+	ERROR_ALERT,
+	UNIQUE_CONSTRAINT_FAILED_ERROR}from "../../resources/strings/ru.js";
 import {showAlert, hideAlert}from "../modal-alert/modal-alert.js";
 import {authHeader}from "../auth-form/auth-form.js";
 import {createEditor}from "../photo-editor/photo-editor.js";
 import {createLoader, destroyLoader}from "../loader/loader.js";
 import {createRecipesSelect}from "../dashboard/dashboard.js";
-import {appendItem, addItem, deleteItem, getIngredientsFromPage, getStepsFromPage, getCroppedImg}from "../add-recipe/add-recipe.js";
-import {jsonPath}from "../../resources/paths/paths.js";
+import {
+	appendItem,
+	addItem,
+	deleteItem,
+	getIngredientsFromPage,
+	getStepsFromPage,
+	getCroppedImg}from "../add-recipe/add-recipe.js";
 
 
 const NAMESPACE = "modify-recipe";
@@ -89,39 +99,8 @@ function getNewData() {
 }
 
 
-// function saveChanges() {
-// 	const group = $(".modify-recipe__dish-group").val();
-// 	const url = pathToJson + "recipes/" + "?group=" + encodeURIComponent(group);
-//
-// 	$.ajax({
-// 		type: "POST",
-// 		url,
-// 		headers: {
-// 			Authorization: authHeader()
-// 		},
-// 		dataType: "json",
-// 		data: getNewData(),
-// 		success(){
-// 			showAlert(MODIFIED_RECIPE_ALERT);
-// 		},
-// 		error(xhr) {
-// 			const err = ERROR_ALERT + xhr.responseText;
-// 			console.log(err);
-// 		},
-// 		beforeSend() {
-// 			createLoader("Пожалуйста подождите, изменения сохраняются");
-// 		},
-// 		complete() {
-// 			destroyLoader();
-// 		}
-// 	});
-// }
-
-
-function modifyRecipeById() {
-	const groupName = $(groupsSelect).val();
-	const recipeId = $(recipesSelect).val();
-	const url = jsonPath + "/api/recipes/" + recipeId + "?group=" + encodeURIComponent(groupName);
+function modifyRecipeById(recipeId) {
+	const url = jsonPath + "/api/recipes/" + recipeId;
 
 	$.ajax({
 		type: "PUT",
@@ -135,8 +114,12 @@ function modifyRecipeById() {
 			showAlert(MODIFIED_RECIPE_ALERT);
 		},
 		error(xhr) {
-			const err = ERROR_ALERT + xhr.responseText;
+			let err = xhr.responseText;
 			console.log(err);
+			if (xhr.responseText.indexOf("unique constraint failed")) {
+				err = ERROR_ALERT + " " + UNIQUE_CONSTRAINT_FAILED_ERROR;
+			}
+			showAlert(err);
 		},
 		beforeSend() {
 			createLoader("Пожалуйста подождите, изменения сохраняются");
@@ -146,28 +129,6 @@ function modifyRecipeById() {
 		}
 	});
 }
-
-
-// function deleteCurrentRecipe(group, recipeToModify) {
-// 	const url = pathToJson + "recipes/" + encodeURIComponent(recipeToModify) + "?group=" + encodeURIComponent(group);
-//
-// 	$.ajax({
-// 		type: "DELETE",
-// 		url,
-// 		headers: {
-// 			Authorization: authHeader()
-// 		},
-// 		dataType: "json",
-// 		success(data){
-// 			console.log(data);
-// 			saveChanges();
-// 		},
-// 		error(xhr) {
-// 			const err = ERROR_ALERT + xhr.responseText;
-// 			console.log(err);
-// 		}
-// 	});
-// }
 
 
 function resetForm() {
@@ -231,10 +192,8 @@ $(document).ready(function (){
 	$(document).on("click", confirmBtn, function () {
 		const alertClsName = "." + alertName;
 		if (!($(confirmBtn).parents(alertClsName).length)) {return;}
-		// const groupName = $(groupsSelect).val();
-		// const recipeId = $(recipesSelect).val();
-		// deleteCurrentRecipe(groupName, recipeId);
-		modifyRecipeById();
+		const recipeId = $(recipesSelect).val();
+		modifyRecipeById(recipeId);
 		hideAlert();
 	});
 
