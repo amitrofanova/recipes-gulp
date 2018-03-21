@@ -8,23 +8,28 @@
 	margin-bottom: 2.2rem
 	&:last-child
 		margin-bottom: 0
+	&:nth-last-child(1)
+		margin-bottom: 0
 	display: flex
 	flex-wrap: nowrap
+	align-items: flex-start
+	align-content: stretch
 	box-shadow: 1px 1px 2px #ccc
 	cursor: pointer
 
 .recipe-preview__image
 	height: 100%
-	display: inline-block
-	vertical-align: top
+	width: 15rem
+	@media (max-width: 575px)
+		width: 25rem
+	flex-shrink: 0
+	flex-grow: 0
+	flex-basis: auto
 	img
 		height: 100%
 
 .recipe-preview__content
-	display: inline-block
-	vertical-align: top
 	padding: 2rem
-	line-height: .9
 
 .recipe-preview__title
 	font-size: calc(12px + .5rem)
@@ -32,6 +37,7 @@
 
 .recipe-preview__description
 	padding-top: 1rem
+	line-height: .9
 	font-size: calc(10px + .5rem)
 
 .recipe-preview__id
