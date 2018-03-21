@@ -1,9 +1,7 @@
 import $ from "jquery";
 import {authHeader}from "../auth-form/auth-form.js";
 // import {createLoader, destroyLoader}from "../loader/loader.js";
-
-
-const pathToJson = "https://amitrofanova.pythonanywhere.com/api/";
+import {jsonPath}from "../../resources/paths/paths.js";
 
 
 function toggleAddForm() {
@@ -32,10 +30,10 @@ function deleteRoundCorners() {
 
 
 function getList(callback, group) {
-	let url = pathToJson + "groups/?short";
+	let url = jsonPath + "/api/groups/?short";
 
 	if (group) {
-		url = pathToJson + "groups/" + encodeURIComponent(group) + "?short";
+		url = jsonPath + "/api/groups/" + encodeURIComponent(group) + "?short";
 	}
 
 	$.ajax({

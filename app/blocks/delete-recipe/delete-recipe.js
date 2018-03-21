@@ -3,8 +3,8 @@ import {CONFIRM_DELETE_ALERT, DELETED_RECIPE_ALERT, ERROR_ALERT}from "../../reso
 import {showAlert, hideAlert}from "../modal-alert/modal-alert.js";
 import {authHeader}from "../auth-form/auth-form.js";
 import {createRecipesSelect}from "../dashboard/dashboard.js";
+import {jsonPath}from "../../resources/paths/paths.js";
 
-const pathToJson = "https://amitrofanova.pythonanywhere.com/api/";
 
 const CLASS_PREFIX = ".delete-recipe";
 const groupsSelect = CLASS_PREFIX + "__dish-group";
@@ -15,7 +15,7 @@ const alertName = "confirmation-before-delete";
 
 
 function deleteRecipe(groupName, recipeId) {
-	const url = pathToJson + "recipes/" + recipeId + "?group=" + encodeURIComponent(groupName);
+	const url = jsonPath + "/api/recipes/" + recipeId + "?group=" + encodeURIComponent(groupName);
 
 	$.ajax({
 		type: "DELETE",

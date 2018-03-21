@@ -1,15 +1,14 @@
 import $ from "jquery";
-
 import {
 	SHORT_PWD_ERR,
 	NOT_EQUAL_PWD_ERR,
 	INVALID_LOGIN_ERR,
 	USER_REGISTERED_ALERT,
 	ERROR_ALERT}from "../../resources/strings/ru.js";
-
 import {showAlert}from "../modal-alert/modal-alert.js";
+import {jsonPath}from "../../resources/paths/paths.js";
 
-const pathToUsers = "https://amitrofanova.pythonanywhere.com/api/users/";
+
 const CLASS_PREFIX = ".auth-form";
 const activeTab = CLASS_PREFIX + "__tab_active", // eslint-disable-line one-var
 	activeForm = CLASS_PREFIX + "__form_active",
@@ -100,7 +99,7 @@ function sendRegisterData() {
 	const dataToSave = JSON.parse(getRegisterData());
 	$.ajax({
 		type: "POST",
-		url: pathToUsers,
+		url: jsonPath + "/api/users/",
 		dataType: "json",
 		data: getRegisterData(),
 		success() {
@@ -140,7 +139,7 @@ function validateLoginData() {
 	const password = data.password;
 
 	$.ajax({
-		url: pathToUsers,
+		url: jsonPath + "/api/users/",
 		headers: {
 			Authorization: "Basic " + btoa( username + ":" + password)
 		},

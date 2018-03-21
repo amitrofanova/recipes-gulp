@@ -6,8 +6,8 @@ import {createEditor}from "../photo-editor/photo-editor.js";
 import {createLoader, destroyLoader}from "../loader/loader.js";
 import {createRecipesSelect}from "../dashboard/dashboard.js";
 import {appendItem, addItem, deleteItem, getIngredientsFromPage, getStepsFromPage, getCroppedImg}from "../add-recipe/add-recipe.js";
+import {jsonPath}from "../../resources/paths/paths.js";
 
-const pathToJson = "https://amitrofanova.pythonanywhere.com/api/";
 
 const NAMESPACE = "modify-recipe";
 const CLASS_PREFIX = ".modify-recipe";
@@ -29,9 +29,9 @@ const alertName = "confirmation-before-modify";
 
 function getCurrentData(recipeToModify) {
 	const result = null;
-	const url = pathToJson + "recipes/" + encodeURIComponent(recipeToModify);
-	const imgSrc = pathToJson + "image/";
-	const imgMinSrc = pathToJson + "image/";
+	const url = jsonPath + "/api/recipes/" + encodeURIComponent(recipeToModify);
+	const imgSrc = jsonPath + "/api/image/";
+	const imgMinSrc = jsonPath + "/api/image/";
 
 	const showCurrentData = function (recipe) {
 
@@ -89,39 +89,39 @@ function getNewData() {
 }
 
 
-function saveChanges() {
-	const group = $(".modify-recipe__dish-group").val();
-	const url = pathToJson + "recipes/" + "?group=" + encodeURIComponent(group);
-
-	$.ajax({
-		type: "POST",
-		url,
-		headers: {
-			Authorization: authHeader()
-		},
-		dataType: "json",
-		data: getNewData(),
-		success(){
-			showAlert(MODIFIED_RECIPE_ALERT);
-		},
-		error(xhr) {
-			const err = ERROR_ALERT + xhr.responseText;
-			console.log(err);
-		},
-		beforeSend() {
-			createLoader("Пожалуйста подождите, изменения сохраняются");
-		},
-		complete() {
-			destroyLoader();
-		}
-	});
-}
+// function saveChanges() {
+// 	const group = $(".modify-recipe__dish-group").val();
+// 	const url = pathToJson + "recipes/" + "?group=" + encodeURIComponent(group);
+//
+// 	$.ajax({
+// 		type: "POST",
+// 		url,
+// 		headers: {
+// 			Authorization: authHeader()
+// 		},
+// 		dataType: "json",
+// 		data: getNewData(),
+// 		success(){
+// 			showAlert(MODIFIED_RECIPE_ALERT);
+// 		},
+// 		error(xhr) {
+// 			const err = ERROR_ALERT + xhr.responseText;
+// 			console.log(err);
+// 		},
+// 		beforeSend() {
+// 			createLoader("Пожалуйста подождите, изменения сохраняются");
+// 		},
+// 		complete() {
+// 			destroyLoader();
+// 		}
+// 	});
+// }
 
 
 function modifyRecipeById() {
 	const groupName = $(groupsSelect).val();
 	const recipeId = $(recipesSelect).val();
-	const url = pathToJson + "recipes/"  + recipeId + "?group=" + encodeURIComponent(groupName);
+	const url = jsonPath + "/api/recipes/" + recipeId + "?group=" + encodeURIComponent(groupName);
 
 	$.ajax({
 		type: "PUT",
@@ -148,26 +148,26 @@ function modifyRecipeById() {
 }
 
 
-function deleteCurrentRecipe(group, recipeToModify) {
-	const url = pathToJson + "recipes/" + encodeURIComponent(recipeToModify) + "?group=" + encodeURIComponent(group);
-
-	$.ajax({
-		type: "DELETE",
-		url,
-		headers: {
-			Authorization: authHeader()
-		},
-		dataType: "json",
-		success(data){
-			console.log(data);
-			saveChanges();
-		},
-		error(xhr) {
-			const err = ERROR_ALERT + xhr.responseText;
-			console.log(err);
-		}
-	});
-}
+// function deleteCurrentRecipe(group, recipeToModify) {
+// 	const url = pathToJson + "recipes/" + encodeURIComponent(recipeToModify) + "?group=" + encodeURIComponent(group);
+//
+// 	$.ajax({
+// 		type: "DELETE",
+// 		url,
+// 		headers: {
+// 			Authorization: authHeader()
+// 		},
+// 		dataType: "json",
+// 		success(data){
+// 			console.log(data);
+// 			saveChanges();
+// 		},
+// 		error(xhr) {
+// 			const err = ERROR_ALERT + xhr.responseText;
+// 			console.log(err);
+// 		}
+// 	});
+// }
 
 
 function resetForm() {
@@ -231,9 +231,10 @@ $(document).ready(function (){
 	$(document).on("click", confirmBtn, function () {
 		const alertClsName = "." + alertName;
 		if (!($(confirmBtn).parents(alertClsName).length)) {return;}
-		const group = $(".modify-recipe__dish-group").val();
-		const recipeToModify = $(".modify-recipe__recipe-to-modify").val();
-		deleteCurrentRecipe(group, recipeToModify);
+		// const groupName = $(groupsSelect).val();
+		// const recipeId = $(recipesSelect).val();
+		// deleteCurrentRecipe(groupName, recipeId);
+		modifyRecipeById();
 		hideAlert();
 	});
 

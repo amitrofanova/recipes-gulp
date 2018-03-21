@@ -4,8 +4,8 @@ import {showAlert}from "../modal-alert/modal-alert.js";
 import {authHeader}from "../auth-form/auth-form.js";
 import {createEditor, destroyEditor, resizeImage}from "../photo-editor/photo-editor.js";
 import {createLoader, destroyLoader}from "../loader/loader.js";
+import {jsonPath}from "../../resources/paths/paths.js";
 
-const jsonPath = "https://amitrofanova.pythonanywhere.com/api/recipes/";
 
 const NAMESPACE = "add-recipe";
 const CLASS_PREFIX = ".add-recipe";
@@ -163,7 +163,7 @@ function saveRecipe(evt){
 	const group = $(selectedGroup).text();
 	$.ajax({
 		type: "POST",
-		url: jsonPath + "?group=" + encodeURIComponent(group),
+		url: jsonPath + "/api/recipes/" + "?group=" + encodeURIComponent(group),
 		headers: {
 			Authorization: authHeader()
 		},

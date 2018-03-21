@@ -2,9 +2,7 @@ import $ from "jquery";
 import {INGREDIENTS_TITLE, STEPS_TITLE, ERROR_ALERT, EMPTY_GROUP_ALERT}from "../../resources/strings/ru.js";
 import {authHeader}from "../auth-form/auth-form.js";
 import {showAlert}from "../modal-alert/modal-alert.js";
-
-
-const pathToJson = "https://amitrofanova.pythonanywhere.com/api/";
+import {jsonPath}from "../../resources/paths/paths.js";
 
 
 function appendBreadcrumb(dishGroup) {
@@ -23,7 +21,7 @@ function appendRecipePreview(recipe) {
 	if (!recipe.image_min_hash) {
 		imgSrc = "assets/images/empty-image.jpg";
 	}
-	else {imgSrc = pathToJson + "image/" + recipe.image_min_hash;}
+	else {imgSrc = jsonPath + "/api/image/" + recipe.image_min_hash;}
 
 	$(".dish-group_opened").append(
 		"<div class=\"recipe-preview\">" +
@@ -42,13 +40,13 @@ function appendRecipePreview(recipe) {
 
 function getContent(callback, group, recipeId){
 	const result = null;
-	let url = pathToJson;
+	let url = jsonPath;
 
 	if (recipeId) {
-		url += "recipes/" + recipeId;
+		url += "/api/recipes/" + recipeId;
 	}
 	else if (group) {
-		url += "groups/" + encodeURIComponent(group);
+		url += "/api/groups/" + encodeURIComponent(group);
 	}
 
 	$.ajax({
@@ -96,7 +94,7 @@ function appendRecipe(recipe) {
 	let img = "";
 	if (recipe.image_hash) {
 		img = "<obj class=\"recipe__image\"	type=\"image/png\">" +
-			"<img src=\"" + pathToJson + "image/" + recipe.image_hash + "\"/></obj>";
+			"<img src=\"" + jsonPath + "/api/image/" + recipe.image_hash + "\"/></obj>";
 	}
 	$("<div class=\"recipe\"></div>")
 		.insertAfter($(".recipe-preview")[0])
