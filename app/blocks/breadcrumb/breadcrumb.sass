@@ -1,39 +1,37 @@
 .breadcrumb
-	height: calc(24px + 1.5rem)
-	font-size: calc(8px + .5rem)
+	display: flex
+	flex-wrap: wrap
+	align-items: center
+	font-size: calc(10px + .5rem)
 	background-color: lighten($secondary-bg-color, 5%)
 
 .breadcrumb_with-border-bottom
 	border-bottom: 2px solid darken($secondary-bg-color, 5%)
 
 .breadcrumb__all-dish-groups,
+.breadcrumb__current-dish-group,
+.breadcrumb__current-recipe
+	margin: calc(8px + 1rem)
+	white-space: nowrap
+	text-transform: uppercase
+	line-height: .8
+
+.breadcrumb__all-dish-groups,
 .breadcrumb__current-dish-group
-	display: inline-block
-	margin: 0 2rem
-	cursor: pointer
-	vertical-align: middle
-	line-height: calc(24px + 1.5rem)
 	&:hover
 		text-decoration: underline
-
-.breadcrumb__current-recipe
-	display: inline-block
-	margin: 0 2rem
-	vertical-align: middle
+		cursor: pointer
 
 .breadcrumb__arrow
-	display: inline-block
 	width: 7px
 	height: 14px
-	@media (max-width: 991px)
+	@media (max-width: 575px)
 		width: 5px
 		height: 10px
-	position: relative
-	vertical-align: middle
-	&::after
-		position: absolute
-		top: 0
-		left: 0
-		width: 100%
-		height: 100%
-		content: url('../images/breadcrumb-arrow.svg')
+	// &::after
+	// 	position: absolute
+	// 	top: 0
+	// 	left: 0
+	// 	width: 100%
+	// 	height: 100%
+	// 	content: url('../images/breadcrumb-arrow.svg')

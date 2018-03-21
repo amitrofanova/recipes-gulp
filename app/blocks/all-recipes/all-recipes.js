@@ -8,8 +8,9 @@ import {jsonPath}from "../../resources/paths/paths.js";
 function appendBreadcrumb(dishGroup) {
 	$(".all-recipes").append(
 		"<div class=\"all-recipes__breadcrumb breadcrumb breadcrumb_with-border-bottom\">" +
-			"<div class=\"breadcrumb__all-dish-groups\">Все рецепты</div>" +
-			"<div class=\"breadcrumb__arrow\"/>" +
+			"<span class=\"breadcrumb__all-dish-groups\">ВСЕ РЕЦЕПТЫ</span>" +
+			// "<div class=\"breadcrumb__arrow\"/>" +
+			"<img class=\"breadcrumb__arrow\" src=\"assets/images/breadcrumb-arrow.svg\"/>" +
 			"<div class=\"breadcrumb__current-dish-group\">" + dishGroup + "</div>" +
 		"</div>"
 	);
@@ -121,7 +122,9 @@ function appendRecipe(recipe) {
 // TODO: move to breadcrumb block
 function appendRecipeToBreadcrumb(title) {
 	$(".all-recipes__breadcrumb")
-		.append("<div class=\"breadcrumb__arrow\"/><div class=\"breadcrumb__current-recipe\">" + title + "</div>");
+		.append(
+			"<img class=\"breadcrumb__arrow\" src=\"assets/images/breadcrumb-arrow.svg\"/>" +
+			"<div class=\"breadcrumb__current-recipe\">" + title + "</div>");
 }
 
 
