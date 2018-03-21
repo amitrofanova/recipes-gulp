@@ -31,6 +31,7 @@ function appendRecipePreview(recipe) {
 				"<img src=\"" + imgSrc + "\">" +
 			"</div>" +
 			"<div class=\"recipe-preview__content\">" +
+				"<div class=\"recipe-preview__id\">"	+	recipe.id + "</div>" +
 				"<div class=\"recipe-preview__title\">"	+	recipe.title + "</div>" +
 				"<div class=\"recipe-preview__description\">" + recipe.description + "</div>" +
 			"</div>" +
@@ -39,12 +40,12 @@ function appendRecipePreview(recipe) {
 }
 
 
-function getContent(callback, group, recipe){
+function getContent(callback, group, recipeId){
 	const result = null;
 	let url = pathToJson;
 
-	if (recipe) {
-		url += "recipes/" + encodeURIComponent(recipe);
+	if (recipeId) {
+		url += "recipes/" + recipeId;
 	}
 	else if (group) {
 		url += "groups/" + encodeURIComponent(group);
@@ -128,6 +129,7 @@ function appendRecipeToBreadcrumb(title) {
 
 function openRecipe() {
 	$(".recipe-preview").hide();
+	const recipeId = $(this).find(".recipe-preview__id").text();
 	const recipeTitle = $(this).find(".recipe-preview__title").text();
 
 	const callback = function (recipe) {
@@ -137,7 +139,7 @@ function openRecipe() {
 		}
 	};
 
-	getContent(callback, null, recipeTitle);
+	getContent(callback, null, recipeId);
 }
 
 
