@@ -3,21 +3,22 @@
 	.auth-form__content
 		
 		.auth-form__tabs
-			a(href="#login" class="auth-form__tab auth-form__tab_active") Login
-			a(href="#register" class="auth-form__tab") Register
+			a(href="#login" class="auth-form__tab auth-form__tab_active") Вход
+			a(href="#register" class="auth-form__tab") Регистрация
 			
+		//- TODO: action, method
 		form.auth-form__form.auth-form__login-form.auth-form__form_active#login
-			.auth-form__header Welcome to Recipe Book
-			.auth-form__sub-header Your own recipes collection
-			input(type="text" placeholder="Username" class="auth-form__login-username" required)
-			input(type="password" placeholder="Password" class="auth-form__login-password" required)
-			input(type="submit" value="Login" class="auth-form__login-submit auth-form__button")
+			.auth-form__header Добро пожаловать!
+			.auth-form__sub-header Создайте свою коллекцию рецептов с Recipe Book
+			input(type="text" placeholder="Логин" class="auth-form__login-username" required)
+			input(type="password" placeholder="Пароль" class="auth-form__login-password" required)
+			input(type="submit" value="Войти" class="auth-form__login-submit auth-form__button")
 			
 		form.auth-form__form.auth-form__register-form.auth-form__form_hidden#register
-			.auth-form__header Are you new to Recipe Book?
-			.auth-form__sub-header Sign up with email
+			.auth-form__header Вы здесь впервые?
+			.auth-form__sub-header Зарегистрируйтесь, чтобы создать кулинарную книгу
 			//- input(type="text" placeholder="Email" class="auth-form__register-email")
-			input(type="text" placeholder="Username" class="auth-form__register-username" required)
-			input(type="password" placeholder="Password (use at least 6 characters)" class="auth-form__register-password" required)
-			input(type="password" placeholder="Confirm password" class="auth-form__register-password-confirm" required)
-			input(type="submit" value="Sign up" class="auth-form__register-submit auth-form__button")
+			input(type="text" placeholder="Введите логин" class="auth-form__register-username" required)
+			input(type="password" placeholder="Введите пароль (минимум 6 символов)" class="auth-form__register-password" required)
+			input(type="password" placeholder="Подтвердите пароль" class="auth-form__register-password-confirm" required)
+			input(type="submit" value="Готово" class="auth-form__register-submit auth-form__button")
