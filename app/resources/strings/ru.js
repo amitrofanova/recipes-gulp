@@ -31,7 +31,7 @@ export const ERROR_ALERT = "Произошла ошибка!";
 export const UNIQUE_CONSTRAINT_FAILED_ERROR = "Рецепт с таким именем уже существует!";
 
 // Empty group
-export const EMPTY_GROUP_ALERT = "У вас пока нет ни одного рецепта группе ";
+export const EMPTY_GROUP_ALERT = "У вас пока нет ни одного рецепта в группе ";
 
 // A recipe constants
 export const INGREDIENTS_TITLE = "Что понадобится:";
