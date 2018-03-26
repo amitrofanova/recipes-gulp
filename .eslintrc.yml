@@ -12,7 +12,13 @@ rules:
   block-scoped-var: 2
   brace-style: [0, '1tbs']
   camelcase: 0
-  comma-dangle: [2, 'never']
+  comma-dangle: [2, {
+    "arrays": "never",
+    "objects": "always",
+    "imports": "never",
+    "exports": "never",
+    "functions": "ignore"
+  }]
   comma-spacing: [2, {before: false, after: true}]
   comma-style: [2, 'last']
   complexity: [1, 11]
@@ -141,7 +147,7 @@ rules:
   no-with: 2
   new-parens: 2
   newline-after-var: 0
-  object-curly-spacing: [1, 'never']
+  object-curly-spacing: [1, 'always']
   object-shorthand: [2, 'always']
   one-var: [2, 'never']
   operator-assignment: [2, 'always']
@@ -155,7 +161,7 @@ rules:
   semi: [2, 'always']
   semi-spacing: [2, {before: false, after: true}]
   sort-vars: 0
-  keyword-spacing: [2, {before: false, after: true, overrides: {
+  keyword-spacing: [2, {before: true, after: true, overrides: {
           return: {after: true},
           throw: {after: true},
           case: {after: true}
