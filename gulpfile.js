@@ -1,4 +1,4 @@
-const gulp = require("gulp"), // eslint-disable-line one-var
+const gulp = require("gulp"),
 	browserify = require("browserify"),
 	babelify = require("babelify"),
 	source = require("vinyl-source-stream"),
@@ -41,7 +41,7 @@ function isFixed(file) {
 }
 
 gulp.task("lint", () => {
-	return gulp.src(["**/*.js", "!node_modules/**", "!dist/**"])
+	return gulp.src(["**/*.js", "!node_modules/**", "!dist/**", "!gulpfile.js"])
 		.pipe(eslint({fix: true}))
 		.pipe(eslint.format())
 		// https://github.com/adametry/gulp-eslint/issues/99#issuecomment-150752049
