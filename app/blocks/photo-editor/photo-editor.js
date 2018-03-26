@@ -84,12 +84,12 @@ function cropImage() {
 		rotatable: false,
 		zoomable: false,
 		minContainerWidth: 300,
-		minContainerHeight: 200
+		minContainerHeight: 200,
 	};
 	let cropper = new Cropper(image, options);
 
 	$(document).on("click", ".photo-editor__crop-btn", function () {
-		const res = cropper.getCroppedCanvas({maxWidth: 4500, maxHeight: 3000}).toDataURL();
+		const res = cropper.getCroppedCanvas({ maxWidth: 4500, maxHeight: 3000, }).toDataURL();
 		cropper.destroy();
 		$(".photo-editor__image-crop").attr("src", res);
 		cropper = new Cropper(initialImage, options);
@@ -105,12 +105,12 @@ function cropImageMin() {
 		rotatable: false,
 		zoomable: false,
 		minContainerWidth: 300,
-		minContainerHeight: 200
+		minContainerHeight: 200,
 	};
 	let cropperMin = new Cropper(imageMin, optionsMin);
 
 	$(document).on("click", ".photo-editor__crop-min-btn", function () {
-		const res = cropperMin.getCroppedCanvas({maxWidth: 4000, maxHeight: 4000}).toDataURL();
+		const res = cropperMin.getCroppedCanvas({ maxWidth: 4000, maxHeight: 4000, }).toDataURL();
 		cropperMin.destroy();
 		$(".photo-editor__image-crop-min").attr("src", res);
 		cropperMin = new Cropper(initialImage, optionsMin);

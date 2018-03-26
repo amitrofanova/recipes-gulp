@@ -4,9 +4,9 @@ import {
 	NOT_EQUAL_PWD_ERR,
 	INVALID_LOGIN_ERR,
 	USER_REGISTERED_ALERT,
-	ERROR_ALERT}from "../../resources/strings/ru.js";
-import {showAlert}from "../modal-alert/modal-alert.js";
-import {jsonPath}from "../../resources/paths/paths.js";
+	ERROR_ALERT } from "../../resources/strings/ru.js";
+import { showAlert } from "../modal-alert/modal-alert.js";
+import { jsonPath } from "../../resources/paths/paths.js";
 
 
 const CLASS_PREFIX = ".auth-form";
@@ -49,8 +49,7 @@ function toggleForm(evt) {
 function showFormError(errorText) {
 	if ($(".auth-form__error").length) {
 		$(".auth-form__error").text(errorText);
-	}
-	else {
+	} else {
 		$(activeForm).append("<div class=\"auth-form__error\">" + errorText + "</div>");
 	}
 }
@@ -90,13 +89,15 @@ function getRegisterData() {
 	// const email = $(registerEmail).val();
 	const user_name = $(registerUsername).val();
 	const password = $(registerConfirmPwd).val();
-	const registerData = {user_name, password};
+	const registerData = { user_name, password, };
+
 	return JSON.stringify(registerData, null, "\t");
 }
 
 
 function sendRegisterData() {
 	const dataToSave = JSON.parse(getRegisterData());
+
 	$.ajax({
 		type: "POST",
 		url: jsonPath + "/api/users/",
@@ -111,16 +112,16 @@ function sendRegisterData() {
 		error(xhr) {
 			const err = ERROR_ALERT + xhr.responseText;
 			showAlert(err);
-		}
+		},
 	});
 }
 
 
 function submitRegisterForm(evt) {
 	const isValidForm = validateForm();
-	if (isValidForm) {
-		sendRegisterData();
-	}
+
+	if (isValidForm) {sendRegisterData();}
+
 	evt.preventDefault();
 }
 
@@ -128,7 +129,8 @@ function submitRegisterForm(evt) {
 function getLoginData() {
 	const user_name = $(loginUsername).val();
 	const password = $(loginPwd).val();
-	const loginData = {user_name, password};
+	const loginData = { user_name, password, };
+
 	return loginData;
 }
 
@@ -141,7 +143,7 @@ function validateLoginData() {
 	$.ajax({
 		url: jsonPath + "/api/users/",
 		headers: {
-			Authorization: "Basic " + btoa( username + ":" + password)
+			Authorization: "Basic " + btoa( username + ":" + password),
 		},
 		success() {
 			localStorage.setItem("username", username);
@@ -150,7 +152,7 @@ function validateLoginData() {
 		},
 		error() {
 			showFormError(INVALID_LOGIN_ERR);
-		}
+		},
 	});
 }
 
@@ -163,9 +165,7 @@ function submitLoginForm(evt) {
 
 (function () {
 	function checkUserInStorage() {
-		if ((localStorage.getItem("username")) && (localStorage.getItem("password"))) {
-			return true;
-		}
+		if ((localStorage.getItem("username")) && (localStorage.getItem("password"))){return true;}
 	}
 
 	function checkUserOnPageLoad() {
@@ -174,8 +174,7 @@ function submitLoginForm(evt) {
 
 		if ((isUserInStorage === true) && ((currentPage === "/index.html") || (currentPage === "/"))) {
 			window.location.pathname = "/home.html";
-		}
-		else if ((isUserInStorage !== true) && (currentPage !== "/index.html")) {
+		} else if ((isUserInStorage !== true) && (currentPage !== "/index.html")) { // TODO: try to minimize
 			window.location.pathname = "/index.html";
 		}
 	}

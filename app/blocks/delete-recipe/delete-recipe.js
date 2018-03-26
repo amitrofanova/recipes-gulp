@@ -1,9 +1,9 @@
 import $ from "jquery";
-import {CONFIRM_DELETE_ALERT, DELETED_RECIPE_ALERT, ERROR_ALERT}from "../../resources/strings/ru.js";
-import {showAlert, hideAlert}from "../modal-alert/modal-alert.js";
-import {authHeader}from "../auth-form/auth-form.js";
-import {createRecipesSelect}from "../dashboard/dashboard.js";
-import {jsonPath}from "../../resources/paths/paths.js";
+import { CONFIRM_DELETE_ALERT, DELETED_RECIPE_ALERT, ERROR_ALERT } from "../../resources/strings/ru.js";
+import { showAlert, hideAlert } from "../modal-alert/modal-alert.js";
+import { authHeader } from "../auth-form/auth-form.js";
+import { createRecipesSelect } from "../dashboard/dashboard.js";
+import { jsonPath } from "../../resources/paths/paths.js";
 
 
 const CLASS_PREFIX = ".delete-recipe";
@@ -17,11 +17,13 @@ const alertName = "confirmation-before-delete";
 function deleteRecipe(recipeId) {
 	const url = jsonPath + "/api/recipes/" + recipeId;
 
+	// TODO: Group your shorthand properties at the beginning of your object declaration
+
 	$.ajax({
 		type: "DELETE",
 		url,
 		headers: {
-			Authorization: authHeader()
+			Authorization: authHeader(),
 		},
 		dataType: "json",
 		success(data){
@@ -31,7 +33,7 @@ function deleteRecipe(recipeId) {
 		error(xhr) {
 			const err = ERROR_ALERT + xhr.responseText;
 			showAlert(err);
-		}
+		},
 	});
 }
 
@@ -52,11 +54,11 @@ $(document).ready(function (){
 
 	$(document).on("click", confirmBtn, function () {
 		const alertClsName = "." + alertName;
-		if (!($(confirmBtn).parents(alertClsName).length)) {return;}
+		if (!($(confirmBtn).parents(alertClsName).length)){return;}
 
 		const recipeId = $(recipesSelect).val();
 		deleteRecipe(recipeId);
-		
+
 		hideAlert();
 	});
 

@@ -1,5 +1,6 @@
 import $ from "jquery";
 
+// TODO: rename functions to append and remove
 export function createLoader(loaderText) {
 	let contentString = "";
 

@@ -1,7 +1,7 @@
 import $ from "jquery";
-import {authHeader}from "../auth-form/auth-form.js";
+import { authHeader } from "../auth-form/auth-form.js";
 // import {createLoader, destroyLoader}from "../loader/loader.js";
-import {jsonPath}from "../../resources/paths/paths.js";
+import { jsonPath } from "../../resources/paths/paths.js";
 
 
 function toggleAddForm() {
@@ -39,7 +39,7 @@ function getList(callback, group) {
 	$.ajax({
 		url,
 		headers: {
-			Authorization: authHeader()
+			Authorization: authHeader(),
 		},
 		dataType: "json",
 		success(data){
@@ -50,7 +50,7 @@ function getList(callback, group) {
 		// },
 		// complete() {
 		// 	destroyLoader();
-		}
+		},
 	});
 }
 
