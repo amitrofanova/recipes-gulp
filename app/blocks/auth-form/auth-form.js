@@ -1,31 +1,31 @@
 import $ from "jquery";
+import { showAlert } from "../modal-alert/modal-alert.js";
+import { jsonPath } from "../../resources/paths/paths.js";
 import {
 	SHORT_PWD_ERR,
 	NOT_EQUAL_PWD_ERR,
 	INVALID_LOGIN_ERR,
 	USER_REGISTERED_ALERT,
 	ERROR_ALERT } from "../../resources/strings/ru.js";
-import { showAlert } from "../modal-alert/modal-alert.js";
-import { jsonPath } from "../../resources/paths/paths.js";
 
 
 const CLASS_PREFIX = ".auth-form";
-const activeTab = CLASS_PREFIX + "__tab_active", // eslint-disable-line one-var
-	activeForm = CLASS_PREFIX + "__form_active",
-	hiddenForm = CLASS_PREFIX + "__form_hidden",
-	tabs = CLASS_PREFIX + "__tabs",
-	tab = CLASS_PREFIX + "__tab",
+const	loginForm = CLASS_PREFIX + "__login-form";
+const	registerForm = CLASS_PREFIX + "__register-form";
 
-	loginUsername = CLASS_PREFIX + "__login-username",
-	loginPwd = CLASS_PREFIX + "__login-password",
+const	activeForm = CLASS_PREFIX + "__form_active";
+const	hiddenForm = CLASS_PREFIX + "__form_hidden";
+const	tabs = CLASS_PREFIX + "__tabs";
+const	tab = CLASS_PREFIX + "__tab";
+const activeTab = CLASS_PREFIX + "__tab_active";
 
-	// registerEmail = CLASS_PREFIX + '__register-email',
-	registerUsername = CLASS_PREFIX + "__register-username",
-	registerPwd = CLASS_PREFIX + "__register-password",
-	registerConfirmPwd = CLASS_PREFIX + "__register-password-confirm",
+const	loginUsername = CLASS_PREFIX + "__login-username";
+const	loginPwd = CLASS_PREFIX + "__login-password";
 
-	loginForm = CLASS_PREFIX + "__login-form",
-	registerForm = CLASS_PREFIX + "__register-form";
+	// const registerEmail = CLASS_PREFIX + '__register-email';
+const	registerUsername = CLASS_PREFIX + "__register-username";
+const	registerPwd = CLASS_PREFIX + "__register-password";
+const	registerConfirmPwd = CLASS_PREFIX + "__register-password-confirm";
 
 
 function toggleForm(evt) {
@@ -76,6 +76,7 @@ function validateForm() {
 		showFormError(NOT_EQUAL_PWD_ERR);
 		return false;
 	}
+
 	return true;
 }
 
@@ -120,7 +121,7 @@ function sendRegisterData() {
 function submitRegisterForm(evt) {
 	const isValidForm = validateForm();
 
-	if (isValidForm) {sendRegisterData();}
+	if (isValidForm) sendRegisterData();
 
 	evt.preventDefault();
 }

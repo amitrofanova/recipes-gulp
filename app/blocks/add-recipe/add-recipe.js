@@ -69,15 +69,15 @@ export function addItem(inputName, wrapper, nameSpace) {
 
 export function getIngredientsFromPage(nameSpace) {
 	const ingredients = [];
-	const ingredientsWrapper = "." + nameSpace + "__ingredients";
 	const newItem = "." + nameSpace + "__new-item";
-	let newIngredient;
 
 	$(newItem).each(function () {
+		const ingredientsWrapper = "." + nameSpace + "__ingredients";
+
 		if ($(this).parents(ingredientsWrapper).length) {
 
 			// FIXME: Use indentation when making long method chains
-			newIngredient = $(this).contents().filter(function () {
+			const newIngredient = $(this).contents().filter(function () {
 				return this.nodeType === TEXT_NODE_TYPE;
 			}).text();
 
@@ -164,6 +164,8 @@ function createRecipe() {
 function saveRecipe(evt){
 	const selectedGroup = dishGroupInputCls + " option:selected";
 	const group = $(selectedGroup).text();
+	// const group = $(dishGroupInputCls).val();
+	// console.log(group);
 
 	$.ajax({
 		type: "POST",
@@ -179,7 +181,6 @@ function saveRecipe(evt){
 		error(xhr) {
 			const err = ERROR_ALERT + xhr.responseText;
 			showAlert(err);
-			// showAlert(form, err);
 		},
 		beforeSend() {
 			createLoader("Пожалуйста подождите, рецепт сохраняется");

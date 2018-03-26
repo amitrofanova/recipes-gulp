@@ -137,14 +137,12 @@ function openRecipe() {
 	const recipeId = $(this).find(".recipe-preview__id").text();
 	const recipeTitle = $(this).find(".recipe-preview__title").text();
 
-	const callback = function (recipe) {
+	getContent((recipe) => {
 		if (recipe) {
 			appendRecipeToBreadcrumb(recipeTitle);
 			appendRecipe(recipe);
 		}
-	};
-
-	getContent(callback, null, recipeId);
+	}, null, recipeId);
 }
 
 
