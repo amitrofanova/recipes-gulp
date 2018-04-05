@@ -37,27 +37,21 @@ export function resetInput(input) {
 }
 
 
-// TODO: When programmatically building up strings, use template strings instead of concatenation
-// function sayHi(name) {
-// return `How are you, ${name}?`;
-// }
 export function appendItem(item, wrapper, nameSpace) {
-	const newItemClass = nameSpace + "__new-item";
-	const deleteItemClass = nameSpace + "__delete-item";
-	const newEl =
-		"<div class=\"" + newItemClass + "\">" + item +
-			"<div class=\"" + deleteItemClass + "\"></div>" +
-		"</div>";
+	const newItemClass = `${nameSpace}__new-item`;
+	const deleteItemClass = `${nameSpace}__delete-item`;
+	const newEl = `<div class="${newItemClass}">${item}<div class="${deleteItemClass}"></div></div>`;
 
 	$(wrapper).append(newEl);
 }
 
 
+// TODO: add ingredients measure with map
 export function addItem(inputName, wrapper, nameSpace) {
-	const newItem = $(inputName).val();
+	const newItemVal = $(inputName).val();
 
-	if ((newItem) && (newItem !== EMPTY_FIELD_ALERT)) {
-		appendItem(newItem, wrapper, nameSpace);
+	if ((newItemVal) && (newItemVal !== EMPTY_FIELD_ALERT)) {
+		appendItem(newItemVal, wrapper, nameSpace);
 		$(inputName).val("");
 	} else {
 		$(inputName).css("color", "#eee");
@@ -69,10 +63,10 @@ export function addItem(inputName, wrapper, nameSpace) {
 
 export function getIngredientsFromPage(nameSpace) {
 	const ingredients = [];
-	const newItem = "." + nameSpace + "__new-item";
+	const newItem = `.${nameSpace}__new-item`;
 
 	$(newItem).each(function () {
-		const ingredientsWrapper = "." + nameSpace + "__ingredients";
+		const ingredientsWrapper = `.${nameSpace}__ingredients`;
 
 		if ($(this).parents(ingredientsWrapper).length) {
 
@@ -91,10 +85,10 @@ export function getIngredientsFromPage(nameSpace) {
 
 export function getStepsFromPage(nameSpace) {
 	const steps = [];
-	const newItem = "." + nameSpace + "__new-item";
+	const newItem = `.${nameSpace}__new-item`;
 
 	$(newItem).each(function () {
-		const stepsWrapper = "." + nameSpace + "__steps";
+		const stepsWrapper = `.${nameSpace}__steps`;
 
 		if ($(this).parents(stepsWrapper).length) {
 			const newStep = $(this).contents().filter(function () {
@@ -119,7 +113,7 @@ export function deleteItem() {
 	}
 
 	const wrapper = $(this).parents().eq(1).attr("class");
-	const newItem = "." + nameSpace + "__new-item";
+	const newItem = `.${nameSpace}__new-item`;
 	let items;
 
 	if (wrapper.indexOf("ingredients")) {
@@ -164,9 +158,8 @@ function createRecipe() {
 function saveRecipe(evt){
 	const selectedGroup = dishGroupInputCls + " option:selected";
 	const group = $(selectedGroup).text();
-	// const group = $(dishGroupInputCls).val();
-	// console.log(group);
 
+	// TODO: Promise for modal alerts
 	$.ajax({
 		type: "POST",
 		url: jsonPath + "/api/recipes/" + "?group=" + encodeURIComponent(group),
@@ -211,7 +204,7 @@ export function getCroppedImg(wrapper, preview, previewMin) {
 	const imgMin = $(".photo-editor__image-crop-min")[0];
 	const resizedImgMin = resizeImage(imgMin);
 
-	if (wrapper !== null) { // TODO: try wo null
+	if (wrapper) {
 		$(wrapper).css("display", "flex");
 	}
 
@@ -231,12 +224,8 @@ $(document).ready(function () {
 	$(document).on("click", ".add-recipe__open-editor-btn", createEditor);
 
 	$(document).on("click", ".photo-editor__submit-btn", function () {
-		const wrapper = ".add-recipe__image-preview-wrap";
-		const preview = ".add-recipe__image-preview";
-		const previewMin = ".add-recipe__image-preview-min";
-
 		if ($(this).parents(".add-recipe").length) {
-			getCroppedImg(wrapper, preview, previewMin);
+			getCroppedImg(imagePreviewWrap, imagePreviewCls, imagePreviewMin);
 		}
 	});
 

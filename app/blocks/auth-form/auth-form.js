@@ -22,7 +22,7 @@ const activeTab = CLASS_PREFIX + "__tab_active";
 const	loginUsername = CLASS_PREFIX + "__login-username";
 const	loginPwd = CLASS_PREFIX + "__login-password";
 
-	// const registerEmail = CLASS_PREFIX + '__register-email';
+// const registerEmail = CLASS_PREFIX + '__register-email';
 const	registerUsername = CLASS_PREFIX + "__register-username";
 const	registerPwd = CLASS_PREFIX + "__register-password";
 const	registerConfirmPwd = CLASS_PREFIX + "__register-password-confirm";
@@ -121,7 +121,7 @@ function sendRegisterData() {
 function submitRegisterForm(evt) {
 	const isValidForm = validateForm();
 
-	if (isValidForm) sendRegisterData();
+	if (isValidForm) {sendRegisterData();}
 
 	evt.preventDefault();
 }
@@ -130,7 +130,10 @@ function submitRegisterForm(evt) {
 function getLoginData() {
 	const user_name = $(loginUsername).val();
 	const password = $(loginPwd).val();
-	const loginData = { user_name, password, };
+	const loginData = {
+		user_name,
+		password,
+	};
 
 	return loginData;
 }
@@ -173,9 +176,9 @@ function submitLoginForm(evt) {
 		const isUserInStorage = checkUserInStorage();
 		const currentPage = window.location.pathname;
 
-		if ((isUserInStorage === true) && ((currentPage === "/index.html") || (currentPage === "/"))) {
+		if ((isUserInStorage) && ((currentPage === "/index.html") || (currentPage === "/"))) {
 			window.location.pathname = "/home.html";
-		} else if ((isUserInStorage !== true) && (currentPage !== "/index.html")) { // TODO: try to minimize
+		} else if ((!isUserInStorage) && (currentPage !== "/index.html")) {
 			window.location.pathname = "/index.html";
 		}
 	}

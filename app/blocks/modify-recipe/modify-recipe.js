@@ -23,10 +23,10 @@ const NAMESPACE = "modify-recipe";
 const CLASS_PREFIX = ".modify-recipe";
 const groupsSelect = CLASS_PREFIX + "__dish-group";
 const	recipesSelect = CLASS_PREFIX + "__recipe-to-modify";
-	// ingredientsCls = CLASS_PREFIX + "__ingredients",
-	// ingredientInputCls = CLASS_PREFIX + "__ingredient-input",
-	// stepsCls = CLASS_PREFIX + "__steps",
-	// stepInputCls = CLASS_PREFIX + "__step-input",
+// ingredientsCls = CLASS_PREFIX + "__ingredients",
+// ingredientInputCls = CLASS_PREFIX + "__ingredient-input",
+// stepsCls = CLASS_PREFIX + "__steps",
+// stepInputCls = CLASS_PREFIX + "__step-input",
 const	newIngredientBtnCls = CLASS_PREFIX + "__new-ingredient-btn";
 const	newStepBtnCls = CLASS_PREFIX + "__new-step-btn";
 const	startModifyBtn = CLASS_PREFIX + "__modify-btn";
@@ -48,6 +48,7 @@ function getCurrentData(recipeToModify) {
 		$(".modify-recipe__image-preview").attr("src", imgSrc + recipe.image_hash);
 		$(".modify-recipe__image-preview-min").attr("src", imgMinSrc + recipe.image_min_hash);
 
+		// TODO: use reduce instead of iterator
 		for (let i = 0; i < recipe.components.length; i++) {
 			const ingredient = recipe.components[i];
 			appendItem(ingredient, ".modify-recipe__ingredients", "modify-recipe");
@@ -191,7 +192,7 @@ $(document).ready( () => {
 		const alertClsName = "." + alertName;
 		const recipeId = $(recipesSelect).val();
 
-		if (!($(confirmBtn).parents(alertClsName).length)) return;
+		if (!($(confirmBtn).parents(alertClsName).length)) {return;}
 
 		modifyRecipeById(recipeId);
 		hideAlert();

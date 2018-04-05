@@ -40,7 +40,6 @@ function appendRecipePreview(recipe) {
 
 
 function getContent(callback, group, recipeId){
-	// const result = null;
 	let url = jsonPath;
 
 	if (recipeId) {
@@ -63,7 +62,6 @@ function getContent(callback, group, recipeId){
 			showAlert(err);
 		},
 	});
-	// return result;
 }
 
 
@@ -137,7 +135,7 @@ function openRecipe() {
 	const recipeId = $(this).find(".recipe-preview__id").text();
 	const recipeTitle = $(this).find(".recipe-preview__title").text();
 
-	getContent((recipe) => {
+	getContent(recipe => {
 		if (recipe) {
 			appendRecipeToBreadcrumb(recipeTitle);
 			appendRecipe(recipe);
