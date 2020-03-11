@@ -8,7 +8,7 @@ The website is intended for storing cook recipes.
 Clone repository and go to the project folder
 
 ```
-git clone git@gitlab.com:funnymitrofunny/recipe-book.git && cd recipe-book
+git clone git@github.com:funnymitrofunny/recipe-book.git && cd recipe-book
 ```
 
 Install modules
